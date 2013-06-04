@@ -8,6 +8,7 @@ namespace Ancestry.Daisy.Program
 {
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
+    using Ancestry.Daisy.Language.Walks;
     using Ancestry.Daisy.Utils;
 
     public class ExecutionDebugInfo
@@ -40,6 +41,14 @@ namespace Ancestry.Daisy.Program
         public IEnumerable<DebugNode> DebugFor(GroupOperator group)
         {
             return groups[group];
+        }
+
+        public string DebugView
+        {
+            get
+            {
+                return new DaisyDebugPrinter(this).Print();
+            }
         }
     }
 

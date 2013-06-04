@@ -30,7 +30,7 @@ namespace Ancestry.Daisy.Tests.TestObjects
             return new Regex("^" + test + "$", RegexOptions.IgnoreCase).Match(matchingContext.Statement);
         }
 
-        public bool Execute(ExecutionContext context)
+        public bool Execute(InvokationContext context)
         {
             return predicate((int)context.Scope);
         }
@@ -62,7 +62,7 @@ namespace Ancestry.Daisy.Tests.TestObjects
 
         public Type TransformsScopeTo { get; private set; }
 
-        public bool Execute(ExecutionContext context)
+        public bool Execute(InvokationContext context)
         {
             return ((IEnumerable<F>)context.Scope).Any(x => context.Proceed(x));
         }

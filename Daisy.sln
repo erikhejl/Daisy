@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daisy", "Daisy\Daisy.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{16A138A4-A3C7-4024-AE13-D3C496DE1674}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHelpers", "TestHelpers\TestHelpers.csproj", "{60F3515B-D47C-42E2-9D02-64628A4EF4C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{16A138A4-A3C7-4024-AE13-D3C496DE1674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16A138A4-A3C7-4024-AE13-D3C496DE1674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16A138A4-A3C7-4024-AE13-D3C496DE1674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60F3515B-D47C-42E2-9D02-64628A4EF4C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60F3515B-D47C-42E2-9D02-64628A4EF4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60F3515B-D47C-42E2-9D02-64628A4EF4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60F3515B-D47C-42E2-9D02-64628A4EF4C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

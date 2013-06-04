@@ -10,7 +10,7 @@ namespace Ancestry.Daisy.Rules
 
     public interface IRuleHandler
     {
-        bool Execute(ExecutionContext context);
+        bool Execute(InvokationContext context);
         Type ScopeType { get; }
         Match Matches(MatchingContext matchingContext);
         string Name { get; }

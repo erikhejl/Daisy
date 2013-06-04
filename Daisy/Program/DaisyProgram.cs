@@ -54,7 +54,7 @@
                 var link = links.RuleFor(statement.Command, scope.GetType());
                 if (link == null) throw new DaisyRuntimeException(string.Format("Expected link for '{0}', but none found", statement.Command));
                 SanityCheckLink(link, scope, statement.Command);
-                var result = link.Handler.Execute(new ExecutionContext() {
+                var result = link.Handler.Execute(new InvokationContext() {
                         Match = link.Match,
                         Scope = scope,
                         Statement = statement.Command,
@@ -76,7 +76,7 @@
                     var link = links.RuleFor(group.Command, scope.GetType());
                     if (link == null) throw new DaisyRuntimeException(string.Format("Expected link for '{0}', but none found", group.Command));
                     SanityCheckLink(link, scope, group.Command);
-                    var result =  link.Handler.Execute(new ExecutionContext() {
+                    var result =  link.Handler.Execute(new InvokationContext() {
                         Match = link.Match,
                         Scope = scope,
                         Statement = group.Command,

@@ -54,7 +54,7 @@ namespace Ancestry.Daisy.Rules
             return spacings;
         }
 
-        protected object CreateController(ExecutionContext executionContext)
+        protected object CreateController(InvokationContext invokationContext)
         {
             object controller;
             try
@@ -67,16 +67,16 @@ namespace Ancestry.Daisy.Rules
                     string.Format("Cannot build rule {0} because it's controller could not be constructed.",
                         MethodInfo.Name))
                     {
-                        Scope = executionContext.Scope,
-                        Statement = executionContext.Statement
+                        Scope = invokationContext.Scope,
+                        Statement = invokationContext.Statement
                     };
             }
-            controller.GetType().GetProperty("Scope").SetValue(controller, executionContext.Scope);
-            controller.GetType().GetProperty("Context").SetValue(controller, executionContext.Context);
+            controller.GetType().GetProperty("Scope").SetValue(controller, invokationContext.Scope);
+            controller.GetType().GetProperty("Context").SetValue(controller, invokationContext.Context);
             return controller;
         }
 
-        protected object Cast(string obj, ParameterInfo param, ExecutionContext executionContext)
+        protected object Cast(string obj, ParameterInfo param, InvokationContext invokationContext)
         {
             try
             {
@@ -88,13 +88,13 @@ namespace Ancestry.Daisy.Rules
                     string.Format("Cannot convert '{0}' into {1}, to match parameter '{2}'",
                     obj, param.ParameterType, param.Name))
                     {
-                        Scope = executionContext.Scope,
-                        Statement = executionContext.Statement
+                        Scope = invokationContext.Scope,
+                        Statement = invokationContext.Statement
                     };
             }
         }
 
-        public bool Execute(ExecutionContext context)
+        public bool Execute(InvokationContext context)
         {
             var parameters = MethodInfo.GetParameters();
             var inst = CreateController(context);
@@ -104,7 +104,7 @@ namespace Ancestry.Daisy.Rules
 
         public Type TransformsScopeTo { get; private set; }
 
-        private object[] MapParameters(ExecutionContext context, ParameterInfo[] parameters)
+        private object[] MapParameters(InvokationContext context, ParameterInfo[] parameters)
         {
             var objs = new List<object>();
             var ptrGroups = 1;

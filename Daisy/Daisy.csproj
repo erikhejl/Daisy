@@ -66,7 +66,7 @@
     <Compile Include="Rules\CannotExecuteRuleException.cs" />
     <Compile Include="Rules\ReflectionRuleHandler.cs" />
     <Compile Include="Rules\MatchesAttribute.cs" />
-    <Compile Include="Rules\ExecutionContext.cs" />
+    <Compile Include="Rules\InvokationContext.cs" />
     <Compile Include="Rules\IRuleHandler.cs" />
     <Compile Include="Rules\RuleController.cs" />
     <Compile Include="Language\UnexpectedEndOfStreamException.cs" />

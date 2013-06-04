@@ -86,7 +86,7 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
 
                 });
             Assert.True(match.Success);
-            return load.Execute(new ExecutionContext() {
+            return load.Execute(new InvokationContext() {
                     Statement = statement,
                     Scope = scope,
                     Match = match,
@@ -114,7 +114,7 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
             });
             Assert.True(match.Success);
             var calls = 0;
-            var result = load.Execute(new ExecutionContext() {
+            var result = load.Execute(new InvokationContext() {
                 Statement = statement,
                 Scope = scope,
                 Match = match,

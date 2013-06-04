@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{16A138A4-A3C7-4024-AE13-D3C496DE1674}</ProjectGuid>
+    <ProjectGuid>{60F3515B-D47C-42E2-9D02-64628A4EF4C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ancestry.Daisy.Tests</RootNamespace>
-    <AssemblyName>Ancestry.Daisy.Tests</AssemblyName>
+    <RootNamespace>Ancestry.Daisy.TestHelpers</RootNamespace>
+    <AssemblyName>Ancestry.Daisy.TestHelpers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,12 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -57,89 +51,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Component\Controllers\AccountController.cs" />
-    <Compile Include="Component\Controllers\TransactionController.cs" />
-    <Compile Include="Component\Controllers\UserController.cs" />
-    <Compile Include="Component\Domain\Account.cs" />
-    <Compile Include="Component\Domain\AccountType.cs" />
-    <Compile Include="Component\Domain\Transaction.cs" />
-    <Compile Include="Component\Domain\TransactionType.cs" />
-    <Compile Include="Component\Domain\User.cs" />
-    <Compile Include="Component\Executions.cs" />
-    <Compile Include="Component\Rules.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Rules.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Component\TestData.cs" />
+    <Compile Include="TestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TestData.resx</DependentUpon>
-    </Compile>
-    <Compile Include="TestObjects\MyRuleController.cs" />
-    <Compile Include="TestObjects\ParentObject.cs" />
-    <Compile Include="TestObjects\FakeRule.cs" />
-    <Compile Include="Unit\Utils\DaisyProgramTests.cs" />
-    <Compile Include="Unit\Language\LexerTests.cs" />
-    <Compile Include="Unit\Language\LookAheadTokenStream.cs" />
-    <Compile Include="Unit\Language\ParserTest.cs" />
-    <Compile Include="Unit\Language\PreprocessorTests.cs" />
-    <Compile Include="Unit\Language\WalksTests\DaisyAstPrinterTests.cs" />
-    <Compile Include="Unit\Language\WalksTests\DaisyDebugPrinterTests.cs" />
-    <Compile Include="Unit\Linking\DaisyLinkerTest.cs" />
-    <Compile Include="Unit\Linking\DaisyLinksTests.cs" />
-    <Compile Include="Unit\Rules\ReflectionRuleHandlerTests.cs" />
-    <Compile Include="Unit\Rules\MatchesAttributeTests.cs" />
-    <Compile Include="Unit\Rules\RuleSetTests.cs" />
-    <Compile Include="Unit\Rules\StaticAnalysisTests.cs" />
-    <Compile Include="Unit\Utils\StringExtentionsTests.cs" />
-    <Compile Include="Unit\Utils\TestHelperTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Daisy\Daisy.csproj">
-      <Project>{DE53DC38-3C58-4E77-B9E6-CC867AEEE802}</Project>
+      <Project>{de53dc38-3c58-4e77-b9e6-cc867aeee802}</Project>
       <Name>Daisy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TestHelpers\TestHelpers.csproj">
-      <Project>{60f3515b-d47c-42e2-9d02-64628a4ef4c5}</Project>
-      <Name>TestHelpers</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TestCode1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Code-f.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Component\Rules.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Rules.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestData.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TestData.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\UnusedAccounts.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\UserHasUnusedAccount.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\UserHasNoRecentTransactions.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\UserIsOverdrawn.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\UserHasUnusedMoneyMarket.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
