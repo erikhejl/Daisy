@@ -6,7 +6,7 @@ namespace Ancestry.Daisy.Rules
     using System.Text.RegularExpressions;
     using System.Linq;
 
-    using Monads.NET;
+    using Ancestry.Daisy.Utils;
 
     public class ReflectionRuleHandler : IRuleHandler
     {

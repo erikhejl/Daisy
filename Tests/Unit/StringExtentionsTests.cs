@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Tests.Unit
 {
+    using Ancestry.Daisy.Utils;
+
     using NUnit.Framework;
 
     [TestFixture,Category("Unit")]

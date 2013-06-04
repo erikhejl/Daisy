@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Monads.NET
+﻿namespace Ancestry.Daisy.Utils
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     internal static class Maybe
     {
 

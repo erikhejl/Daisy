@@ -1,4 +1,4 @@
-﻿namespace Ancestry.Daisy
+﻿namespace Ancestry.Daisy.Utils
 {
     using System.Collections.Generic;
     using System.Text;

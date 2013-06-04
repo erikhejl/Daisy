@@ -26,6 +26,7 @@
                 if(PreVisit(and))
                 {
                     Walk(and.Left);
+                    InfixVisit(and);
                     Walk(and.Right);
                     PostVisit(and);
                 }
@@ -36,6 +37,7 @@
                 if(PreVisit(or))
                 {
                     Walk(or.Left);
+                    InfixVisit(or);
                     Walk(or.Right);
                     PostVisit(or);
                 }
@@ -74,6 +76,9 @@
         protected virtual bool PreVisit(NotOperator node) { return true; }
         protected virtual bool PreVisit(GroupOperator node) { return true; }
         protected virtual bool PreVisit(DaisyAst node) { return true; }
+
+        protected virtual void InfixVisit(AndOperator node) {}
+        protected virtual void InfixVisit(OrOperator node) { }
 
         protected virtual void PostVisit(AndOperator node) {}
         protected virtual void PostVisit(OrOperator node) {}

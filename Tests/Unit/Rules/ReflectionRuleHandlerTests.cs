@@ -9,8 +9,7 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
     using System.Reflection;
 
     using Ancestry.Daisy.Rules;
-
-    using Monads.NET;
+    using Ancestry.Daisy.Utils;
 
     using NUnit.Framework;
 

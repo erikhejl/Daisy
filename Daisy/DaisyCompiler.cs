@@ -8,6 +8,7 @@ namespace Ancestry.Daisy
 {
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Linking;
+    using Ancestry.Daisy.Program;
     using Ancestry.Daisy.Rules;
 
     public class DaisyCompiler

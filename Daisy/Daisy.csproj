@@ -40,9 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DaisyCompiler.cs" />
-    <Compile Include="DaisyRuntimeException.cs" />
+    <Compile Include="Language\Walks\DaisyDebugPrinter.cs" />
+    <Compile Include="Program\DaisyRuntimeException.cs" />
     <Compile Include="Linking\DaisyLinks.cs" />
-    <Compile Include="DaisyProgram.cs" />
+    <Compile Include="Program\DaisyProgram.cs" />
     <Compile Include="Linking\DaisyLinker.cs" />
     <Compile Include="Linking\DaisyRuleLink.cs" />
     <Compile Include="Linking\FailedLinkException.cs" />
@@ -56,9 +57,11 @@
     <Compile Include="Language\AST\Statement.cs" />
     <Compile Include="Language\DaisyParser.cs" />
     <Compile Include="Language\Walks\DaisyAstPrinter.cs" />
-    <Compile Include="Language\Walks\StatementFinder.cs" />
     <Compile Include="Linking\LinkingError.cs" />
-    <Compile Include="Maybe.cs" />
+    <Compile Include="Program\ExecutionDebugInfo.cs" />
+    <Compile Include="Program\Execution.cs" />
+    <Compile Include="Utils\MultiMap.cs" />
+    <Compile Include="Utils\Maybe.cs" />
     <Compile Include="Rules\BaseReflectionHandler.cs" />
     <Compile Include="Rules\CannotExecuteRuleException.cs" />
     <Compile Include="Rules\ReflectionRuleHandler.cs" />
@@ -75,7 +78,7 @@
     <Compile Include="Rules\MatchingContext.cs" />
     <Compile Include="Rules\RuleSet.cs" />
     <Compile Include="Rules\StaticAnalysis.cs" />
-    <Compile Include="StringExtentions.cs" />
+    <Compile Include="Utils\StringExtentions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

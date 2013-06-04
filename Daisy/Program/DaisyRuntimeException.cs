@@ -1,4 +1,4 @@
-﻿namespace Ancestry.Daisy
+﻿namespace Ancestry.Daisy.Program
 {
     using System;
 

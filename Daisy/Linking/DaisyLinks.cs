@@ -4,7 +4,7 @@ namespace Ancestry.Daisy.Linking
     using System.Collections.Generic;
     using System.Linq;
 
-    using Monads.NET;
+    using Ancestry.Daisy.Utils;
 
     public class DaisyLinks 
     {

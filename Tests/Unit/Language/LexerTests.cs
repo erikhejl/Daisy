@@ -4,6 +4,7 @@
     using System.Linq;
 
     using Ancestry.Daisy.Language;
+    using Ancestry.Daisy.Utils;
 
     using NUnit.Framework;
 

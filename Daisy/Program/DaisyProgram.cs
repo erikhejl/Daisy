@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ancestry.Daisy
+﻿namespace Ancestry.Daisy.Program
 {
+    using System;
     using System.Dynamic;
+    using System.Runtime.Remoting.Contexts;
 
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
-    using Ancestry.Daisy.Language.Walks;
     using Ancestry.Daisy.Linking;
     using Ancestry.Daisy.Rules;
 
@@ -18,8 +13,6 @@ namespace Ancestry.Daisy
     {
         private readonly DaisyAst ast;
         private readonly DaisyLinks links;
-
-        public dynamic Context { get; private set; }
 
         public DaisyProgram(DaisyAst ast, DaisyLinks links)
         {
@@ -31,28 +24,29 @@ namespace Ancestry.Daisy
             }
         }
 
-        public bool Execute(T scope)
+        public Execution Execute(T scope)
         {
-            Context = new ExpandoObject();
-            return Execute(scope, ast.Root);
+            var execution = new Execution(ast);
+            execution.Result = Execute(scope, ast.Root, execution);
+            return execution;
         }
 
-        private bool Execute(object scope, IDaisyAstNode node)
+        private bool Execute(object scope, IDaisyAstNode node, Execution execution)
         {
             if(node is AndOperator)
             {
                 var and = node as AndOperator;
-                return Execute(scope, and.Left) && Execute(scope, and.Right);
+                return Execute(scope, and.Left, execution) && Execute(scope, and.Right, execution);
             }
             else if(node is OrOperator)
             {
                 var or = node as OrOperator;
-                return Execute(scope, or.Left) || Execute(scope, or.Right);
+                return Execute(scope, or.Left, execution) || Execute(scope, or.Right, execution);
             }
             else if(node is NotOperator)
             {
                 var not = node as NotOperator;
-                return !Execute(scope, not.Inner);
+                return !Execute(scope, not.Inner, execution);
             }
             else if(node is Statement)
             {
@@ -65,7 +59,12 @@ namespace Ancestry.Daisy
                         Scope = scope,
                         Statement = statement.Command,
                         Proceed = o => false,  //I don't know. False since there are no children?
-                        Context = Context
+                        Context = execution.Context
+                    });
+                execution.DebugInfo.AttachDebugInfo(statement, new DebugNode() {
+                        Scope = scope,
+                        Result = result,
+                        ScopeType = link.ScopeType
                     });
                 return result;
             }
@@ -81,21 +80,22 @@ namespace Ancestry.Daisy
                         Match = link.Match,
                         Scope = scope,
                         Statement = group.Command,
-                        Proceed = o => Execute(o,group.Root),
-                        Context = Context
+                        Proceed = o => Execute(o,@group.Root, execution),
+                        Context = execution.Context
+                    });
+                    execution.DebugInfo.AttachDebugInfo(group, new DebugNode() {
+                        Scope = scope,
+                        Result = result,
+                        ScopeType = link.ScopeType
                     });
                     return result;
                 } else
                 {
-                    var result = Execute(scope, group.Root);
+                    var result = Execute(scope, @group.Root, execution);
                     return result;
                 }
             }
-            else
-            {
-                throw new Exception("Don't know how to walk nodes of type: " + node.GetType());
-            }
-            return false;
+            throw new Exception("Don't know how to walk nodes of type: " + node.GetType());
         }
 
         internal static void SanityCheckLink(DaisyRuleLink link, object scope, string command)

@@ -40,7 +40,8 @@ namespace Ancestry.Daisy.Tests.Component
         public bool ItExecutesRules(string code, User data)
         {
             return DaisyCompiler.Compile<User>(code, rules)
-                .Execute(data);
+                .Execute(data)
+                .Result;
         }
     }
 }

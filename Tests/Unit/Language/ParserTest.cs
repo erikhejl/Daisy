@@ -4,6 +4,7 @@
 
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.Walks;
+    using Ancestry.Daisy.Utils;
 
     using NUnit.Framework;
 

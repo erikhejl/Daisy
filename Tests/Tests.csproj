@@ -87,6 +87,7 @@
     <Compile Include="Unit\Language\ParserTest.cs" />
     <Compile Include="Unit\Language\PreprocessorTests.cs" />
     <Compile Include="Unit\Language\WalksTests\DaisyAstPrinterTests.cs" />
+    <Compile Include="Unit\Language\WalksTests\DaisyDebugPrinterTests.cs" />
     <Compile Include="Unit\Linking\DaisyLinkerTest.cs" />
     <Compile Include="Unit\Linking\DaisyLinksTests.cs" />
     <Compile Include="Unit\Rules\ReflectionRuleHandlerTests.cs" />

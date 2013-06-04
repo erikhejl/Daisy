@@ -9,6 +9,7 @@ namespace Ancestry.Daisy.Tests.Unit
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
     using Ancestry.Daisy.Linking;
+    using Ancestry.Daisy.Program;
     using Ancestry.Daisy.Rules;
     using Ancestry.Daisy.Tests.TestObjects;
 
@@ -71,7 +72,7 @@ namespace Ancestry.Daisy.Tests.Unit
             AddLink(links, "t", i => true);
             AddLink(links, "f", i => false);
             var program = new DaisyProgram<int>(ast, links);
-            var result = program.Execute(1);
+            var result = program.Execute(1).Result;
             return result;
         }
 
@@ -86,7 +87,7 @@ namespace Ancestry.Daisy.Tests.Unit
             AddLink(links, "t", i => true);
             AddAggregateLink(links, "any");
             var program = new DaisyProgram<IEnumerable<int>>(ast, links);
-            var result = program.Execute(values.Split(',').Select(int.Parse));
+            var result = program.Execute(values.Split(',').Select(int.Parse)).Result;
             return result;
         }
 
