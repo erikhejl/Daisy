@@ -40,6 +40,27 @@ namespace Ancestry.Daisy.Tests.Unit.Linking
             Assert.AreEqual(match, linkFor.Match);
         }
 
+        [Test]
+        public void ItDoesNotLinkAnonymousGroups()
+        {
+            var match = new Regex("a").Match("a");
+            var rule = new Mock<IRuleHandler>();
+            rule.Setup(x => x.Matches(It.IsAny<MatchingContext>())).Returns(match);
+            rule.SetupGet(x => x.Name).Returns("Tennant");
+            rule.SetupGet(x => x.ScopeType).Returns(typeof(Int32));
+
+            var ruleSet = new RuleSet().Add(rule.Object);
+
+            var ast = new DaisyAst(new GroupOperator(null,new Statement("a")));
+
+            var load = new DaisyLinker(ast,ruleSet,typeof(int));
+
+            var links = load.Link();
+            var linkFor = links.RuleFor("a", typeof(int));
+            Assert.AreEqual("Tennant",linkFor.Handler.Name);
+            Assert.AreEqual(match, linkFor.Match);
+        }
+
         /*
         [Test]
         public void ItLinksAggregates()

@@ -34,6 +34,9 @@ namespace Ancestry.Daisy.Tests.Component
                 new TestCaseData(Rules.UserHasUnusedMoneyMarket, TestData.Ben)
                 .Returns(true)
                 .SetName("Has unused money market account"),
+                new TestCaseData(Rules.UserHasNonCheckingWithABalance, TestData.Ben)
+                .Returns(true)
+                .SetName("Has non checking account with a balance"),
             };
 
         [TestCaseSource("itExecutesRules")]

@@ -58,9 +58,16 @@
 
             protected override bool PreVisit(GroupOperator node)
             {
-                var nextScope = linker.Link(node.Command, scopes.Peek(),true);
-                if (nextScope == null) return false;
-                scopes.Push(nextScope);
+                if(node.HasCommand)
+                {
+                    var nextScope = linker.Link(node.Command, scopes.Peek(),true);
+                    if (nextScope == null) return false;
+                    scopes.Push(nextScope);
+                }
+                else
+                {
+                    scopes.Push(scopes.Peek());
+                }
                 return true;
             }
         }

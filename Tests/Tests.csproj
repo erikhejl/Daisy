@@ -141,6 +141,9 @@
   <ItemGroup>
     <None Include="Resources\UserHasUnusedMoneyMarket.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UserHasNonCheckingWithABalance.txt" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -61,6 +61,18 @@ namespace Ancestry.Daisy.Tests.Component {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has account
+        ///    NOT
+        ///        Balance is less than 0
+        ///        OR Type is Checking.
+        /// </summary>
+        internal static string UserHasNonCheckingWithABalance {
+            get {
+                return ResourceManager.GetString("UserHasNonCheckingWithABalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Active
         ///NOT Has Account
         ///    Has Transaction
@@ -87,7 +99,7 @@ namespace Ancestry.Daisy.Tests.Component {
         ///   Looks up a localized string similar to Is Active
         ///Has Account
         ///    Type is MoneyMarket
-        ///    NOT Has Transactions.
+        ///    NOT Has Transaction.
         /// </summary>
         internal static string UserHasUnusedMoneyMarket {
             get {

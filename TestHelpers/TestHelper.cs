@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Dynamic;
+    using System.Reflection;
     using System.Text.RegularExpressions;
 
     using Ancestry.Daisy.Rules;
@@ -13,12 +14,27 @@
 
     public class TestHelper
     {
-        public static InvokationResult Invoke<T>(Type controller, string methodName, T scope, string statement)
+
+        public static bool Matches(Type controller, string methodName, string statement)
+        {
+            var method = GetMethod(controller, methodName);
+            var ruleHandler = new ReflectionRuleHandler(method, controller);
+            return ruleHandler.Matches(new MatchingContext() {
+                    Statement = statement,
+                }).Success;
+        }
+
+        private static MethodInfo GetMethod(Type controller, string methodName)
         {
             var method = controller.GetMethod(methodName);
             if(method == null) throw new ArgumentException(string.Format("Cannot find method {0} on {1}", methodName, controller.GetType().Name));
-            var ruleHandler = new ReflectionRuleHandler(method, controller);
+            return method;
+        }
 
+        public static InvokationResult Invoke<T>(Type controller, string methodName, T scope, string statement)
+        {
+            var method = GetMethod(controller, methodName);
+            var ruleHandler = new ReflectionRuleHandler(method, controller);
             var invokationResult = new InvokationResult()
                 {
                     Context = new ExpandoObject(),
