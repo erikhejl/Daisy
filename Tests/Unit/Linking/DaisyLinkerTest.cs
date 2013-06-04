@@ -35,7 +35,7 @@ namespace Ancestry.Daisy.Tests.Unit.Linking
             var load = new DaisyLinker(ast,ruleSet,typeof(int));
 
             var links = load.Link();
-            var linkFor = links.RuleFor("Hello gov'nor");
+            var linkFor = links.RuleFor("Hello gov'nor", typeof(int));
             Assert.AreEqual("Tennant",linkFor.Handler.Name);
             Assert.AreEqual(match, linkFor.Match);
         }

@@ -80,7 +80,7 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
         [TestCase("R6","R6",9,Result = true, TestName = "It sets context")]
         public bool ItExecutesRules(string rule, string statement, int scope)
         {
-            var load = new Daisy.Rules.ReflectionRuleHandler(GetMethod(rule), typeof(TestRules));
+            var load = new ReflectionRuleHandler(GetMethod(rule), typeof(TestRules));
             var match = load.Matches(new MatchingContext() {
                     ScopeType = scope.GetType(),
                     Statement = statement

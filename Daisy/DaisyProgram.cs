@@ -57,7 +57,7 @@ namespace Ancestry.Daisy
             else if(node is Statement)
             {
                 var statement = node as Statement;
-                var link = links.RuleFor(statement.Command);
+                var link = links.RuleFor(statement.Command, scope.GetType());
                 if (link == null) throw new DaisyRuntimeException(string.Format("Expected link for '{0}', but none found", statement.Command));
                 SanityCheckLink(link, scope, statement.Command);
                 var result = link.Handler.Execute(new ExecutionContext() {
@@ -74,7 +74,7 @@ namespace Ancestry.Daisy
                 var group = node as GroupOperator;
                 if (group.HasCommand)
                 {
-                    var link = links.RuleFor(group.Command);
+                    var link = links.RuleFor(group.Command, scope.GetType());
                     if (link == null) throw new DaisyRuntimeException(string.Format("Expected link for '{0}', but none found", group.Command));
                     SanityCheckLink(link, scope, group.Command);
                     var result =  link.Handler.Execute(new ExecutionContext() {

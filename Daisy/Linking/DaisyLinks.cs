@@ -2,6 +2,7 @@ namespace Ancestry.Daisy.Linking
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Monads.NET;
 
@@ -14,21 +15,29 @@ namespace Ancestry.Daisy.Linking
             RootScopeType = rootScopeType;
         }
 
-        private Dictionary<string, DaisyRuleLink> ruleLinks = new Dictionary<string, DaisyRuleLink>();
+        private Dictionary<string,List<DaisyRuleLink>> ruleLinks = new Dictionary<string,List<DaisyRuleLink>>();
 
-        public DaisyRuleLink RuleFor(string statement)
+        public DaisyRuleLink RuleFor(string statement,Type scopeType)
         {
-            return ruleLinks.With(statement);
+            return ruleLinks.With(statement)
+                .With(x => x.FirstOrDefault(y => y.ScopeType.IsAssignableFrom(scopeType)));
         }
 
-        public bool HasRuleLink(string statement)
+        public bool HasRuleLink(string statement, Type scopeType)
         {
-            return ruleLinks.ContainsKey(statement);
+            return RuleFor(statement, scopeType) != null;
         }
         
         public void AddLink(DaisyRuleLink link)
         {
-            ruleLinks.Add(link.Statement, link);
+            if (RuleFor(link.Statement, link.ScopeType) != null) return;
+            var list = ruleLinks.With(link.Statement);
+            if(list == null)
+            {
+                list = new List<DaisyRuleLink>();
+                ruleLinks.Add(link.Statement, list);
+            }
+            list.Add(link);
         }
     }
 }
