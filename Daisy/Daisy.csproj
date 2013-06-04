@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Monads.NET">
-      <HintPath>..\packages\Monads.NET.1.0.3\lib\net40\Monads.NET.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +58,7 @@
     <Compile Include="Language\Walks\DaisyAstPrinter.cs" />
     <Compile Include="Language\Walks\StatementFinder.cs" />
     <Compile Include="Linking\LinkingError.cs" />
+    <Compile Include="Maybe.cs" />
     <Compile Include="Rules\BaseReflectionHandler.cs" />
     <Compile Include="Rules\CannotExecuteRuleException.cs" />
     <Compile Include="Rules\ReflectionRuleHandler.cs" />
@@ -78,9 +76,6 @@
     <Compile Include="Rules\RuleSet.cs" />
     <Compile Include="Rules\StaticAnalysis.cs" />
     <Compile Include="StringExtentions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

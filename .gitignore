@@ -21,10 +21,4 @@ _ReSharper*
 *.user
 *.vsmdi
 *.orig
-
-# Auto-generated content
-/Host/css/*.css
-/Host/js/contextvis*.js
-/Host/js/contextvis*.map
-/Host/js/templates.js
-/Tests/phantomjs.exe
+**.nupkg
