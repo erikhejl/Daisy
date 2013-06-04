@@ -15,16 +15,10 @@ namespace Ancestry.Daisy.Linking
         }
 
         private Dictionary<string, DaisyRuleLink> ruleLinks = new Dictionary<string, DaisyRuleLink>();
-        private Dictionary<string, DaisyAggregateLink> aggregateLinks = new Dictionary<string, DaisyAggregateLink>();
 
         public DaisyRuleLink RuleFor(string statement)
         {
             return ruleLinks.With(statement);
-        }
-
-        public DaisyAggregateLink AggregateFor(string statement)
-        {
-            return aggregateLinks.With(statement);
         }
 
         public bool HasRuleLink(string statement)
@@ -35,16 +29,6 @@ namespace Ancestry.Daisy.Linking
         public void AddLink(DaisyRuleLink link)
         {
             ruleLinks.Add(link.Statement, link);
-        }
-
-        public bool HasAggregateLink(string statement)
-        {
-            return aggregateLinks.ContainsKey(statement);
-        }
-        
-        public void AddLink(DaisyAggregateLink link)
-        {
-            aggregateLinks.Add(link.Statement, link);
         }
     }
 }

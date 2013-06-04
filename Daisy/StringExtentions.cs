@@ -4,7 +4,7 @@
     using System.Text;
     using System.IO;
 
-    public static class StringExtentions
+    internal static class StringExtentions
     {
         public static Stream ToStream(this string str)
         {

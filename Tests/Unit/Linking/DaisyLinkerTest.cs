@@ -40,6 +40,7 @@ namespace Ancestry.Daisy.Tests.Unit.Linking
             Assert.AreEqual(match, linkFor.Match);
         }
 
+        /*
         [Test]
         public void ItLinksAggregates()
         {
@@ -65,6 +66,7 @@ namespace Ancestry.Daisy.Tests.Unit.Linking
             Assert.AreEqual("Tennant",linkFor.Handler.Name);
             Assert.AreEqual(match, linkFor.Match);
         }
+        */
 
         [Test]
         public void ItDiesOnFailureToLink()

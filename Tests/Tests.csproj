@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Monads.NET">
       <HintPath>..\packages\Monads.NET.1.0.3\lib\net40\Monads.NET.dll</HintPath>
     </Reference>
@@ -90,7 +91,6 @@
     <Compile Include="Unit\Language\PreprocessorTests.cs" />
     <Compile Include="Unit\Language\WalksTests\DaisyAstPrinterTests.cs" />
     <Compile Include="Unit\Linking\DaisyLinkerTest.cs" />
-    <Compile Include="Unit\Rules\ReflectionAggregateHandlerTests.cs" />
     <Compile Include="Unit\Rules\ReflectionRuleHandlerTests.cs" />
     <Compile Include="Unit\Rules\MatchesAttributeTests.cs" />
     <Compile Include="Unit\Rules\RuleSetTests.cs" />

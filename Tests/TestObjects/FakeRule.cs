@@ -36,9 +36,11 @@ namespace Ancestry.Daisy.Tests.TestObjects
         }
 
         public string Name { get; private set; }
+
+        public Type TransformsScopeTo { get; set; }
     }
 
-    public class FakeAggregate<F,T> : IAggregateHandler
+    public class FakeAggregate<F,T> : IRuleHandler
     {
         private readonly string test;
 
@@ -60,9 +62,9 @@ namespace Ancestry.Daisy.Tests.TestObjects
 
         public Type TransformsScopeTo { get; private set; }
 
-        public bool Execute(ExecutionContext executionContext, Func<object, bool> proceed)
+        public bool Execute(ExecutionContext context)
         {
-            return ((IEnumerable<F>)executionContext.Scope).Any(x => proceed(x));
+            return ((IEnumerable<F>)context.Scope).Any(x => context.Proceed(x));
         }
     }
 }

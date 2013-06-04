@@ -8,5 +8,7 @@ namespace Ancestry.Daisy.Rules
         public string Statement { get; set; }
         public object Scope { get; set; }
         public Match Match { get; set; }
+        public Func<object,bool> Proceed { get; set; }
+        public dynamic Context { get; set; }
     }
 }

@@ -62,7 +62,6 @@
     <Compile Include="Language\Walks\StatementFinder.cs" />
     <Compile Include="Linking\LinkingError.cs" />
     <Compile Include="Rules\BaseReflectionHandler.cs" />
-    <Compile Include="Rules\ReflectionAggregateHandler.cs" />
     <Compile Include="Rules\CannotExecuteRuleException.cs" />
     <Compile Include="Rules\ReflectionRuleHandler.cs" />
     <Compile Include="Rules\MatchesAttribute.cs" />

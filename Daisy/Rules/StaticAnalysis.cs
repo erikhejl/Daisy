@@ -25,9 +25,7 @@ namespace Ancestry.Daisy.Rules
         public static bool IsRuleMethod(MethodInfo m)
         {
             return m.IsPublic
-                && m.ReturnType == typeof(bool) && m.DeclaringType != typeof(object)
-                && !IsAggregateMethod(m)
-                ;
+                && m.ReturnType == typeof(bool) && m.DeclaringType != typeof(object);
         }
 
         public static bool IsAggregateMethod(MethodInfo m)

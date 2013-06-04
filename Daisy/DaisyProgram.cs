@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy
 {
+    using System.Dynamic;
+
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
     using Ancestry.Daisy.Language.Walks;
@@ -16,6 +18,8 @@ namespace Ancestry.Daisy
     {
         private readonly DaisyAst ast;
         private readonly DaisyLinks links;
+
+        public dynamic Context { get; private set; }
 
         public DaisyProgram(DaisyAst ast, DaisyLinks links)
         {
@@ -29,6 +33,7 @@ namespace Ancestry.Daisy
 
         public bool Execute(T scope)
         {
+            Context = new ExpandoObject();
             return Execute(scope, ast.Root);
         }
 
@@ -58,7 +63,9 @@ namespace Ancestry.Daisy
                 var result = link.Handler.Execute(new ExecutionContext() {
                         Match = link.Match,
                         Scope = scope,
-                        Statement = statement.Command
+                        Statement = statement.Command,
+                        Proceed = o => false,  //I don't know. False since there are no children?
+                        Context = Context
                     });
                 return result;
             }
@@ -67,14 +74,16 @@ namespace Ancestry.Daisy
                 var group = node as GroupOperator;
                 if (group.HasCommand)
                 {
-                    var link = links.AggregateFor(group.Command);
+                    var link = links.RuleFor(group.Command);
                     if (link == null) throw new DaisyRuntimeException(string.Format("Expected link for '{0}', but none found", group.Command));
                     SanityCheckLink(link, scope, group.Command);
                     var result =  link.Handler.Execute(new ExecutionContext() {
                         Match = link.Match,
                         Scope = scope,
-                        Statement = group.Command
-                        },o => Execute(o,group.Root));
+                        Statement = group.Command,
+                        Proceed = o => Execute(o,group.Root),
+                        Context = Context
+                    });
                     return result;
                 } else
                 {
@@ -89,7 +98,7 @@ namespace Ancestry.Daisy
             return false;
         }
 
-        internal static void SanityCheckLink(Link link, object scope, string command)
+        internal static void SanityCheckLink(DaisyRuleLink link, object scope, string command)
         {
             if (link.Statement != command) throw new DaisyRuntimeException(string.Format("Bad link statement. Expected '{0}', but got '{1}'.",command,link.Statement));
             if (!link.ScopeType.IsInstanceOfType(scope)) throw new DaisyRuntimeException(string.Format("Bad link scope type. Expected {0}, but got {1}.", scope.GetType(), link.ScopeType));

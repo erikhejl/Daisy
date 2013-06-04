@@ -12,7 +12,6 @@ namespace Ancestry.Daisy.Rules
     public class RuleSet
     {
         private readonly List<IRuleHandler> rules = new List<IRuleHandler>();
-        private readonly List<IAggregateHandler> aggregates = new List<IAggregateHandler>();
 
         public RuleSet FromAssembly(Assembly assembly)
         {
@@ -31,12 +30,6 @@ namespace Ancestry.Daisy.Rules
             return this;
         }
 
-        public RuleSet Add(IAggregateHandler aggregateHandler)
-        {
-            aggregates.Add(aggregateHandler);
-            return this;
-        }
-
         public RuleSet FromAssemblyOf(Type type)
         {
             return FromAssembly(type.Assembly);
@@ -48,15 +41,9 @@ namespace Ancestry.Daisy.Rules
             rules.AddRange(methods
                 .Where(StaticAnalysis.IsRuleMethod)
                 .Select(m => new ReflectionRuleHandler(m,controllerType)));
-            aggregates.AddRange(methods
-                .Where(StaticAnalysis.IsAggregateMethod)
-                .Select(m => new ReflectionAggregateHandler(m,controllerType)));
             return this;
         }
 
         public IEnumerable<IRuleHandler> Rules { get { return rules; } }
-
-        public IEnumerable<IAggregateHandler> Aggregates { get { return aggregates; } }
-
     }
 }

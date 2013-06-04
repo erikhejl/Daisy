@@ -31,9 +31,9 @@ namespace Ancestry.Daisy.Linking
 
     public class MultipleLinksFoundError : LinkingError
     {
-        public IList<IHandler> MatchedRules { get; set; }
+        public IList<IRuleHandler> MatchedRules { get; set; }
 
-        public MultipleLinksFoundError(string statement, Type scopeType, IList<IHandler> matchedRules)
+        public MultipleLinksFoundError(string statement, Type scopeType, IList<IRuleHandler> matchedRules)
         {
             MatchedRules = matchedRules;
             Statement = statement;

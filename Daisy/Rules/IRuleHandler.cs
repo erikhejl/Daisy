@@ -8,21 +8,12 @@ namespace Ancestry.Daisy.Rules
 {
     using System.Text.RegularExpressions;
 
-    public interface IHandler
+    public interface IRuleHandler
     {
+        bool Execute(ExecutionContext context);
         Type ScopeType { get; }
         Match Matches(MatchingContext matchingContext);
         string Name { get; }
-    }
-
-    public interface IRuleHandler : IHandler
-    {
-        bool Execute(ExecutionContext context);
-    }
-
-    public interface IAggregateHandler :IHandler
-    {
         Type TransformsScopeTo { get; }
-        bool Execute(ExecutionContext executionContext, Func<object,bool> proceed);
     }
 }

@@ -125,7 +125,7 @@ namespace Ancestry.Daisy.Tests.Unit
         private void AddAggregateLink(DaisyLinks links, string statement)
         {
             var rule = new FakeAggregate<int,int>(statement);
-            links.AddLink(new DaisyAggregateLink() {
+            links.AddLink(new DaisyRuleLink() {
                 Match = rule.Matches(new MatchingContext(){Statement = statement}),
                 Handler = rule,
                 ScopeType = typeof(IEnumerable<int>),

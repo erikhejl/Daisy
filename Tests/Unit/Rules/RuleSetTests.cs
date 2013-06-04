@@ -31,26 +31,6 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
             Assert.That(load.Rules.OfType<Daisy.Rules.ReflectionRuleHandler>().Any(x => x.Name == "R1"));
         }
 
-        [Test]
-        public void ItAddsAggregatesFromAssembly()
-        {
-            var load = new RuleSet();
-            load.FromAssemblyOf(typeof(RuleSetTests));
-            Assert.That(load.Aggregates
-                .OfType<ReflectionAggregateHandler>()
-                .Any(x => x.Name == "R2"));
-        }
-
-        [Test]
-        public void ItAddsAggregatesFromType()
-        {
-            var load = new RuleSet();
-            load.FromController(typeof(MyRule));
-            Assert.That(load.Aggregates
-                .OfType<ReflectionAggregateHandler>()
-                .Any(x => x.Name == "R2"));
-        }
-
         public class MyRule : RuleController<string>
         {
             public bool R1() { return true; }

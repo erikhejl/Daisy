@@ -77,8 +77,7 @@
 
         private Type Link(string statement, Type scopeType, bool isGroup)
         {
-            var matches = isGroup ? FindAggregateMatches(statement,scopeType).ToList() 
-                : FindRuleMatches(statement, scopeType).ToList();
+            var matches = FindRuleMatches(statement, scopeType).ToList();
             if(matches.Count == 0)
             {
                 errors.Add(new NoLinksFoundError(statement, scopeType));
@@ -87,31 +86,18 @@
             if(matches.Count > 1)
             {
                 errors.Add(new MultipleLinksFoundError(statement, scopeType,matches
-                    .Select(x => ((IHandler)x.Rule) ?? x.Aggregate)
+                    .Select(x => x.Rule)
                     .ToArray()));
                 return null;
             }
             var match = matches.First();
-            if(isGroup)
-            {
-                links.AddLink(new DaisyAggregateLink() {
-                        Match = match.Match,
-                        Handler = match.Aggregate,
-                        Statement = statement,
-                        ScopeType = scopeType
-                    });
-                return match.Aggregate.TransformsScopeTo;
-            }
-            else
-            {
                 links.AddLink(new DaisyRuleLink() {
                         Match = match.Match,
                         Handler = match.Rule,
                         Statement = statement,
                         ScopeType = scopeType
                     });
-                return scopeType;
-            }
+                return isGroup ? match.Rule.TransformsScopeTo : scopeType;
         }
 
         private IEnumerable<RuleMatch> FindRuleMatches(string statement, Type scopeType)
@@ -128,27 +114,11 @@
                 .Where(x => x.Match != null && x.Match.Success);
         }
 
-        private IEnumerable<RuleMatch> FindAggregateMatches(string statement, Type scopeType)
-        {
-            return rules.Aggregates
-                .Where(x => scopeType.IsAssignableFrom(x.ScopeType))
-                .Select(x => new RuleMatch{
-                    Match = x.Matches(new MatchingContext() {
-                            Statement = statement,
-                            ScopeType = scopeType
-                        }),
-                    Aggregate = x
-                })
-                .Where(x => x.Match != null && x.Match.Success);
-        }
-
         private class RuleMatch
         {
             public Match Match { get; set; }
 
             public IRuleHandler Rule { get; set; }
-
-            public IAggregateHandler Aggregate { get; set; }
         }
     }
 }
