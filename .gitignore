@@ -1,0 +1,30 @@
+[Tt]estResults/*
+packages/*
+Build/*
+!packages/repositories.config
+testimpactdata.sdf
+
+[Bb]in/
+[Oo]bj/
+*.[Ll]og
+Backup*/
+*Upgrade*
+stylecopviolations*.xml
+
+.idea/
+
+# ReSharper is a .NET coding add-in
+_ReSharper*
+*.sln.DotSettings
+
+*.suo
+*.user
+*.vsmdi
+*.orig
+
+# Auto-generated content
+/Host/css/*.css
+/Host/js/contextvis*.js
+/Host/js/contextvis*.map
+/Host/js/templates.js
+/Tests/phantomjs.exe

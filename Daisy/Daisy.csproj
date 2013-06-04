@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DE53DC38-3C58-4E77-B9E6-CC867AEEE802}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ancestry.Daisy</RootNamespace>
+    <AssemblyName>Ancestry.Daisy</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Monads.NET">
+      <HintPath>..\packages\Monads.NET.1.0.3\lib\net40\Monads.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DaisyCompiler.cs" />
+    <Compile Include="DaisyRuntimeException.cs" />
+    <Compile Include="Linking\DaisyLinks.cs" />
+    <Compile Include="DaisyProgram.cs" />
+    <Compile Include="Linking\DaisyLinker.cs" />
+    <Compile Include="Linking\DaisyRuleLink.cs" />
+    <Compile Include="Linking\FailedLinkException.cs" />
+    <Compile Include="Language\Walks\AstTreeWalker.cs" />
+    <Compile Include="Language\AST\AndOperator.cs" />
+    <Compile Include="Language\DaisyAst.cs" />
+    <Compile Include="Language\AST\GroupOperator.cs" />
+    <Compile Include="Language\AST\NotOperator.cs" />
+    <Compile Include="Language\AST\OrOperator.cs" />
+    <Compile Include="Language\AST\IDaisyAstNode.cs" />
+    <Compile Include="Language\AST\Statement.cs" />
+    <Compile Include="Language\DaisyParser.cs" />
+    <Compile Include="Language\Walks\DaisyAstPrinter.cs" />
+    <Compile Include="Language\Walks\StatementFinder.cs" />
+    <Compile Include="Linking\LinkingError.cs" />
+    <Compile Include="Rules\BaseReflectionHandler.cs" />
+    <Compile Include="Rules\ReflectionAggregateHandler.cs" />
+    <Compile Include="Rules\CannotExecuteRuleException.cs" />
+    <Compile Include="Rules\ReflectionRuleHandler.cs" />
+    <Compile Include="Rules\MatchesAttribute.cs" />
+    <Compile Include="Rules\ExecutionContext.cs" />
+    <Compile Include="Rules\IRuleHandler.cs" />
+    <Compile Include="Rules\RuleController.cs" />
+    <Compile Include="Language\UnexpectedEndOfStreamException.cs" />
+    <Compile Include="Language\UnexpectedTokenException.cs" />
+    <Compile Include="Language\Lexer.cs" />
+    <Compile Include="Language\LookAheadTokenStream.cs" />
+    <Compile Include="Language\Preprocessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\MatchingContext.cs" />
+    <Compile Include="Rules\RuleSet.cs" />
+    <Compile Include="Rules\StaticAnalysis.cs" />
+    <Compile Include="StringExtentions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
