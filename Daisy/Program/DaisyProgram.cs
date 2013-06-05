@@ -26,7 +26,12 @@
 
         public Execution Execute(T scope)
         {
-            var execution = new Execution(ast);
+            return Execute(scope, new ExpandoObject());
+        }
+
+        public Execution Execute(T scope, dynamic context)
+        {
+            var execution = new Execution(ast,context);
             execution.Result = Execute(scope, ast.Root, execution);
             return execution;
         }

@@ -18,10 +18,10 @@ namespace Ancestry.Daisy.Program
 
         public dynamic Context { get; private set; }
 
-        internal Execution(DaisyAst ast)
+        internal Execution(DaisyAst ast, dynamic context)
         {
             DebugInfo = new ExecutionDebugInfo(ast);
-            Context = new ExpandoObject();
+            Context = context;
         }
     }
 }
