@@ -1,6 +1,7 @@
 ﻿namespace Ancestry.Daisy.Language
 {
     using Ancestry.Daisy.Language.AST;
+    using Ancestry.Daisy.Language.Preprocessing;
     using Ancestry.Daisy.Utils;
 
     public class DaisyParser
@@ -127,7 +128,8 @@
 
         public static DaisyAst Parse(string code)
         {
-            var llstream = new LookAheadStream<Token>(new Lexer(code.ToStream()).Lex());
+            var preProcessedStream = Preprocessor.Preprocess(code.ToStream());
+            var llstream = new LookAheadStream<Token>(new Lexer(preProcessedStream).Lex());
             var parser = new DaisyParser(llstream);
             return parser.Parse();
         }

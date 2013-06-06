@@ -2,10 +2,10 @@
 {
     using System.Text;
     using System.IO;
-
-    using Ancestry.Daisy.Language;
+    using Ancestry.Daisy.Utils;
 
     using NUnit.Framework;
+    using Ancestry.Daisy.Language.Preprocessing;
 
     [TestFixture,Category("Unit")]
     public class PreprocessorTests
@@ -16,9 +16,22 @@
         [TestCase("a\r\na\n", Result = "a\na\n", TestName = "It normalizes line endings")]
         public string ItPreProccesses(string input)
         {
-            var output = Preprocessor.Preprocess(new MemoryStream(Encoding.UTF8.GetBytes(input)));
+            var output = Preprocessor.Preprocess(input.ToStream());
             var str = new StreamReader(output).ReadToEnd();
             return str;
+        }
+
+        [TestCase("start\r\n\tone tab\r\n    four spaces\r\n\t\ttwo tabs")]
+        public void ItThrowsWhitespaceValidationExceptions(string input)
+        {
+            Assert.Throws<InconsistentWhitespaceException>(() =>
+                Preprocessor.Preprocess(input.ToStream()));
+        }
+        [TestCase("start\r\n\tone tab\r\n\t\ttwo tabs\r\n\t\ttwo tabs")]
+        public void ItDoesntThrowWhitespaceValidationExceptions(string input)
+        {
+            Assert.DoesNotThrow(() =>
+                Preprocessor.Preprocess(input.ToStream()));
         }
     }
 }
