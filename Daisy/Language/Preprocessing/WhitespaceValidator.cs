@@ -31,7 +31,7 @@ namespace Ancestry.Daisy.Language.Preprocessing
                 throw new InconsistentWhitespaceException
                 {
                     LineNumber = badLine.firstLine,
-                    Line = codelines[badLine.firstLine],
+                    Line = codelines[badLine.firstLine-1],
                     UnexpectedWhitespace = badLine.@char
                 };
             }

@@ -33,5 +33,27 @@
             Assert.DoesNotThrow(() =>
                 Preprocessor.Preprocess(input.ToStream()));
         }
+        [TestCase("start\r\n\tone tab\r\n\t\ttwo tabs\r\n\t\ttwo tabs\r\n one space")]
+        public void ItDoesntthrowOutOfBoundsExceptionOnLastItem(string input)
+        {
+            Assert.Throws<InconsistentWhitespaceException>(() =>
+                Preprocessor.Preprocess(input.ToStream()));
+        }
+        [TestCase("start\r\n\tone tab\r\n one space")]
+        public void ItReturnsTheCorrectLine(string input)
+        {
+            bool didThrow = false;
+            try
+            {
+                Preprocessor.Preprocess(input.ToStream());
+            }catch(InconsistentWhitespaceException e)
+            {
+                didThrow = true;
+                Assert.AreEqual(3, e.LineNumber);
+                Assert.AreEqual(" one space", e.Line);
+                Assert.AreEqual(' ', e.UnexpectedWhitespace);
+            }
+            Assert.IsTrue(didThrow);
+        }
     }
 }
