@@ -110,7 +110,7 @@
         private IEnumerable<RuleMatch> FindRuleMatches(string statement, Type scopeType)
         {
             return rules.Rules
-                .Where(x => scopeType.IsAssignableFrom(x.ScopeType))
+                .Where(x => x.ScopeType.IsAssignableFrom(scopeType))
                 .Select(x => new RuleMatch{
                     Match = x.Matches(new MatchingContext() {
                             Statement = statement,
