@@ -16,5 +16,11 @@ namespace Ancestry.Daisy.Tests.Component.Controllers
         {
             return DateTime.Now.AddYears(-yearsAgo) > Scope.Timestamp;
         }
+
+        [Matches("Amount is greater than (\\d+)")]
+        public bool AmountIsGreaterThan(int value)
+        {
+            return Scope.Amount > value;
+        }
     }
 }

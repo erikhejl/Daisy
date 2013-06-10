@@ -61,6 +61,19 @@ namespace Ancestry.Daisy.Tests.Component {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has Account
+        ///  Has Transaction
+        ///    Amount is greater 
+        ///Or Is Active
+        ///.
+        /// </summary>
+        internal static string DoubleGroupEndings {
+            get {
+                return ResourceManager.GetString("DoubleGroupEndings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Has account
         ///    NOT
         ///        Balance is less than 0

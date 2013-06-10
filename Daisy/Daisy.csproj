@@ -40,8 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DaisyCompiler.cs" />
-    <Compile Include="Language\Preprocessing\WhitespaceValidator.cs" />
+    <Compile Include="Language\InconsistentWhitespaceException.cs" />
     <Compile Include="Language\Walks\DaisyDebugPrinter.cs" />
+    <Compile Include="Language\WhitespaceEater.cs" />
     <Compile Include="Program\DaisyRuntimeException.cs" />
     <Compile Include="Linking\DaisyLinks.cs" />
     <Compile Include="Program\DaisyProgram.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Language\UnexpectedTokenException.cs" />
     <Compile Include="Language\Lexer.cs" />
     <Compile Include="Language\LookAheadTokenStream.cs" />
-    <Compile Include="Language\Preprocessing\Preprocessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\MatchingContext.cs" />
     <Compile Include="Rules\RuleSet.cs" />

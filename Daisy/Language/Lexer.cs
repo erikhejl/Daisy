@@ -1,5 +1,6 @@
 ﻿namespace Ancestry.Daisy.Language
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -27,9 +28,8 @@
     public class Lexer
     {
         private StreamReader reader;
+        private WhitespaceEater eater = new WhitespaceEater();
         private int lineNum = 0;
-        private int spaces = 0;
-        private int openGroups = 0;
 
         public Lexer(Stream stream)
         {
@@ -66,20 +66,7 @@
         internal IEnumerable<Token> InterpretLine(string line)
         {
             var tokens = new List<Token>();
-
-            var newSpaces = TrimLeadingSpaces(ref line);
-            if(newSpaces > spaces)
-            {
-                tokens.Add(new Token() { Kind = TokenKind.StartGroup, Line = lineNum});
-                openGroups++;
-            }
-            else if(newSpaces < spaces)
-            {
-                tokens.Add(new Token() { Kind = TokenKind.EndGroup, Line = lineNum});
-                openGroups--;
-            }
-
-            spaces = newSpaces;
+            line = InterpretSpaces(tokens,line);
 
             line = ChunkOff(line, "AND", tokens, TokenKind.And);
             line = ChunkOff(line, "OR", tokens, TokenKind.Or);
@@ -93,6 +80,18 @@
             return tokens;
         }
 
+        private string InterpretSpaces(List<Token> tokens, string line)
+        {
+            var morsel = eater.Eat(line, lineNum);
+            foreach (var blah in Enumerable.Range(0,Math.Abs(morsel.DeltaIndents)))
+            {
+                tokens.Add(new Token() {
+                    Kind = morsel.DeltaIndents > 0 ? TokenKind.StartGroup : TokenKind.EndGroup,
+                    Line = lineNum});
+            }
+            return morsel.Line;
+        }
+
         public IEnumerable<Token> Lex()
         {
             IEnumerable<Token> tokens = null;
@@ -103,7 +102,7 @@
                     yield return token;
                 }
             }
-            for(int i = 0; i < openGroups; ++i)
+            for(int i = 0; i < eater.OpenIndents; ++i)
             {
                 yield return new Token() { Kind = TokenKind.EndGroup, Line = lineNum };
             }

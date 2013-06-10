@@ -69,6 +69,33 @@
             AssertTokenStreamEquals(expected.ToArray(), tokens);
         }
 
+        [Test]
+        public void ItLexesMultpleCloseEndGroups()
+        {
+            var lexer = new Lexer("a\n\tb\n\t\tc\nd".ToStream());
+            var stream = lexer.Lex().ToArray();
+            AssertTokenStreamEquals(stream, new []
+                {
+                    new Token() { Kind = TokenKind.Statement, Value = "a"},
+                    new Token() { Kind = TokenKind.StartGroup },
+                    new Token() { Kind = TokenKind.Statement, Value = "b"},
+                    new Token() { Kind = TokenKind.StartGroup },
+                    new Token() { Kind = TokenKind.Statement, Value = "c"},
+                    new Token() { Kind = TokenKind.EndGroup },
+                    new Token() { Kind = TokenKind.EndGroup },
+                    new Token() { Kind = TokenKind.Statement, Value = "d"},
+                    new Token() { Kind = TokenKind.EOF},
+                });
+        }
+
+        [TestCase("a\n\tb\n c")]
+        [TestCase("a\n   b\n  c")]
+        public void ItDiesOnInconsistentWhitespace(string code)
+        {
+            var lexer = new Lexer(code.ToStream());
+            Assert.Catch<InconsistentWhitespaceException>(() =>lexer.Lex().ToArray());
+        }
+
         private readonly TestCaseData[] itLexesPrograms =
             {
                 new TestCaseData("a",new []

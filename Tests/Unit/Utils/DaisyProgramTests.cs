@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ancestry.Daisy.Tests.Unit
+﻿namespace Ancestry.Daisy.Tests.Unit.Utils
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
     using Ancestry.Daisy.Linking;

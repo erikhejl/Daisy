@@ -13,7 +13,7 @@ namespace Ancestry.Daisy.Tests.Component
     using NUnit.Framework;
 
     [TestFixture,Category("Component")]
-    public class Executions
+    public class DomainExecutions
     {
         private RuleSet rules;
 
