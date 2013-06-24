@@ -16,12 +16,12 @@ namespace Ancestry.Daisy.Program
 
         public ExecutionDebugInfo DebugInfo { get; private set; }
 
-        public dynamic Context { get; private set; }
+        public dynamic Attachments { get; private set; }
 
-        internal Execution(DaisyAst ast, dynamic context)
+        internal Execution(DaisyAst ast)
         {
+            Attachments = new ExpandoObject();
             DebugInfo = new ExecutionDebugInfo(ast);
-            Context = context;
         }
     }
 }

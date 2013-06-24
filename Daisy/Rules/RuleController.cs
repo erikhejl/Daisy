@@ -10,5 +10,6 @@
         public T Scope { get; set; }
 
         public dynamic Context { get; set; }
+        public dynamic Attachments { get; set; }
     }
 }

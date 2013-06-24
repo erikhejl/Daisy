@@ -66,6 +66,7 @@
     <Compile Include="Component\Domain\TransactionType.cs" />
     <Compile Include="Component\Domain\User.cs" />
     <Compile Include="Component\DomainExecutions.cs" />
+    <Compile Include="Component\EndToEndDaisyTest.cs" />
     <Compile Include="Component\Rules.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

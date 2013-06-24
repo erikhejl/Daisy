@@ -10,5 +10,6 @@ namespace Ancestry.Daisy.Rules
         public Match Match { get; set; }
         public Func<object,bool> Proceed { get; set; }
         public dynamic Context { get; set; }
+        public dynamic Attachments { get; set; }
     }
 }

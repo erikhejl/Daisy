@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Ancestry.Daisy</id>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
     <title>Daisy</title>
     <authors>Ancestry.com</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An ultra-light-weight rules engine. Daisy allows for rules to be written by domain experts, and only the sticky parts are written by developers. Essentially domain experts can create and re-use their own domain language.</description>
     <summary />
-    <releaseNotes>Allow more general controllers to link to more specific scopes.</releaseNotes>
+    <releaseNotes>ENHANCED TO SUPPORT ATTACHMENTS!!!!!!!</releaseNotes>
     <dependencies>
     </dependencies>
   </metadata>

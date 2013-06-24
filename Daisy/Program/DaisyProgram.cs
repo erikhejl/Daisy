@@ -31,27 +31,27 @@
 
         public Execution Execute(T scope, dynamic context)
         {
-            var execution = new Execution(ast,context);
-            execution.Result = Execute(scope, ast.Root, execution);
+            var execution = new Execution(ast);
+            execution.Result = Execute(scope, ast.Root, execution, context);
             return execution;
         }
 
-        private bool Execute(object scope, IDaisyAstNode node, Execution execution)
+        private bool Execute(object scope, IDaisyAstNode node, Execution execution, dynamic context)
         {
             if(node is AndOperator)
             {
                 var and = node as AndOperator;
-                return Execute(scope, and.Left, execution) && Execute(scope, and.Right, execution);
+                return Execute(scope, and.Left, execution, context) && Execute(scope, and.Right, execution, context);
             }
             else if(node is OrOperator)
             {
                 var or = node as OrOperator;
-                return Execute(scope, or.Left, execution) || Execute(scope, or.Right, execution);
+                return Execute(scope, or.Left, execution, context) || Execute(scope, or.Right, execution, context);
             }
             else if(node is NotOperator)
             {
                 var not = node as NotOperator;
-                return !Execute(scope, not.Inner, execution);
+                return !Execute(scope, not.Inner, execution, context);
             }
             else if(node is Statement)
             {
@@ -64,7 +64,8 @@
                         Scope = scope,
                         Statement = statement.Command,
                         Proceed = o => false,  //I don't know. False since there are no children?
-                        Context = execution.Context
+                        Context = context,
+                        Attachments = execution.Attachments
                     });
                 execution.DebugInfo.AttachDebugInfo(statement, new DebugNode() {
                         Scope = scope,
@@ -85,8 +86,9 @@
                         Match = link.Match,
                         Scope = scope,
                         Statement = group.Command,
-                        Proceed = o => Execute(o,@group.Root, execution),
-                        Context = execution.Context
+                        Proceed = o => Execute(o, @group.Root, execution, context),
+                        Context = context,
+                        Attachments = execution.Attachments
                     });
                     execution.DebugInfo.AttachDebugInfo(group, new DebugNode() {
                         Scope = scope,
@@ -96,7 +98,7 @@
                     return result;
                 } else
                 {
-                    var result = Execute(scope, @group.Root, execution);
+                    var result = Execute(scope, @group.Root, execution, context);
                     return result;
                 }
             }

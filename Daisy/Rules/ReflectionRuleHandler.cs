@@ -73,6 +73,7 @@ namespace Ancestry.Daisy.Rules
             }
             controller.GetType().GetProperty("Scope").SetValue(controller, invokationContext.Scope);
             controller.GetType().GetProperty("Context").SetValue(controller, invokationContext.Context);
+            controller.GetType().GetProperty("Attachments").SetValue(controller, invokationContext.Attachments);
             return controller;
         }
 

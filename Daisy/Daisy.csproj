@@ -62,6 +62,7 @@
     <Compile Include="Linking\LinkingError.cs" />
     <Compile Include="Program\ExecutionDebugInfo.cs" />
     <Compile Include="Program\Execution.cs" />
+    <Compile Include="Program\ExecutionResultType.cs" />
     <Compile Include="Utils\MultiMap.cs" />
     <Compile Include="Utils\Maybe.cs" />
     <Compile Include="Rules\BaseReflectionHandler.cs" />
