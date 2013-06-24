@@ -44,7 +44,7 @@ namespace Ancestry.Daisy.Rules
 
         internal static Regex MethodNameToRegex(string name)
         {
-            return new Regex(NormalizeMethodName(name),RegexOptions.IgnoreCase);
+            return new Regex("^"+NormalizeMethodName(name)+"$",RegexOptions.IgnoreCase);
         }
 
         internal static string NormalizeMethodName(string name)

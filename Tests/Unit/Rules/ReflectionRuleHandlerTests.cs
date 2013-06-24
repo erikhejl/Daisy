@@ -59,6 +59,7 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
         }
 
         [TestCase("R1","R1",Result = true)]
+        [TestCase("R1","R1AndSomeMore",Result = false)]
         [TestCase("R1","R2",Result = false)]
         public bool ItMatchesRules(string rule, string statement)
         {

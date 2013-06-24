@@ -65,7 +65,6 @@
     <Compile Include="Program\ExecutionResultType.cs" />
     <Compile Include="Utils\MultiMap.cs" />
     <Compile Include="Utils\Maybe.cs" />
-    <Compile Include="Rules\BaseReflectionHandler.cs" />
     <Compile Include="Rules\CannotExecuteRuleException.cs" />
     <Compile Include="Rules\ReflectionRuleHandler.cs" />
     <Compile Include="Rules\MatchesAttribute.cs" />
