@@ -55,6 +55,13 @@ namespace Ancestry.Daisy.Rules
                 ;
         }
 
+        /// <summary>
+        /// Converts a predicate of Func<object,bool> to
+        /// Func<Type,bool> of the given type.
+        /// </summary>
+        /// <param name="destType">Type of the dest.</param>
+        /// <param name="predicate">The predicate.</param>
+        /// <returns></returns>
         public static object ConvertPredicate(Type destType, Func<object,bool> predicate)
         {
             var scopeParam = Expression.Parameter(destType, "i");

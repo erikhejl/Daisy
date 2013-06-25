@@ -31,15 +31,18 @@
             return method;
         }
 
-        public static InvokationResult Invoke<T>(Type controller, string methodName, T scope, string statement)
+        public static InvokationResult Invoke<T>(Type controller, string methodName, T scope, string statement, Func<T, bool> proceed = null)
         {
+            if(proceed == null)
+                proceed = o => false;
             var method = GetMethod(controller, methodName);
             var ruleHandler = new ReflectionRuleHandler(method, controller);
             var invokationResult = new InvokationResult()
                 {
                     Context = new ExpandoObject(),
                     Statement = statement,
-                    MatchingCriteria = ruleHandler.GetMatchingCriteria()
+                    MatchingCriteria = ruleHandler.GetMatchingCriteria(),
+                    Attachments = new ExpandoObject()
                 };
             invokationResult.Match = ruleHandler.Matches(new MatchingContext() {
                     Statement = statement,
@@ -49,9 +52,10 @@
             invokationResult.Result = ruleHandler.Execute(new InvokationContext() {
                 Statement = statement,
                 Context = invokationResult.Context,
+                Attachments = invokationResult.Attachments,
                 Scope = scope,
                 Match = invokationResult.Match,
-                Proceed = o => false
+                Proceed = o => proceed((T)o)
             });
             return invokationResult;
         }
@@ -63,6 +67,8 @@
             public Match Match { get; set; }
 
             public dynamic Context { get; set; }
+
+            public dynamic Attachments { get; set; }
 
             public bool Result { get; set; }
 

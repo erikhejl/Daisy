@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Ancestry.Daisy.TestHelpers</id>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
     <title>Daisy Test Helpers</title>
     <authors>Ancestry.com</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Helpers for unit testing Daisy rules and definitions.</description>
     <summary />
-    <releaseNotes>Adding some stub rules</releaseNotes>
+    <releaseNotes>Adding proceed to invoke</releaseNotes>
     <dependencies>
       <dependency id ="Ancestry.Daisy"/>
     </dependencies>
