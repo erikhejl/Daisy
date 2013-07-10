@@ -31,15 +31,17 @@
             return method;
         }
 
-        public static InvokationResult Invoke<T>(Type controller, string methodName, T scope, string statement, Func<T, bool> proceed = null)
+        public static InvokationResult Invoke<T>(Type controller, string methodName, T scope,
+            string statement, dynamic context = null, Func<object, bool> proceed = null)
         {
             if(proceed == null)
                 proceed = o => false;
+            context = context ?? new ExpandoObject();
             var method = GetMethod(controller, methodName);
             var ruleHandler = new ReflectionRuleHandler(method, controller);
             var invokationResult = new InvokationResult()
                 {
-                    Context = new ExpandoObject(),
+                    Context = context,
                     Statement = statement,
                     MatchingCriteria = ruleHandler.GetMatchingCriteria(),
                     Attachments = new ExpandoObject()
@@ -55,7 +57,7 @@
                 Attachments = invokationResult.Attachments,
                 Scope = scope,
                 Match = invokationResult.Match,
-                Proceed = o => proceed((T)o)
+                Proceed = proceed
             });
             return invokationResult;
         }
