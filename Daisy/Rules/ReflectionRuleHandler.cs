@@ -126,7 +126,11 @@ namespace Ancestry.Daisy.Rules
                             + "{0} are available.",
                             context.Match.Groups.Count -1, Name));
                     }
-                    var obj = context.Match.Groups[ptrGroups++].Captures[0].Value;
+                    var obj = context.Match
+                        .Groups[ptrGroups++]
+                        .Captures
+                        .If(x => x.Count > 0)
+                        .With(x => x[0].Value);
                     objs.Add(Cast(obj, param, context));
                 }
             }

@@ -56,6 +56,12 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
             {
                 return Context != null;
             }
+
+            [Matches(@"I haz (an a+wesome )?cheeseburgers")]
+            public bool R7(string value)
+            {
+                return value == null;
+            }
         }
 
         [TestCase("R1","R1",Result = true)]
@@ -78,6 +84,7 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
         [TestCase("R4","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotExecuteRuleException), TestName = "It errors when cannot make parameter")]
         [TestCase("R5","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotExecuteRuleException), TestName = "It errors when cannot make parameter")]
         [TestCase("R6","R6",9,Result = true, TestName = "It sets context")]
+        [TestCase("R7","I haz cheeseburgers",1,Result = true, TestName = "It injects null for non-captured groups")]
         public bool ItExecutesRules(string rule, string statement, int scope)
         {
             var load = new ReflectionRuleHandler(GetMethod(rule), typeof(TestRules));
