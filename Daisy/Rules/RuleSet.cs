@@ -35,6 +35,11 @@ namespace Ancestry.Daisy.Rules
             return FromAssembly(type.Assembly);
         }
 
+        public RuleSet FromAssemblyOf<T>()
+        {
+            return FromAssemblyOf(typeof(T));
+        }
+
         public RuleSet FromController(Type controllerType)
         {
             var methods = controllerType.GetMethods(BindingFlags.Public | BindingFlags.Instance);
