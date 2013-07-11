@@ -2,7 +2,6 @@
 {
     using System;
     using System.Dynamic;
-    using System.Runtime.Remoting.Contexts;
 
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
@@ -24,34 +23,34 @@
             }
         }
 
-        public Execution Execute(T scope)
+        public IDaisyExecution Execute(T scope)
         {
             return Execute(scope, new ExpandoObject());
         }
 
-        public Execution Execute(T scope, dynamic context)
+        public IDaisyExecution Execute(T scope, dynamic context)
         {
-            var execution = new Execution(ast);
+            var execution = new DaisyExecution(ast);
             execution.Result = Execute(scope, ast.Root, execution, context);
             return execution;
         }
 
-        private bool Execute(object scope, IDaisyAstNode node, Execution execution, dynamic context)
+        private bool Execute(object scope, IDaisyAstNode node, DaisyExecution daisyExecution, dynamic context)
         {
             if(node is AndOperator)
             {
                 var and = node as AndOperator;
-                return Execute(scope, and.Left, execution, context) && Execute(scope, and.Right, execution, context);
+                return Execute(scope, and.Left, daisyExecution, context) && Execute(scope, and.Right, daisyExecution, context);
             }
             else if(node is OrOperator)
             {
                 var or = node as OrOperator;
-                return Execute(scope, or.Left, execution, context) || Execute(scope, or.Right, execution, context);
+                return Execute(scope, or.Left, daisyExecution, context) || Execute(scope, or.Right, daisyExecution, context);
             }
             else if(node is NotOperator)
             {
                 var not = node as NotOperator;
-                return !Execute(scope, not.Inner, execution, context);
+                return !Execute(scope, not.Inner, daisyExecution, context);
             }
             else if(node is Statement)
             {
@@ -65,9 +64,9 @@
                         Statement = statement.Command,
                         Proceed = o => false,  //I don't know. False since there are no children?
                         Context = context,
-                        Attachments = execution.Attachments
+                        Attachments = daisyExecution.Attachments
                     });
-                execution.DebugInfo.AttachDebugInfo(statement, new DebugNode() {
+                daisyExecution.DebugInfo.AttachDebugInfo(statement, new DebugNode() {
                         Scope = scope,
                         Result = result,
                         ScopeType = link.ScopeType
@@ -86,11 +85,11 @@
                         Match = link.Match,
                         Scope = scope,
                         Statement = group.Command,
-                        Proceed = o => Execute(o, @group.Root, execution, context),
+                        Proceed = o => Execute(o, @group.Root, daisyExecution, context),
                         Context = context,
-                        Attachments = execution.Attachments
+                        Attachments = daisyExecution.Attachments
                     });
-                    execution.DebugInfo.AttachDebugInfo(group, new DebugNode() {
+                    daisyExecution.DebugInfo.AttachDebugInfo(group, new DebugNode() {
                         Scope = scope,
                         Result = result,
                         ScopeType = link.ScopeType
@@ -98,7 +97,7 @@
                     return result;
                 } else
                 {
-                    var result = Execute(scope, @group.Root, execution, context);
+                    var result = Execute(scope, @group.Root, daisyExecution, context);
                     return result;
                 }
             }

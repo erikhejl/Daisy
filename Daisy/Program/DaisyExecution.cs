@@ -10,7 +10,14 @@ namespace Ancestry.Daisy.Program
 
     using Ancestry.Daisy.Language;
 
-    public class Execution
+    public interface IDaisyExecution
+    {
+        bool Result { get; }
+        ExecutionDebugInfo DebugInfo { get; }
+        dynamic Attachments { get; }
+    }
+
+    public class DaisyExecution : IDaisyExecution
     {
         public bool Result { get; internal set; }
 
@@ -18,7 +25,7 @@ namespace Ancestry.Daisy.Program
 
         public dynamic Attachments { get; private set; }
 
-        internal Execution(DaisyAst ast)
+        internal DaisyExecution(DaisyAst ast)
         {
             Attachments = new ExpandoObject();
             DebugInfo = new ExecutionDebugInfo(ast);
