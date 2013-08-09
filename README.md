@@ -25,9 +25,10 @@ This rule could be used in a manufacturing domain to assert that all widgets pas
 Daisy handles the boolean algebra and linking statements to functions. Domain experts write business rules in a language that not only makes sense to them, but they invent. Software engineers translate each statement into code their software understands.
 
 ###Why Use Daisy
--Simple to write, implement and deploy, it's about as lightweight a rules engine you'll ever use
--Domain adaptive. Daisy will work for nearly any domain you've got, since it let's you define the data model
--Open source. Openly available well tested source means you can always see what's happening under the covers
+
+*  Simple to write, implement and deploy, it's about as lightweight a rules engine you'll ever use
+*  Domain adaptive. Daisy will work for nearly any domain you've got, since it let's you define the data model
+*  Open source. Openly available well tested source means you can always see what's happening under the covers
 
 
 
@@ -132,8 +133,8 @@ public class UserController : StatementController<User>
 
 A statement controller has a number of methods, each of which maps to a bit of code that can match a line in Daisy. A statement controller also declares a type as a generic arguement. This type is the Scope, or the object that the rule is examining when a statement is called. Each statement may then access the scope through the inherited Scope property. Each public method that returns a bool in a statement controller is eligible to match Daisy lines. It is made up of two parts:
 
-1) Matching a Daisy line
-2) The method definition
+1.  Matching a Daisy line
+2.  The method definition
 
 ###Matching
 Statement controller methods may be annotated with the Matches attribute. This attribute specifies a regular expression that, is a line in the Daisy rule matches, the rule will execute. The regular expression may specify capture groups to be passed as paramters to the method. If there are capture groups, the regular expression must have the same number of captures as paramters in the method, and the method parameters must be either strings or ints.
@@ -166,9 +167,10 @@ The Daisy runtime will handle calling sub-statements when the proceed function i
 
 ###Invoking Daisy
 Daisy programs can be compiled by calling DaisyCompiler.Compile. This method requires:
-1) The type of the initial scope for a rule
-2) The Daisy code
-3) A StatementSet, which is the set of controllers/methods
+
+1.  The type of the initial scope for a rule
+2.  The Daisy code
+3.  A StatementSet, which is the set of controllers/methods
 
 The following example will compile a Daisy rule using all rules found in the current assembly:
 ```C#
