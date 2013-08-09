@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Tests.Component.Controllers
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.Tests.Component.Domain;
 
-    public class AccountController : RuleController<Account>
+    public class AccountController : StatementController<Account>
     {
         public bool HasTransaction(Func<Transaction,bool> proceed)
         {

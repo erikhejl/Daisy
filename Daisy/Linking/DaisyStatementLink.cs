@@ -3,9 +3,9 @@ namespace Ancestry.Daisy.Linking
     using System;
     using System.Text.RegularExpressions;
 
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
 
-    public class DaisyRuleLink 
+    public class DaisyStatementLink 
     {
         public Match Match { get; set; }
 
@@ -13,7 +13,7 @@ namespace Ancestry.Daisy.Linking
 
         public Type ScopeType { get; set; }
 
-        public IRuleHandler Handler { get; set; }
+        public IStatementHandler Handler { get; set; }
 
     }
 }

@@ -16,14 +16,14 @@ namespace Ancestry.Daisy.Tests.Unit.Linking
         [Test]
         public void ItFindsByType()
         {
-            var link = new DaisyRuleLink()
+            var link = new DaisyStatementLink()
                 {
                     Statement = "a",
                     ScopeType = typeof(int)
                 };
             var load = new DaisyLinks(typeof(int));
             load.AddLink(link);
-            Assert.IsNotNull(load.RuleFor("a",typeof(int)));
+            Assert.IsNotNull(load.StatementFor("a",typeof(int)));
         }
 
         private class MyClassA { }
@@ -33,20 +33,20 @@ namespace Ancestry.Daisy.Tests.Unit.Linking
         [Test]
         public void ItFindsByDerivableType()
         {
-            var link = new DaisyRuleLink()
+            var link = new DaisyStatementLink()
                 {
                     Statement = "a",
                     ScopeType = typeof(MyClassA)
                 };
             var load = new DaisyLinks(typeof(int));
             load.AddLink(link);
-            Assert.IsNotNull(load.RuleFor("a",typeof(MyClassB)));
+            Assert.IsNotNull(load.StatementFor("a",typeof(MyClassB)));
         }
 
         [Test]
         public void ItAllowsForDoubleLinking()
         {
-            var link = new DaisyRuleLink()
+            var link = new DaisyStatementLink()
                 {
                     Statement = "a",
                     ScopeType = typeof(int)
@@ -54,7 +54,7 @@ namespace Ancestry.Daisy.Tests.Unit.Linking
             var load = new DaisyLinks(typeof(int));
             load.AddLink(link);
             load.AddLink(link);
-            Assert.IsNotNull(load.RuleFor("a",typeof(int)));
+            Assert.IsNotNull(load.StatementFor("a",typeof(int)));
         }
 
     }

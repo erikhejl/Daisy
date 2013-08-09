@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Tests.Component.Controllers
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.Tests.Component.Domain;
 
-    public class UserController : RuleController<User>
+    public class UserController : StatementController<User>
     {
         public bool HasAccount(Func<Account,bool> procced)
         {

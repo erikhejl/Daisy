@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Tests.Unit.Utils
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.TestHelpers;
     using Ancestry.Daisy.Utils;
 
@@ -17,7 +17,7 @@ namespace Ancestry.Daisy.Tests.Unit.Utils
     [TestFixture]
     public class TestHelperTests
     {
-        private class MyRule1 : RuleController<int>
+        private class MyStatement1 : StatementController<int>
         {
             [Matches("Good boy")]
             public bool R1()
@@ -30,7 +30,7 @@ namespace Ancestry.Daisy.Tests.Unit.Utils
         [Test]
         public void ItInvokesFunctions()
         {
-            TestHelper.Invoke(typeof(MyRule1), "R1", 1, "Good boy")
+            TestHelper.Invoke(typeof(MyStatement1), "R1", 1, "Good boy")
                 .AssertMatched()
                 .AssertResult(true)
                 .AssertContextHas("didIt");
@@ -39,7 +39,7 @@ namespace Ancestry.Daisy.Tests.Unit.Utils
         [Test,NUnit.Framework.ExpectedException(typeof(AssertFailedException))]
         public void ItAssertsMatchFailures()
         {
-            TestHelper.Invoke(typeof(MyRule1), "R1", 1, "Bad boy")
+            TestHelper.Invoke(typeof(MyStatement1), "R1", 1, "Bad boy")
                 .AssertMatched()
                 ;
         }
@@ -47,7 +47,7 @@ namespace Ancestry.Daisy.Tests.Unit.Utils
         [Test,NUnit.Framework.ExpectedException(typeof(AssertFailedException))]
         public void ItAssertsResultWrong()
         {
-            TestHelper.Invoke(typeof(MyRule1), "R1", 2, "Bad boy")
+            TestHelper.Invoke(typeof(MyStatement1), "R1", 2, "Bad boy")
                 .AssertResult(true)
                 ;
         }

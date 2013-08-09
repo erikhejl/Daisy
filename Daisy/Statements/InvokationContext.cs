@@ -1,4 +1,4 @@
-namespace Ancestry.Daisy.Rules
+namespace Ancestry.Daisy.Statements
 {
     using System;
     using System.Text.RegularExpressions;

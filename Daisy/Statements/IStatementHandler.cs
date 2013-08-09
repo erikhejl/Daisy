@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ancestry.Daisy.Rules
+﻿namespace Ancestry.Daisy.Statements
 {
+    using System;
     using System.Text.RegularExpressions;
 
-    public interface IRuleHandler
+    public interface IStatementHandler
     {
         bool Execute(InvokationContext context);
         Type ScopeType { get; }

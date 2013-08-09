@@ -2,9 +2,10 @@
 {
     using System;
     using System.Linq;
-    using Ancestry.Daisy.Rules;
 
-    public class MyRuleController : RuleController<ParentObject>
+    using Ancestry.Daisy.Statements;
+
+    public class MyStatementController : StatementController<ParentObject>
     {
         [Matches("Number is greater than \\d+")]
         public bool NumberIsGreaterThan(int greaterThan)

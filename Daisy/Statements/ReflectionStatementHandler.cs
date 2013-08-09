@@ -1,4 +1,4 @@
-namespace Ancestry.Daisy.Rules
+namespace Ancestry.Daisy.Statements
 {
     using System;
     using System.Collections.Generic;
@@ -8,17 +8,17 @@ namespace Ancestry.Daisy.Rules
 
     using Ancestry.Daisy.Utils;
 
-    public class ReflectionRuleHandler : IRuleHandler
+    public class ReflectionStatementHandler : IStatementHandler
     {
-        public MethodInfo MethodInfo { get; set; }
+        public MethodInfo MethodInfo { get; private set; }
 
-        public Type ControllerType { get; set; }
+        public Type ControllerType { get; private set; }
 
         public Regex MatchingCriteria { get; private set; }
 
         public string Name { get { return MethodInfo.Name; } }
 
-        public ReflectionRuleHandler(MethodInfo methodInfo, Type controllerType)
+        public ReflectionStatementHandler(MethodInfo methodInfo, Type controllerType)
         {
             MethodInfo = methodInfo;
             ControllerType = controllerType;
@@ -63,8 +63,8 @@ namespace Ancestry.Daisy.Rules
             }
             catch
             {
-                throw new CannotExecuteRuleException(MethodInfo,
-                    string.Format("Cannot build rule {0} because it's controller could not be constructed.",
+                throw new CannotExecuteStatementException(MethodInfo,
+                    string.Format("Cannot build statement {0} because it's controller could not be constructed.",
                         MethodInfo.Name))
                     {
                         Scope = invokationContext.Scope,
@@ -85,7 +85,7 @@ namespace Ancestry.Daisy.Rules
             }
             catch(FormatException e)
             {
-                throw new CannotExecuteRuleException(MethodInfo,
+                throw new CannotExecuteStatementException(MethodInfo,
                     string.Format("Cannot convert '{0}' into {1}, to match parameter '{2}'",
                     obj, param.ParameterType, param.Name))
                     {
@@ -120,9 +120,9 @@ namespace Ancestry.Daisy.Rules
                 {
                     if(ptrGroups>=context.Match.Groups.Count)
                     {
-                        throw new CannotExecuteRuleException(
+                        throw new CannotExecuteStatementException(
                             MethodInfo,
-                            string.Format("Rule {1} has more parameters than captures available to it." 
+                            string.Format("Statement {1} has more parameters than captures available to it." 
                             + "{0} are available.",
                             context.Match.Groups.Count -1, Name));
                     }
@@ -136,17 +136,17 @@ namespace Ancestry.Daisy.Rules
             }
             if(objs.Count != parameters.Length)
             {
-                throw new CannotExecuteRuleException(
+                throw new CannotExecuteStatementException(
                     MethodInfo,
-                    string.Format("Rule {2} wants {0} parameters from statement," 
+                    string.Format("Statement {2} wants {0} parameters from statement," 
                     + " but only {1} could be matched.",
                     parameters.Length, objs.Count, Name));
             }
             if(ptrGroups < context.Match.Groups.Count)
             {
-                throw new CannotExecuteRuleException(
+                throw new CannotExecuteStatementException(
                     MethodInfo,
-                    string.Format("Rule {2} did not use all captures available to it." 
+                    string.Format("Statement {2} did not use all captures available to it." 
                     + "It used {0} but {1} are available.",
                     ptrGroups-1, context.Match.Groups.Count -1, Name));
             }

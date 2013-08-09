@@ -9,14 +9,14 @@ namespace Ancestry.Daisy
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Linking;
     using Ancestry.Daisy.Program;
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
 
     public class DaisyCompiler
     {
-        public static DaisyProgram<T> Compile<T>(string code, RuleSet rules)
+        public static DaisyProgram<T> Compile<T>(string code, StatementSet statements)
         {
             var ast = DaisyParser.Parse(code);
-            var linker = new DaisyLinker(ast, rules, typeof(T));
+            var linker = new DaisyLinker(ast, statements, typeof(T));
             var links = linker.Link();
             return new DaisyProgram<T>(ast, links);
         }

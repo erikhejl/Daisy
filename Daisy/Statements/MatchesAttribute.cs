@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ancestry.Daisy.Rules
+﻿namespace Ancestry.Daisy.Statements
 {
+    using System;
     using System.Text.RegularExpressions;
 
     [AttributeUsage(AttributeTargets.Method)]

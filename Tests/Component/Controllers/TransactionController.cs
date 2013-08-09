@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Tests.Component.Controllers
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.Tests.Component.Domain;
 
-    public class TransactionController : RuleController<Transaction>
+    public class TransactionController : StatementController<Transaction>
     {
         [Matches("Timestamp before (\\d+) years? ago")]
         public bool TimestampBeforeYearsAgo(int yearsAgo)

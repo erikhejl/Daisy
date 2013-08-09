@@ -15,27 +15,27 @@ namespace Ancestry.Daisy.Linking
             RootScopeType = rootScopeType;
         }
 
-        private Dictionary<string,List<DaisyRuleLink>> ruleLinks = new Dictionary<string,List<DaisyRuleLink>>();
+        private Dictionary<string,List<DaisyStatementLink>> statementLinks = new Dictionary<string,List<DaisyStatementLink>>();
 
-        public DaisyRuleLink RuleFor(string statement,Type scopeType)
+        public DaisyStatementLink StatementFor(string statement,Type scopeType)
         {
-            return ruleLinks.With(statement)
+            return statementLinks.With(statement)
                 .With(x => x.FirstOrDefault(y => y.ScopeType.IsAssignableFrom(scopeType)));
         }
 
-        public bool HasRuleLink(string statement, Type scopeType)
+        public bool HasStatementLink(string statement, Type scopeType)
         {
-            return RuleFor(statement, scopeType) != null;
+            return StatementFor(statement, scopeType) != null;
         }
         
-        public void AddLink(DaisyRuleLink link)
+        public void AddLink(DaisyStatementLink link)
         {
-            if (RuleFor(link.Statement, link.ScopeType) != null) return;
-            var list = ruleLinks.With(link.Statement);
+            if (StatementFor(link.Statement, link.ScopeType) != null) return;
+            var list = statementLinks.With(link.Statement);
             if(list == null)
             {
-                list = new List<DaisyRuleLink>();
-                ruleLinks.Add(link.Statement, list);
+                list = new List<DaisyStatementLink>();
+                statementLinks.Add(link.Statement, list);
             }
             list.Add(link);
         }

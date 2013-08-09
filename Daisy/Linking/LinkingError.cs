@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Linking
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
 
     public abstract class LinkingError
     {
@@ -25,25 +25,25 @@ namespace Ancestry.Daisy.Linking
 
         public override string ToString()
         {
-            return string.Format("No rules linked '{0}'", Statement);
+            return string.Format("No statements linked '{0}'", Statement);
         }
     }
 
     public class MultipleLinksFoundError : LinkingError
     {
-        public IList<IRuleHandler> MatchedRules { get; set; }
+        public IList<IStatementHandler> MatchedStatements { get; set; }
 
-        public MultipleLinksFoundError(string statement, Type scopeType, IList<IRuleHandler> matchedRules)
+        public MultipleLinksFoundError(string statement, Type scopeType, IList<IStatementHandler> matchedStatements)
         {
-            MatchedRules = matchedRules;
+            MatchedStatements = matchedStatements;
             Statement = statement;
             ScopeType = scopeType;
         }
 
         public override string ToString()
         {
-            return string.Format("Multiple rules linked to '{0}'. They are: {1}", Statement,
-                string.Join(",",MatchedRules.Select(x => x.Name)));
+            return string.Format("Multiple statements linked to '{0}'. They are: {1}", Statement,
+                string.Join(",",MatchedStatements.Select(x => x.Name)));
         }
     }
 }

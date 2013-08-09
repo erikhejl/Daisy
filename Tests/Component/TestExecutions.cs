@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Tests.Component
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.Tests.Component.Controllers;
     using Ancestry.Daisy.Tests.Component.Domain;
 
@@ -15,17 +15,17 @@ namespace Ancestry.Daisy.Tests.Component
     [TestFixture, Category("Component")]
     public class TestExecutions
     {
-        private RuleSet rules;
+        private StatementSet statements;
 
         [SetUp]
         public void Setup()
         {
-            rules = new RuleSet().FromAssemblyOf(typeof(UserController));
+            statements = new StatementSet().FromAssemblyOf(typeof(UserController));
         }
 
-        private TestCaseData[] itExecutesRules =
+        private TestCaseData[] itExecutesStatements =
             {
-                new TestCaseData(Rules.DoubleGroupEndings, new User()
+                new TestCaseData(Statements.DoubleGroupEndings, new User()
                     {
                         Accounts = new List<Account>()
                             {
@@ -46,10 +46,10 @@ namespace Ancestry.Daisy.Tests.Component
                 .SetName("It works with or groups"),
             };
 
-        [TestCaseSource("itExecutesRules")]
-        public bool ItExecutesRules(string code, User data)
+        [TestCaseSource("itExecutesStatements")]
+        public bool ItExecutesStatements(string code, User data)
         {
-            var exec = DaisyCompiler.Compile<User>(code, rules).Execute(data);
+            var exec = DaisyCompiler.Compile<User>(code, statements).Execute(data);
             return exec.Result;
         }
     }

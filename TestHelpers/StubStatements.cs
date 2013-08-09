@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.TestHelpers
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
 
-    public class StubRules<T> : RuleController<T>
+    public class StubStatements<T> : StatementController<T>
     {
         public bool t()
         {
@@ -21,7 +21,7 @@ namespace Ancestry.Daisy.TestHelpers
         }
     }
 
-    public class StubRules : RuleController<int>
+    public class StubStatements : StatementController<int>
     {
         public bool odd()
         {

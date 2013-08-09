@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ancestry.Daisy.Tests.Unit.Rules
+﻿namespace Ancestry.Daisy.Tests.Unit.Statements
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
 
     using NUnit.Framework;
 

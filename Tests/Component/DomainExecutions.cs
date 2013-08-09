@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Tests.Component
 {
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.Tests.Component.Controllers;
     using Ancestry.Daisy.Tests.Component.Domain;
 
@@ -15,34 +15,34 @@ namespace Ancestry.Daisy.Tests.Component
     [TestFixture,Category("Component")]
     public class DomainExecutions
     {
-        private RuleSet rules;
+        private StatementSet statements;
 
         [SetUp]
         public void Setup()
         {
-            rules = new RuleSet().FromAssemblyOf(typeof(UserController));
+            statements = new StatementSet().FromAssemblyOf(typeof(UserController));
         }
 
-        private TestCaseData[] itExecutesRules =
+        private TestCaseData[] itExecutesStatments =
             {
-                new TestCaseData(Rules.UserHasNoRecentTransactions, TestData.Ben)
+                new TestCaseData(Statements.UserHasNoRecentTransactions, TestData.Ben)
                 .Returns(false)
                 .SetName("Has no recent transaction"),
-                new TestCaseData(Rules.UserIsOverdrawnOnChecking, TestData.Ben)
+                new TestCaseData(Statements.UserIsOverdrawnOnChecking, TestData.Ben)
                 .Returns(true)
                 .SetName("Is overdrawn on checking"),
-                new TestCaseData(Rules.UserHasUnusedMoneyMarket, TestData.Ben)
+                new TestCaseData(Statements.UserHasUnusedMoneyMarket, TestData.Ben)
                 .Returns(true)
                 .SetName("Has unused money market account"),
-                new TestCaseData(Rules.UserHasNonCheckingWithABalance, TestData.Ben)
+                new TestCaseData(Statements.UserHasNonCheckingWithABalance, TestData.Ben)
                 .Returns(true)
                 .SetName("Has non checking account with a balance"),
             };
 
-        [TestCaseSource("itExecutesRules")]
-        public bool ItExecutesRules(string code, User data)
+        [TestCaseSource("itExecutesStatments")]
+        public bool ItExecutesStatements(string code, User data)
         {
-            return DaisyCompiler.Compile<User>(code, rules)
+            return DaisyCompiler.Compile<User>(code, statements)
                 .Execute(data)
                 .Result;
         }

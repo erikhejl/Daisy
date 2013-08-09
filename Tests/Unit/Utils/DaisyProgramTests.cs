@@ -8,7 +8,7 @@
     using Ancestry.Daisy.Language.AST;
     using Ancestry.Daisy.Linking;
     using Ancestry.Daisy.Program;
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.Tests.TestObjects;
 
     using NUnit.Framework;
@@ -94,7 +94,7 @@
         public void ItSanityChecksLinksForStatementEquality()
         {
             var ex = Assert.Catch<DaisyRuntimeException>(() =>
-                DaisyProgram<int>.SanityCheckLink(new DaisyRuleLink() { Statement = "a" }, null, "b"));
+                DaisyProgram<int>.SanityCheckLink(new DaisyStatementLink() { Statement = "a" }, null, "b"));
             Assert.That(ex.Message.Contains("statement"));
         }
 
@@ -102,7 +102,7 @@
         public void ItSanityChecksLinksForScopeConsistency()
         {
             var ex = Assert.Catch<DaisyRuntimeException>(() =>
-                DaisyProgram<int>.SanityCheckLink(new DaisyRuleLink() {
+                DaisyProgram<int>.SanityCheckLink(new DaisyStatementLink() {
                         Statement = "a",
                         ScopeType = typeof(int)
                     },
@@ -110,25 +110,25 @@
             Assert.That(ex.Message.Contains("scope"));
         }
 
-        public void AddLink(DaisyLinks links, string statement, Func<int,bool> predicate)
+        public void AddLink(DaisyLinks links, string rawStatement, Func<int,bool> predicate)
         {
-            var rule = new FakeRule(statement, predicate);
-            links.AddLink(new DaisyRuleLink() {
-                Match = rule.Matches(new MatchingContext(){Statement = statement}),
-                Handler = rule,
+            var statement = new FakeStatement(rawStatement, predicate);
+            links.AddLink(new DaisyStatementLink() {
+                Match = statement.Matches(new MatchingContext(){Statement = rawStatement}),
+                Handler = statement,
                 ScopeType = typeof(int),
-                Statement = statement
+                Statement = rawStatement
             });
         }
 
-        private void AddAggregateLink(DaisyLinks links, string statement)
+        private void AddAggregateLink(DaisyLinks links, string rawStatement)
         {
-            var rule = new FakeAggregate<int,int>(statement);
-            links.AddLink(new DaisyRuleLink() {
-                Match = rule.Matches(new MatchingContext(){Statement = statement}),
-                Handler = rule,
+            var statement = new FakeAggregate<int,int>(rawStatement);
+            links.AddLink(new DaisyStatementLink() {
+                Match = statement.Matches(new MatchingContext(){Statement = rawStatement}),
+                Handler = statement,
                 ScopeType = typeof(IEnumerable<int>),
-                Statement = statement
+                Statement = rawStatement
             });
         }
     }

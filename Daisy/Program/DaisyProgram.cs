@@ -6,7 +6,7 @@
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
     using Ancestry.Daisy.Linking;
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
 
     public class DaisyProgram<T>
     {
@@ -55,7 +55,7 @@
             else if(node is Statement)
             {
                 var statement = node as Statement;
-                var link = links.RuleFor(statement.Command, scope.GetType());
+                var link = links.StatementFor(statement.Command, scope.GetType());
                 if (link == null) throw new DaisyRuntimeException(string.Format("Expected link for '{0}', but none found", statement.Command));
                 SanityCheckLink(link, scope, statement.Command);
                 var result = link.Handler.Execute(new InvokationContext() {
@@ -78,7 +78,7 @@
                 var group = node as GroupOperator;
                 if (group.HasCommand)
                 {
-                    var link = links.RuleFor(group.Command, scope.GetType());
+                    var link = links.StatementFor(group.Command, scope.GetType());
                     if (link == null) throw new DaisyRuntimeException(string.Format("Expected link for '{0}', but none found", group.Command));
                     SanityCheckLink(link, scope, group.Command);
                     var result =  link.Handler.Execute(new InvokationContext() {
@@ -104,7 +104,7 @@
             throw new Exception("Don't know how to walk nodes of type: " + node.GetType());
         }
 
-        internal static void SanityCheckLink(DaisyRuleLink link, object scope, string command)
+        internal static void SanityCheckLink(DaisyStatementLink link, object scope, string command)
         {
             if (link.Statement != command) throw new DaisyRuntimeException(string.Format("Bad link statement. Expected '{0}', but got '{1}'.",command,link.Statement));
             if (!link.ScopeType.IsInstanceOfType(scope)) throw new DaisyRuntimeException(string.Format("Bad link scope type. Expected {0}, but got {1}.", scope.GetType(), link.ScopeType));

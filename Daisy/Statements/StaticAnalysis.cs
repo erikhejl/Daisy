@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ancestry.Daisy.Rules
+﻿namespace Ancestry.Daisy.Statements
 {
+    using System;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
 
@@ -16,13 +12,13 @@ namespace Ancestry.Daisy.Rules
             public Type ChildScopeType { get; set; }
         }
 
-        public static bool IsRuleController(Type type)
+        public static bool IsStatementController(Type type)
         {
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(RuleController<>)) return true;
-            return type.BaseType != null && IsRuleController(type.BaseType);
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(StatementController<>)) return true;
+            return type.BaseType != null && IsStatementController(type.BaseType);
         }
 
-        public static bool IsRuleMethod(MethodInfo m)
+        public static bool IsStatementMethod(MethodInfo m)
         {
             return m.IsPublic
                 && m.ReturnType == typeof(bool) && m.DeclaringType != typeof(object);

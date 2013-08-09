@@ -8,15 +8,15 @@ namespace Ancestry.Daisy.Tests.TestObjects
 {
     using System.Text.RegularExpressions;
 
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
 
-    public class FakeRule : IRuleHandler
+    public class FakeStatement : IStatementHandler
     {
         private readonly string test;
 
         private readonly Func<int, bool> predicate;
 
-        public FakeRule(string test, Func<int,bool> predicate)
+        public FakeStatement(string test, Func<int,bool> predicate)
         {
             this.test = test;
             this.predicate = predicate;
@@ -40,7 +40,7 @@ namespace Ancestry.Daisy.Tests.TestObjects
         public Type TransformsScopeTo { get; set; }
     }
 
-    public class FakeAggregate<F,T> : IRuleHandler
+    public class FakeAggregate<F,T> : IStatementHandler
     {
         private readonly string test;
 

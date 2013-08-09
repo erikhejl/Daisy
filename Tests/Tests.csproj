@@ -67,10 +67,10 @@
     <Compile Include="Component\Domain\User.cs" />
     <Compile Include="Component\DomainExecutions.cs" />
     <Compile Include="Component\EndToEndDaisyTest.cs" />
-    <Compile Include="Component\Rules.Designer.cs">
+    <Compile Include="Component\Statements.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Rules.resx</DependentUpon>
+      <DependentUpon>Statements.resx</DependentUpon>
     </Compile>
     <Compile Include="Component\TestData.cs" />
     <Compile Include="Component\TestExecutions.cs" />
@@ -80,9 +80,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestData.resx</DependentUpon>
     </Compile>
-    <Compile Include="TestObjects\MyRuleController.cs" />
+    <Compile Include="TestObjects\MyStatementController.cs" />
     <Compile Include="TestObjects\ParentObject.cs" />
-    <Compile Include="TestObjects\FakeRule.cs" />
+    <Compile Include="TestObjects\FakeStatement.cs" />
     <Compile Include="Unit\Language\WhitespaceEaterTests.cs" />
     <Compile Include="Unit\Utils\DaisyProgramTests.cs" />
     <Compile Include="Unit\Language\LexerTests.cs" />
@@ -92,10 +92,10 @@
     <Compile Include="Unit\Language\WalksTests\DaisyDebugPrinterTests.cs" />
     <Compile Include="Unit\Linking\DaisyLinkerTest.cs" />
     <Compile Include="Unit\Linking\DaisyLinksTests.cs" />
-    <Compile Include="Unit\Rules\ReflectionRuleHandlerTests.cs" />
-    <Compile Include="Unit\Rules\MatchesAttributeTests.cs" />
-    <Compile Include="Unit\Rules\RuleSetTests.cs" />
-    <Compile Include="Unit\Rules\StaticAnalysisTests.cs" />
+    <Compile Include="Unit\Statements\ReflectionRuleHandlerTests.cs" />
+    <Compile Include="Unit\Statements\MatchesAttributeTests.cs" />
+    <Compile Include="Unit\Statements\StatementSetTests.cs" />
+    <Compile Include="Unit\Statements\StaticAnalysisTests.cs" />
     <Compile Include="Unit\Utils\StringExtentionsTests.cs" />
     <Compile Include="Unit\Utils\TestHelperTests.cs" />
   </ItemGroup>
@@ -119,9 +119,9 @@
     <None Include="Resources\Code-f.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Component\Rules.resx">
+    <EmbeddedResource Include="Component\Statements.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Rules.Designer.cs</LastGenOutput>
+      <LastGenOutput>Statements.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="TestData.resx">

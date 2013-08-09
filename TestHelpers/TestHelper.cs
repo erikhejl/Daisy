@@ -6,7 +6,7 @@
     using System.Reflection;
     using System.Text.RegularExpressions;
 
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,8 +18,8 @@
         public static bool Matches(Type controller, string methodName, string statement)
         {
             var method = GetMethod(controller, methodName);
-            var ruleHandler = new ReflectionRuleHandler(method, controller);
-            return ruleHandler.Matches(new MatchingContext() {
+            var statementHandler = new ReflectionStatementHandler(method, controller);
+            return statementHandler.Matches(new MatchingContext() {
                     Statement = statement,
                 }).Success;
         }
@@ -38,20 +38,20 @@
                 proceed = o => false;
             context = context ?? new ExpandoObject();
             var method = GetMethod(controller, methodName);
-            var ruleHandler = new ReflectionRuleHandler(method, controller);
+            var statementHandler = new ReflectionStatementHandler(method, controller);
             var invokationResult = new InvokationResult()
                 {
                     Context = context,
                     Statement = statement,
-                    MatchingCriteria = ruleHandler.GetMatchingCriteria(),
+                    MatchingCriteria = statementHandler.GetMatchingCriteria(),
                     Attachments = new ExpandoObject()
                 };
-            invokationResult.Match = ruleHandler.Matches(new MatchingContext() {
+            invokationResult.Match = statementHandler.Matches(new MatchingContext() {
                     Statement = statement,
                     ScopeType = typeof(T)
                 });
             if (!invokationResult.Matched) return invokationResult;
-            invokationResult.Result = ruleHandler.Execute(new InvokationContext() {
+            invokationResult.Result = statementHandler.Execute(new InvokationContext() {
                 Statement = statement,
                 Context = invokationResult.Context,
                 Attachments = invokationResult.Attachments,

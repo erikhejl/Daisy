@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ancestry.Daisy.Tests.Unit.Rules
+﻿namespace Ancestry.Daisy.Tests.Unit.Statements
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
 
-    using Ancestry.Daisy.Rules;
+    using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.Utils;
 
     using NUnit.Framework;
 
     [TestFixture,Category("Unit")]
-    public class ReflectionRuleHandlerTests
+    public class ReflectionStatementHandlerTests
     {
         [TestCase("IsResidence",Result = "Is\\s+Residence")]
         public string ItNormalizesMethodNames(string name)
         {
-            return ReflectionRuleHandler.NormalizeMethodName(name);
+            return ReflectionStatementHandler.NormalizeMethodName(name);
         }
 
-        private class TestRules : RuleController<int>
+        private class TestStatements : StatementController<int>
         {
             public bool R1()
             {
@@ -67,63 +64,63 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
         [TestCase("R1","R1",Result = true)]
         [TestCase("R1","R1AndSomeMore",Result = false)]
         [TestCase("R1","R2",Result = false)]
-        public bool ItMatchesRules(string rule, string statement)
+        public bool ItMatchesStatements(string statment, string statement)
         {
-            var m = GetMethod(rule);
-            var load = new Daisy.Rules.ReflectionRuleHandler(m, typeof(TestRules));
+            var m = GetMethod(statment);
+            var load = new ReflectionStatementHandler(m, typeof(TestStatements));
             var match = load.Matches(new MatchingContext() {
                     Statement = statement
                 });
             return match.Let(x => x.Success,false);
         }
 
-        [TestCase("R1","R1",1,Result = true, TestName = "It returns result of rule")]
+        [TestCase("R1","R1",1,Result = true, TestName = "It returns result of statment")]
         [TestCase("R2","R2",9,Result = true, TestName = "It sets scope")]
         [TestCase("R2","R2",8,Result = false, TestName = "It sets scope. Inverse")]
         [TestCase("R3","I haz 2 cheeseburgers",2,Result = true, TestName = "It sets parameter values")]
-        [TestCase("R4","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotExecuteRuleException), TestName = "It errors when cannot make parameter")]
-        [TestCase("R5","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotExecuteRuleException), TestName = "It errors when cannot make parameter")]
+        [TestCase("R4","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotExecuteStatementException), TestName = "It errors when cannot make parameter")]
+        [TestCase("R5","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotExecuteStatementException), TestName = "It errors when cannot make parameter")]
         [TestCase("R6","R6",9,Result = true, TestName = "It sets context")]
         [TestCase("R7","I haz cheeseburgers",1,Result = true, TestName = "It injects null for non-captured groups")]
-        public bool ItExecutesRules(string rule, string statement, int scope)
+        public bool ItExecutesStatements(string statement, string rawStatement, int scope)
         {
-            var load = new ReflectionRuleHandler(GetMethod(rule), typeof(TestRules));
+            var load = new ReflectionStatementHandler(GetMethod(statement), typeof(TestStatements));
             var match = load.Matches(new MatchingContext() {
                     ScopeType = scope.GetType(),
-                    Statement = statement
+                    Statement = rawStatement
 
                 });
             Assert.True(match.Success);
             return load.Execute(new InvokationContext() {
-                    Statement = statement,
+                    Statement = rawStatement,
                     Scope = scope,
                     Match = match,
                     Context = new object(),
                 });
         }
 
-        private MethodInfo GetMethod(string ruleName)
+        private MethodInfo GetMethod(string statementName)
         {
-            return typeof(TestRules).GetMethod(ruleName);
+            return typeof(TestStatements).GetMethod(statementName);
         }
 
-        [TestCase("R1", "R1", "1,2,3,4", 2, Result = true, TestName = "It returns result of rule")]
+        [TestCase("R1", "R1", "1,2,3,4", 2, Result = true, TestName = "It returns result of statment")]
         [TestCase("R1", "R1", "1,3,5", 3, Result = false, TestName = "It sets scope. Inverse")]
         [TestCase("R2", "I haz 10 cheeseburgers", "1,2,3",2 , Result = true, TestName = "It sets parameter values")]
-        [TestCase("R3", "I haz 10 cheeseburgers", "1", 1, ExpectedException = typeof(CannotExecuteRuleException), TestName = "It errors when cannot make parameter")] //too few
-        [TestCase("R4", "I haz 10 cheeseburgers", "1", 1, ExpectedException = typeof(CannotExecuteRuleException), TestName = "It errors when cannot make parameter")] //too many
-        public bool ItExecutesAggregates(string rule, string statement, string strScope, int expectedCalls)
+        [TestCase("R3", "I haz 10 cheeseburgers", "1", 1, ExpectedException = typeof(CannotExecuteStatementException), TestName = "It errors when cannot make parameter")] //too few
+        [TestCase("R4", "I haz 10 cheeseburgers", "1", 1, ExpectedException = typeof(CannotExecuteStatementException), TestName = "It errors when cannot make parameter")] //too many
+        public bool ItExecutesAggregates(string statement, string rawStatement, string strScope, int expectedCalls)
         {
             var scope = strScope.Split(',').Select(int.Parse);
-            var load = new ReflectionRuleHandler(GetAggregateMethod(rule), typeof(TestAggregates));
+            var load = new ReflectionStatementHandler(GetAggregateMethod(statement), typeof(TestAggregates));
             var match = load.Matches(new MatchingContext() {
                 ScopeType = scope.GetType(),
-                Statement = statement
+                Statement = rawStatement
             });
             Assert.True(match.Success);
             var calls = 0;
             var result = load.Execute(new InvokationContext() {
-                Statement = statement,
+                Statement = rawStatement,
                 Scope = scope,
                 Match = match,
                 Proceed =  o =>
@@ -136,12 +133,12 @@ namespace Ancestry.Daisy.Tests.Unit.Rules
             return result;
         }
 
-        private MethodInfo GetAggregateMethod(string ruleName)
+        private MethodInfo GetAggregateMethod(string statementName)
         {
-            return typeof(TestAggregates).GetMethod(ruleName);
+            return typeof(TestAggregates).GetMethod(statementName);
         }
 
-        private class TestAggregates : RuleController<IEnumerable<int>>
+        private class TestAggregates : StatementController<IEnumerable<int>>
         {
             public bool R1(Func<int,bool> proceed)
             {

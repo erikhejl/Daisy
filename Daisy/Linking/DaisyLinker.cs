@@ -7,26 +7,27 @@
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
     using Ancestry.Daisy.Language.Walks;
-    using Ancestry.Daisy.Rules;
 
     using System.Linq;
+
+    using Ancestry.Daisy.Statements;
 
     public class DaisyLinker
     {
         public Type RootScopeType { get; set; }
 
         private readonly DaisyAst ast;
-        private readonly RuleSet rules;
+        private readonly StatementSet statements;
 
         private DaisyLinks links;
         private IList<LinkingError> errors;
 
 
-        public DaisyLinker(DaisyAst ast, RuleSet rules, Type rootType)
+        public DaisyLinker(DaisyAst ast, StatementSet statements, Type rootType)
         {
             RootScopeType = rootType;
             this.ast = ast;
-            this.rules = rules;
+            this.statements = statements;
         }
 
         private class Walker : AstTreeWalker
@@ -84,7 +85,7 @@
 
         private Type Link(string statement, Type scopeType, bool isGroup)
         {
-            var matches = FindRuleMatches(statement, scopeType).ToList();
+            var matches = FindStatementMatches(statement, scopeType).ToList();
             if(matches.Count == 0)
             {
                 errors.Add(new NoLinksFoundError(statement, scopeType));
@@ -93,39 +94,39 @@
             if(matches.Count > 1)
             {
                 errors.Add(new MultipleLinksFoundError(statement, scopeType,matches
-                    .Select(x => x.Rule)
+                    .Select(x => x.Statement)
                     .ToArray()));
                 return null;
             }
             var match = matches.First();
-                links.AddLink(new DaisyRuleLink() {
+                links.AddLink(new DaisyStatementLink() {
                         Match = match.Match,
-                        Handler = match.Rule,
+                        Handler = match.Statement,
                         Statement = statement,
                         ScopeType = scopeType
                     });
-                return isGroup ? match.Rule.TransformsScopeTo : scopeType;
+                return isGroup ? match.Statement.TransformsScopeTo : scopeType;
         }
 
-        private IEnumerable<RuleMatch> FindRuleMatches(string statement, Type scopeType)
+        private IEnumerable<StatementMatch> FindStatementMatches(string statement, Type scopeType)
         {
-            return rules.Rules
+            return statements.Statements
                 .Where(x => x.ScopeType.IsAssignableFrom(scopeType))
-                .Select(x => new RuleMatch{
+                .Select(x => new StatementMatch{
                     Match = x.Matches(new MatchingContext() {
                             Statement = statement,
                             ScopeType = scopeType
                         }),
-                    Rule = x
+                    Statement = x
                 })
                 .Where(x => x.Match != null && x.Match.Success);
         }
 
-        private class RuleMatch
+        private class StatementMatch
         {
             public Match Match { get; set; }
 
-            public IRuleHandler Rule { get; set; }
+            public IStatementHandler Statement { get; set; }
         }
     }
 }
