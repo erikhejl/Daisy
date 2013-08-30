@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ancestry.Daisy.Tests {
+namespace Ancestry.Daisy.Tests.Daisy.Component {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Ancestry.Daisy.Tests {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class TestData {
+    internal class Statements {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal TestData() {
+        internal Statements() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Ancestry.Daisy.Tests {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ancestry.Daisy.Tests.TestData", typeof(TestData).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ancestry.Daisy.Tests.Daisy.Component.Statements", typeof(Statements).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,81 +61,74 @@ namespace Ancestry.Daisy.Tests {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace Ancestry.Daisy.Tests.Daisy.Component.Controllers
-        ///{
-        ///    using System;
-        ///    using System.Linq;
-        ///
-        ///    using Ancestry.Daisy.Statements;
-        ///    using Ancestry.Daisy.Tests.Daisy.Component.Domain;
-        ///
-        ///    public class AccountController : StatementController&lt;Account&gt;
-        ///    {
-        ///        public bool HasTransaction(Func&lt;Transaction,bool&gt; proceed)
-        ///        {
-        ///            return Scope.Transactions.Any(proceed);
-        ///        }
-        ///
-        ///        /// &lt;summary&gt;
-        ///        /// True when the Account is of the given type.
-        ///        / [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Has Account
+        ///  Has Transaction
+        ///    Amount is greater than 3
+        ///OR Is Active
+        ///.
         /// </summary>
-        internal static string AccountsController {
+        internal static string DoubleGroupEndings {
             get {
-                return ResourceManager.GetString("AccountsController", resourceCulture);
+                return ResourceManager.GetString("DoubleGroupEndings", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to t
-        ///AND f
-        ///OR
-        ///  t
-        ///  AND
-        ///    f
-        ///    OR f    .
+        ///   Looks up a localized string similar to Has account
+        ///    NOT
+        ///        Balance is less than 0
+        ///        OR Type is Checking.
         /// </summary>
-        internal static string Code_f {
+        internal static string UserHasNonCheckingWithABalance {
             get {
-                return ResourceManager.GetString("Code_f", resourceCulture);
+                return ResourceManager.GetString("UserHasNonCheckingWithABalance", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
-        ///&lt;doc&gt;
-        ///    &lt;assembly&gt;
-        ///        &lt;name&gt;Ancestry.Context&lt;/name&gt;
-        ///    &lt;/assembly&gt;
-        ///    &lt;members&gt;
-        ///        &lt;member name=&quot;M:Ancestry.Context.Episodes.DaisyRules.EventRules.IsBirth&quot;&gt;
-        ///            &lt;summary&gt;
-        ///            True if the Event is a birth event
-        ///            &lt;/summary&gt;
-        ///            &lt;returns&gt;&lt;/returns&gt;
-        ///        &lt;/member&gt;
-        ///        &lt;member name=&quot;T:Ancestry.Context.ContentServices.NewspaperDataRepo&quot;&gt;
-        ///            &lt;summary&gt;
-        ///            Class that will check for newspaper entries on a spe [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Is Active
+        ///NOT Has Account
+        ///    Has Transaction
+        ///        Timestamp before 1 year ago
+        ///        .
         /// </summary>
-        internal static string ExampleCommentsDocumentation {
+        internal static string UserHasNoRecentTransactions {
             get {
-                return ResourceManager.GetString("ExampleCommentsDocumentation", resourceCulture);
+                return ResourceManager.GetString("UserHasNoRecentTransactions", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to t
-        ///AND f
-        ///OR
-        ///  t
-        ///  AND
-        ///    f
-        ///    OR t    .
+        ///   Looks up a localized string similar to Has account
+        ///    NOT has transactions.
         /// </summary>
-        internal static string TestCode1 {
+        internal static string UserHasUnusedAccount {
             get {
-                return ResourceManager.GetString("TestCode1", resourceCulture);
+                return ResourceManager.GetString("UserHasUnusedAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Active
+        ///Has Account
+        ///    Type is MoneyMarket
+        ///    NOT Has Transaction.
+        /// </summary>
+        internal static string UserHasUnusedMoneyMarket {
+            get {
+                return ResourceManager.GetString("UserHasUnusedMoneyMarket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Active
+        ///Has Account
+        ///    Type is checking
+        ///    Balance is less than 0.
+        /// </summary>
+        internal static string UserIsOverdrawnOnChecking {
+            get {
+                return ResourceManager.GetString("UserIsOverdrawnOnChecking", resourceCulture);
             }
         }
     }

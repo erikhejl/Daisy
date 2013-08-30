@@ -63,6 +63,8 @@
     <Compile Include="Program\ExecutionDebugInfo.cs" />
     <Compile Include="Program\DaisyExecution.cs" />
     <Compile Include="Program\ExecutionResultType.cs" />
+    <Compile Include="Statements\StatementParameter.cs" />
+    <Compile Include="Statements\TitleAttribute.cs" />
     <Compile Include="Utils\MultiMap.cs" />
     <Compile Include="Utils\Maybe.cs" />
     <Compile Include="Statements\CannotExecuteStatementException.cs" />

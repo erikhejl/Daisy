@@ -24,10 +24,10 @@ namespace Ancestry.Daisy.Statements
             ControllerType = controllerType;
             MatchingCriteria = GetMatchingCriteria();
             ScopeType = controllerType.GetProperty("Scope").PropertyType;
-            TransformsScopeTo = StaticAnalysis.ExtractProceedFunction(methodInfo)
-              .With(x => x.ParameterType)
-              .With(StaticAnalysis.ExtractProceedFunctionType);
+            IsolateParameters(methodInfo);
         }
+
+        public IList<StatementParameter> Parameters { get; private set; }
 
         public Type ScopeType { get; private set; }
 
@@ -38,7 +38,9 @@ namespace Ancestry.Daisy.Statements
 
         public Regex GetMatchingCriteria()
         {
-            var attr = MethodInfo.GetCustomAttributes<MatchesAttribute>().FirstOrDefault();
+            var attr = MethodInfo
+                .GetCustomAttributes<MatchesAttribute>()
+                .FirstOrDefault();
             return attr.With(x => x.RegularExpression).Recover(() => MethodNameToRegex(MethodInfo.Name));
         }
 
@@ -77,17 +79,17 @@ namespace Ancestry.Daisy.Statements
             return controller;
         }
 
-        protected object Cast(string obj, ParameterInfo param, InvokationContext invokationContext)
+        protected object Cast(string obj, StatementParameter param, InvokationContext invokationContext)
         {
             try
             {
-                return Convert.ChangeType(obj, param.ParameterType);
+                return Convert.ChangeType(obj, param.Type);
             }
             catch(FormatException e)
             {
                 throw new CannotExecuteStatementException(MethodInfo,
                     string.Format("Cannot convert '{0}' into {1}, to match parameter '{2}'",
-                    obj, param.ParameterType, param.Name))
+                    obj, param.Type, param.Name))
                     {
                         Scope = invokationContext.Scope,
                         Statement = invokationContext.Statement
@@ -103,18 +105,45 @@ namespace Ancestry.Daisy.Statements
             return (bool)MethodInfo.Invoke(inst, methodParams);
         }
 
-        public Type TransformsScopeTo { get; private set; }
+        public Type TransformsScopeTo
+        {
+            get
+            {
+                return Parameters.OfType<ProceedParameter>().Select(x => x.TransformsTo).FirstOrDefault();
+            }
+        }
+
+
+        private void IsolateParameters(MethodInfo methodInfo)
+        {
+            Parameters = methodInfo.GetParameters()
+                .Select(p => {
+                    var proceedFunctionType = StaticAnalysis.ExtractProceedFunctionType(p.ParameterType);
+                    if (proceedFunctionType != null)
+                    {
+                        return new ProceedParameter() {
+                            Name = p.Name,
+                            Type = p.ParameterType,
+                            TransformsTo = proceedFunctionType
+                        };
+                    }
+                    else
+                    {
+                        return new StatementParameter() { Name = p.Name, Type = p.ParameterType };
+                    }
+                })
+                .ToList();
+        }
 
         private object[] MapParameters(InvokationContext context, ParameterInfo[] parameters)
         {
             var objs = new List<object>();
             var ptrGroups = 1;
-            foreach (var param in parameters)
+            foreach (var param in Parameters)
             {
-                var proceedFunctionType = StaticAnalysis.ExtractProceedFunctionType(param.ParameterType);
-                if (proceedFunctionType != null)
+                if (param is ProceedParameter)
                 {
-                    objs.Add(StaticAnalysis.ConvertPredicate(proceedFunctionType, context.Proceed));
+                    objs.Add(StaticAnalysis.ConvertPredicate(((ProceedParameter)param).TransformsTo, context.Proceed));
                 }
                 else
                 {

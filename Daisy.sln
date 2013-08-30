@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHelpers", "TestHelpers\TestHelpers.csproj", "{60F3515B-D47C-42E2-9D02-64628A4EF4C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Documentor", "Documentor\Documentor.csproj", "{7BB9DA51-717B-4032-9FE1-C0027B78E249}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcDocumentation", "MvcDocumentation\MvcDocumentation.csproj", "{77AA74DC-F57F-4643-A763-9E502D5AD229}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,14 @@ Global
 		{60F3515B-D47C-42E2-9D02-64628A4EF4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60F3515B-D47C-42E2-9D02-64628A4EF4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60F3515B-D47C-42E2-9D02-64628A4EF4C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB9DA51-717B-4032-9FE1-C0027B78E249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB9DA51-717B-4032-9FE1-C0027B78E249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB9DA51-717B-4032-9FE1-C0027B78E249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB9DA51-717B-4032-9FE1-C0027B78E249}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77AA74DC-F57F-4643-A763-9E502D5AD229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77AA74DC-F57F-4643-A763-9E502D5AD229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77AA74DC-F57F-4643-A763-9E502D5AD229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77AA74DC-F57F-4643-A763-9E502D5AD229}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

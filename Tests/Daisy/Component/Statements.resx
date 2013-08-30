@@ -118,16 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="AccountsController" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\AccountsController.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="UserHasNonCheckingWithABalance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\UserHasNonCheckingWithABalance.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Code_f" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Code-f.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="UserHasNoRecentTransactions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\UserHasNoRecentTransactions.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="ExampleCommentsDocumentation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\ExampleCommentsDocumentation.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="UserHasUnusedAccount" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\UserHasUnusedAccount.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="TestCode1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestCode1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="UserHasUnusedMoneyMarket" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\UserHasUnusedMoneyMarket.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="UserIsOverdrawnOnChecking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\UserIsOverdrawn.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="DoubleGroupEndings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\DoubleGroupEndings.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>
