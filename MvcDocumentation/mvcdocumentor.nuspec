@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Ancestry.Daisy.Documentor.MVC</id>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <title>Daisy Auto-Docs for MVC</title>
     <authors>Ancestry.com</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,7 +13,7 @@
       <dependency id ="Ancestry.Daisy.Documentor"/>
       <dependency id ="Ancestry.Daisy"/>
       <dependency id ="RazorEngine"/>
-      <dependency id ="Json.NET"/>
+      <dependency id ="Newtonsoft.Json"/>
     </dependencies>
   </metadata>
   <files>
