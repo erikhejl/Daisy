@@ -9,7 +9,12 @@
     using Ancestry.Daisy.Documentation.Utils;
     using Ancestry.Daisy.Utils;
 
-    public class CommentDocumentation
+    public interface ICommentDocumentation
+    {
+        MethodDocumentation ForMethod(MethodInfo methodInfo);
+    }
+
+    public class CommentDocumentation : ICommentDocumentation
     {
         private XDocument document;
 

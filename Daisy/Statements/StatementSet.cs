@@ -26,6 +26,12 @@
             return this;
         }
 
+        public StatementSet Add(IEnumerable<IStatementHandler> statementHandlers)
+        {
+            foreach (var sh in statementHandlers) Add(sh);
+            return this;
+        }
+
         public StatementSet FromAssemblyOf(Type type)
         {
             return FromAssembly(type.Assembly);

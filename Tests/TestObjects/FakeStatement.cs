@@ -10,6 +10,29 @@ namespace Ancestry.Daisy.Tests.TestObjects
 
     using Ancestry.Daisy.Statements;
 
+    public class MoqStatement : IStatementHandler
+    {
+        private readonly string test;
+
+        private readonly Func<int, bool> predicate;
+
+        public Type ScopeType { get; set; }
+
+        public Match Matches(MatchingContext matchingContext)
+        {
+            return new Regex("^" + test + "$", RegexOptions.IgnoreCase).Match(matchingContext.Statement);
+        }
+
+        public bool Execute(InvokationContext context)
+        {
+            return predicate((int)context.Scope);
+        }
+
+        public string Name { get; set; }
+
+        public Type TransformsScopeTo { get; set; }
+    }
+
     public class FakeStatement : IStatementHandler
     {
         private readonly string test;

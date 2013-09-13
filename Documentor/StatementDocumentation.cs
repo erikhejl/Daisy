@@ -31,7 +31,7 @@
             return title;
         }
 
-        public static StatementDocumentation FromReflection(ReflectionStatementHandler reflectionStatementHandler, CommentDocumentation commentDocumentation)
+        public static StatementDocumentation FromReflection(ReflectionStatementHandler reflectionStatementHandler, ICommentDocumentation commentDocumentation)
         {
             var methodDocs = commentDocumentation.ForMethod(reflectionStatementHandler.MethodInfo);
             return new StatementDocumentation() { 

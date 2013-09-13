@@ -6,6 +6,7 @@
     {
         public string Description { get; set; }
         public IList<DaisyStatementDocumentationViewModel> Statements { get; set; }
+        public IList<string> ScopeOrder { get; set; }
     }
 
     public class DaisyStatementDocumentationViewModel

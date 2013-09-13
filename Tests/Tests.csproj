@@ -92,6 +92,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestData.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestObjects\EmptyCommentDocumentation.cs" />
     <Compile Include="TestObjects\MyStatementController.cs" />
     <Compile Include="TestObjects\ParentObject.cs" />
     <Compile Include="TestObjects\FakeStatement.cs" />
@@ -122,6 +123,10 @@
     <ProjectReference Include="..\Documentor\Documentor.csproj">
       <Project>{7BB9DA51-717B-4032-9FE1-C0027B78E249}</Project>
       <Name>Documentor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MvcDocumentation\MvcDocumentation.csproj">
+      <Project>{77AA74DC-F57F-4643-A763-9E502D5AD229}</Project>
+      <Name>MvcDocumentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestHelpers\TestHelpers.csproj">
       <Project>{60f3515b-d47c-42e2-9d02-64628a4ef4c5}</Project>
@@ -169,7 +174,9 @@
   <ItemGroup>
     <None Include="Resources\AccountsController.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MvcDocumentation\Unit\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ExampleCommentsDocumentation.txt" />
   </ItemGroup>

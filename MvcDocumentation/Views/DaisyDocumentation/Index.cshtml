@@ -89,13 +89,23 @@
                     return statement.Scope;
                   })
                   .map(function(v, k) {
-                      return {
-                          scope: k,
-                          statements: _(v).sortBy(function(statement){ return statement.Title; } )
-                      };
+                    return {
+                      scope: k,
+                      statements: _(v).sortBy(function(statement) { return statement.Title; })
+                    };
                   })
-                  .sortBy(function (v) { return v.scope; })
-                  .value();
+                  .value()
+                  .sort(function(v1, v2) {
+                    var inOrderList1 = data.ScopeOrder.indexOf(v1.scope);
+                    var inOrderList2 = data.ScopeOrder.indexOf(v2.scope);
+                    if(inOrderList1 < 0 && inOrderList2 < 0) {
+                        if(v1.scope > v2.scope) return 1;
+                      return -1;
+                    }
+                    if(inOrderList1 < 0) return 1;
+                    if(inOrderList2 < 0) return -1;
+                    return inOrderList1 - inOrderList1;
+                  });
               }
 
               $scope.$watch('filtertxt', function () {

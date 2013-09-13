@@ -30,17 +30,18 @@ namespace Ancestry.Daisy.Documentation.MVC
             RazorEngine.Razor.Compile(new StreamReader(view).ReadToEnd(),resource);
         }
 
-        public static void ExposeWebDocs(this DocumentationSet docs, RouteCollection routes, string setName)
+        public static void ExposeWebDocs(this DocumentationSet docs, RouteCollection routes, string setName, DaisyDocumentationOptions options = null)
         {
+            options = options ?? new DaisyDocumentationOptions();
             Init();
             routes.MapRoute("Daisy Documentation " + setName,
                 url: "daisy/docs/" + setName,
                 defaults: new { controller = "DaisyDocumentation", action = "Index" },
                 namespaces:new []{"Ancestry.Daisy.Documentation"})
-                .DataTokens["docSet"] = toView(docs,setName);
+                .DataTokens["docSet"] = toView(docs,setName, options);
         }
 
-        private static DaisyDocumentationViewModel toView(DocumentationSet docs, string setName)
+        internal static DaisyDocumentationViewModel toView(DocumentationSet docs, string setName, DaisyDocumentationOptions options)
         {
             return new DaisyDocumentationViewModel()
             {
@@ -64,7 +65,8 @@ namespace Ancestry.Daisy.Documentation.MVC
                           })
                           .ToList()
                   })
-                  .ToList()
+                  .ToList(),
+                  ScopeOrder = options.ScopeOrder.Select(x => x.Name).ToList()
             };
         }
     }

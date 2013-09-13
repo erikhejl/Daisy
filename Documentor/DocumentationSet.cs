@@ -8,9 +8,9 @@
     public class DocumentationSet
     {
         private readonly StatementSet statements;
-        private readonly CommentDocumentation commentDocumentation;
+        private readonly ICommentDocumentation commentDocumentation;
 
-        public DocumentationSet(StatementSet statements, CommentDocumentation commentDocumentation)
+        public DocumentationSet(StatementSet statements, ICommentDocumentation commentDocumentation)
         {
             this.statements = statements;
             this.commentDocumentation = commentDocumentation;

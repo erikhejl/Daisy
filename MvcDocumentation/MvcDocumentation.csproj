@@ -78,7 +78,8 @@
   <ItemGroup>
     <Compile Include="CompiledRazorView.cs" />
     <Compile Include="DaisyDocumentationController.cs" />
-    <Compile Include="DaisyDocumentationExtentions.cs" />
+    <Compile Include="DocumentationSetExtentions.cs" />
+    <Compile Include="DaisyDocumentationOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DaisyDocumentationViewModel.cs" />
   </ItemGroup>

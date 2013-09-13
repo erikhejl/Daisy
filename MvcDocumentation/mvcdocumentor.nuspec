@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Ancestry.Daisy.Documentor.MVC</id>
-    <version>1.0.5</version>
+    <version>1.1.0</version>
     <title>Daisy Auto-Docs for MVC</title>
     <authors>Ancestry.com</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Documentation generator for Daisy</description>
     <summary />
-    <releaseNotes>Initial</releaseNotes>
+    <releaseNotes>Add ordering of scopes</releaseNotes>
     <dependencies>
       <dependency id ="Ancestry.Daisy.Documentor"/>
       <dependency id ="Ancestry.Daisy"/>
