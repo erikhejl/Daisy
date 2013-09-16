@@ -80,6 +80,13 @@
     </Compile>
     <Compile Include="Daisy\Component\TestData.cs" />
     <Compile Include="Daisy\Component\TestExecutions.cs" />
+    <Compile Include="Daisy\Performance\ExecutionPerformanceTest.cs" />
+    <Compile Include="Daisy\Performance\ReflectionStatementHandlerTest.cs" />
+    <Compile Include="Daisy\Performance\SilverBulletHandlers\TimestampBeforeYearsAgoSilverBullet.cs" />
+    <Compile Include="Daisy\Performance\SilverBulletHandlers\HasTransactionSilverBullet.cs" />
+    <Compile Include="Daisy\Performance\SilverBulletHandlers\HasAccountSilverBullet.cs" />
+    <Compile Include="Daisy\Performance\SilverBulletHandlers\IsActiveSilverBullet.cs" />
+    <Compile Include="Daisy\Performance\SilverBulletHandlers\SilverBulletHandler.cs" />
     <Compile Include="Documentor\Component\DocumentorTests.cs" />
     <Compile Include="Documentor\Unit\CommentDocumentationTest.cs" />
     <Compile Include="Documentor\Unit\Utils\MethodInfoExtentionsTests.cs" />
@@ -141,12 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Daisy\Component\Statements.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Statements.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="TestData.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TestData.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

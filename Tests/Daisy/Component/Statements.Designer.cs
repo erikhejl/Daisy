@@ -22,7 +22,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Statements {
+    public class Statements {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ancestry.Daisy.Tests.Daisy.Component.Statements", typeof(Statements).Assembly);
@@ -51,7 +51,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -67,7 +67,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
         ///OR Is Active
         ///.
         /// </summary>
-        internal static string DoubleGroupEndings {
+        public static string DoubleGroupEndings {
             get {
                 return ResourceManager.GetString("DoubleGroupEndings", resourceCulture);
             }
@@ -79,7 +79,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
         ///        Balance is less than 0
         ///        OR Type is Checking.
         /// </summary>
-        internal static string UserHasNonCheckingWithABalance {
+        public static string UserHasNonCheckingWithABalance {
             get {
                 return ResourceManager.GetString("UserHasNonCheckingWithABalance", resourceCulture);
             }
@@ -89,10 +89,9 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
         ///   Looks up a localized string similar to Is Active
         ///NOT Has Account
         ///    Has Transaction
-        ///        Timestamp before 1 year ago
-        ///        .
+        ///        Timestamp before 1 year ago.
         /// </summary>
-        internal static string UserHasNoRecentTransactions {
+        public static string UserHasNoRecentTransactions {
             get {
                 return ResourceManager.GetString("UserHasNoRecentTransactions", resourceCulture);
             }
@@ -102,7 +101,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
         ///   Looks up a localized string similar to Has account
         ///    NOT has transactions.
         /// </summary>
-        internal static string UserHasUnusedAccount {
+        public static string UserHasUnusedAccount {
             get {
                 return ResourceManager.GetString("UserHasUnusedAccount", resourceCulture);
             }
@@ -114,7 +113,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
         ///    Type is MoneyMarket
         ///    NOT Has Transaction.
         /// </summary>
-        internal static string UserHasUnusedMoneyMarket {
+        public static string UserHasUnusedMoneyMarket {
             get {
                 return ResourceManager.GetString("UserHasUnusedMoneyMarket", resourceCulture);
             }
@@ -126,7 +125,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component {
         ///    Type is checking
         ///    Balance is less than 0.
         /// </summary>
-        internal static string UserIsOverdrawnOnChecking {
+        public static string UserIsOverdrawnOnChecking {
             get {
                 return ResourceManager.GetString("UserIsOverdrawnOnChecking", resourceCulture);
             }

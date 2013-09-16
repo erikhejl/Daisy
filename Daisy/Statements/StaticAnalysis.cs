@@ -58,15 +58,24 @@
         /// <param name="destType">Type of the dest.</param>
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
-        public static object ConvertPredicate(Type destType, Func<object,bool> predicate)
+        public static TransformPredicate CreateConverter(Type destType)
         {
-            var scopeParam = Expression.Parameter(destType, "i");
-            var forward = 
-                Expression.Invoke(
-                Expression.Constant(predicate),
-                Expression.Convert(scopeParam,typeof(object)));
-            var expr = Expression.Lambda(forward, new []{scopeParam});
-            return expr.Compile();
+            // This essentially creates the following lambda, but uses destType instead of T
+            // private static Func<Func<object, bool>, Func<T, bool>> Transform<T>()
+            // { 
+            //     return (Func<object,bool> input) => ((T x) => input(x));
+            // }
+            var input = Expression.Parameter(typeof(Func<object, bool>), "input");
+
+            var x = Expression.Parameter(destType, "x");
+            var convert = Expression.Convert(x, typeof(object));
+            var callInputOnX = Expression.Invoke(input, convert);
+            var body2 = Expression.Lambda(callInputOnX, x);
+            var body1 = Expression.Lambda(typeof(TransformPredicate),body2, input);
+            return (TransformPredicate) body1.Compile();
         }
+
+        public delegate object TransformPredicate(Func<object,bool> weak);
+
     }
 }

@@ -22,7 +22,7 @@ namespace Ancestry.Daisy.Tests {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class TestData {
+    public class TestData {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Ancestry.Daisy.Tests {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ancestry.Daisy.Tests.TestData", typeof(TestData).Assembly);
@@ -51,7 +51,7 @@ namespace Ancestry.Daisy.Tests {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -80,7 +80,7 @@ namespace Ancestry.Daisy.Tests {
         ///        /// True when the Account is of the given type.
         ///        / [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string AccountsController {
+        public static string AccountsController {
             get {
                 return ResourceManager.GetString("AccountsController", resourceCulture);
             }
@@ -95,7 +95,7 @@ namespace Ancestry.Daisy.Tests {
         ///    f
         ///    OR f    .
         /// </summary>
-        internal static string Code_f {
+        public static string Code_f {
             get {
                 return ResourceManager.GetString("Code_f", resourceCulture);
             }
@@ -118,7 +118,7 @@ namespace Ancestry.Daisy.Tests {
         ///            &lt;summary&gt;
         ///            Class that will check for newspaper entries on a spe [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ExampleCommentsDocumentation {
+        public static string ExampleCommentsDocumentation {
             get {
                 return ResourceManager.GetString("ExampleCommentsDocumentation", resourceCulture);
             }
@@ -133,7 +133,7 @@ namespace Ancestry.Daisy.Tests {
         ///    f
         ///    OR t    .
         /// </summary>
-        internal static string TestCode1 {
+        public static string TestCode1 {
             get {
                 return ResourceManager.GetString("TestCode1", resourceCulture);
             }

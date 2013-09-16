@@ -64,7 +64,8 @@
         {
             var method = GetType().GetMethod("DoIt");
             Func<object,bool> cont = j => (int)j % 2 == 0;
-            method.Invoke(this, new object[] { StaticAnalysis.ConvertPredicate(typeof(int), cont)});
+            var converter = StaticAnalysis.CreateConverter(typeof(int));
+            method.Invoke(this, new [] {converter(cont) });
             Assert.AreEqual(1, didIt);
         }
 

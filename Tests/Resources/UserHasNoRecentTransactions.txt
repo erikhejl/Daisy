@@ -2,4 +2,3 @@ Is Active
 NOT Has Account
     Has Transaction
         Timestamp before 1 year ago
-        

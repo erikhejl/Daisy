@@ -8,8 +8,24 @@ namespace Ancestry.Daisy.Statements
 
     using Ancestry.Daisy.Utils;
 
+    using Fasterflect;
+
     public class ReflectionStatementHandler : IStatementHandler
     {
+        private FastFlect.ObjectActivator activator;
+
+        private MemberSetter delegateForAttachmentsSetter;
+
+        private MemberSetter delegateForContextSetter;
+
+        private MemberSetter delegateForScopeSetter;
+
+        private MethodInvoker delegateForInvokation;
+
+        private object controllerInstance;
+
+        private StaticAnalysis.TransformPredicate scopeConverter;
+
         public MethodInfo MethodInfo { get; private set; }
 
         public Type ControllerType { get; private set; }
@@ -25,6 +41,20 @@ namespace Ancestry.Daisy.Statements
             MatchingCriteria = GetMatchingCriteria();
             ScopeType = controllerType.GetProperty("Scope").PropertyType;
             IsolateParameters(methodInfo);
+            PrecacheReflections(controllerType);
+        }
+
+        private void PrecacheReflections(Type controllerType)
+        {
+            var defaultConstructor = controllerType.GetConstructors().FirstOrDefault(x => x.GetParameters().Length == 0);
+            if (defaultConstructor == null) throw new ArgumentException("StatementHandler " + controllerType.Name + " does not have a default constructor");
+            activator = FastFlect.GetActivator(defaultConstructor);
+            delegateForScopeSetter = controllerType.DelegateForSetPropertyValue("Scope");
+            delegateForContextSetter = controllerType.DelegateForSetPropertyValue("Context");
+            delegateForAttachmentsSetter = controllerType.DelegateForSetPropertyValue("Attachments");
+            delegateForInvokation = MethodInfo.DelegateForCallMethod();
+            controllerInstance = CreateController();
+            if (TransformsScopeTo != null) scopeConverter = StaticAnalysis.CreateConverter(TransformsScopeTo);
         }
 
         public IList<StatementParameter> Parameters { get; private set; }
@@ -56,27 +86,33 @@ namespace Ancestry.Daisy.Statements
             return spacings;
         }
 
-        protected object CreateController(InvokationContext invokationContext)
+        internal protected object CreateController()
         {
             object controller;
             try
             {
-                controller = Activator.CreateInstance(ControllerType);
+                controller = activator();
             }
             catch
             {
                 throw new CannotExecuteStatementException(MethodInfo,
                     string.Format("Cannot build statement {0} because it's controller could not be constructed.",
-                        MethodInfo.Name))
-                    {
-                        Scope = invokationContext.Scope,
-                        Statement = invokationContext.Statement
-                    };
+                        MethodInfo.Name));
             }
-            controller.GetType().GetProperty("Scope").SetValue(controller, invokationContext.Scope);
-            controller.GetType().GetProperty("Context").SetValue(controller, invokationContext.Context);
-            controller.GetType().GetProperty("Attachments").SetValue(controller, invokationContext.Attachments);
             return controller;
+        }
+
+        internal protected void InitializeController(object controller ,InvokationContext invokationContext)
+        {
+            delegateForScopeSetter(controller, invokationContext.Scope);
+            delegateForContextSetter(controller, invokationContext.Context);
+            delegateForAttachmentsSetter(controller, invokationContext.Attachments);
+
+            /*
+            ControllerType.GetProperty("Scope").SetValue(controller,invokationContext.Scope);
+            ControllerType.GetProperty("Context").SetValue(controller,invokationContext.Context);
+            ControllerType.GetProperty("Attachments").SetValue(controller,invokationContext.Attachments);
+            */
         }
 
         protected object Cast(string obj, StatementParameter param, InvokationContext invokationContext)
@@ -100,9 +136,16 @@ namespace Ancestry.Daisy.Statements
         public bool Execute(InvokationContext context)
         {
             var parameters = MethodInfo.GetParameters();
-            var inst = CreateController(context);
+            var inst = controllerInstance; // CreateController(context);
+            InitializeController(inst,context);
             var methodParams = MapParameters(context, parameters);
-            return (bool)MethodInfo.Invoke(inst, methodParams);
+            return Execute(inst, methodParams);
+        }
+
+        internal bool Execute(object inst, object[] methodParams)
+        {
+            //return (bool)MethodInfo.Invoke(inst, methodParams);
+            return (bool)delegateForInvokation(inst, methodParams);
         }
 
         public Type TransformsScopeTo
@@ -112,7 +155,6 @@ namespace Ancestry.Daisy.Statements
                 return Parameters.OfType<ProceedParameter>().Select(x => x.TransformsTo).FirstOrDefault();
             }
         }
-
 
         private void IsolateParameters(MethodInfo methodInfo)
         {
@@ -143,7 +185,7 @@ namespace Ancestry.Daisy.Statements
             {
                 if (param is ProceedParameter)
                 {
-                    objs.Add(StaticAnalysis.ConvertPredicate(((ProceedParameter)param).TransformsTo, context.Proceed));
+                    objs.Add(scopeConverter(context.Proceed));  //StaticAnalysis.CreateConverter(((ProceedParameter)param).TransformsTo, context.Proceed));
                 }
                 else
                 {
