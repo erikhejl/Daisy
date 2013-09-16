@@ -76,7 +76,7 @@ namespace Ancestry.Daisy.Statements
 
         internal static Regex MethodNameToRegex(string name)
         {
-            return new Regex("^"+NormalizeMethodName(name)+"$",RegexOptions.IgnoreCase);
+            return new Regex("^"+NormalizeMethodName(name)+"$",RegexOptions.IgnoreCase | RegexOptions.Compiled);
         }
 
         internal static string NormalizeMethodName(string name)

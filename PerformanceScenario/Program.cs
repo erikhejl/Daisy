@@ -13,6 +13,7 @@
         static void Main(string[] args)
         {
             var stopwatch = new Stopwatch();
+            stopwatch.Start();
             var code = Tests.Daisy.Component.Statements.UserHasNoRecentTransactions;
             var statements = new StatementSet().FromAssemblyOf<UserController>();
             var pgrm = DaisyCompiler.Compile<User>(code, statements);
@@ -20,7 +21,7 @@
             Console.WriteLine("Setup: " + stopwatch.ElapsedMilliseconds);
 
             stopwatch = new Stopwatch();
-            var iterations = 50000;
+            var iterations = 500000;
             Console.WriteLine("Running Daisy...");
             stopwatch.Start();
 
@@ -32,7 +33,6 @@
             stopwatch.Stop();
             Console.WriteLine("Elapsed: " + stopwatch.ElapsedMilliseconds);
             Console.WriteLine("Per execution: " + ((double)stopwatch.ElapsedMilliseconds)/iterations);
-            Console.ReadKey();
         }
     }
 }

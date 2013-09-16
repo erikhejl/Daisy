@@ -10,7 +10,7 @@
         {
             if (!regexp.EndsWith("$")) regexp = regexp + "$";
             if (!regexp.StartsWith("^")) regexp = "^" + regexp;
-            RegularExpression = new Regex(regexp,RegexOptions.IgnoreCase);
+            RegularExpression = new Regex(regexp,RegexOptions.IgnoreCase | RegexOptions.Compiled);
         }
 
         public Regex RegularExpression { get; private set; }
