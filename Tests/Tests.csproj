@@ -82,11 +82,6 @@
     <Compile Include="Daisy\Component\TestExecutions.cs" />
     <Compile Include="Daisy\Performance\ExecutionPerformanceTest.cs" />
     <Compile Include="Daisy\Performance\ReflectionStatementHandlerTest.cs" />
-    <Compile Include="Daisy\Performance\SilverBulletHandlers\TimestampBeforeYearsAgoSilverBullet.cs" />
-    <Compile Include="Daisy\Performance\SilverBulletHandlers\HasTransactionSilverBullet.cs" />
-    <Compile Include="Daisy\Performance\SilverBulletHandlers\HasAccountSilverBullet.cs" />
-    <Compile Include="Daisy\Performance\SilverBulletHandlers\IsActiveSilverBullet.cs" />
-    <Compile Include="Daisy\Performance\SilverBulletHandlers\SilverBulletHandler.cs" />
     <Compile Include="Documentor\Component\DocumentorTests.cs" />
     <Compile Include="Documentor\Unit\CommentDocumentationTest.cs" />
     <Compile Include="Documentor\Unit\Utils\MethodInfoExtentionsTests.cs" />
@@ -99,6 +94,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestData.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestObjects\AstCollector.cs" />
     <Compile Include="TestObjects\EmptyCommentDocumentation.cs" />
     <Compile Include="TestObjects\MyStatementController.cs" />
     <Compile Include="TestObjects\ParentObject.cs" />
@@ -111,7 +107,6 @@
     <Compile Include="Daisy\Unit\Language\WalksTests\DaisyAstPrinterTests.cs" />
     <Compile Include="Daisy\Unit\Language\WalksTests\DaisyDebugPrinterTests.cs" />
     <Compile Include="Daisy\Unit\Linking\DaisyLinkerTest.cs" />
-    <Compile Include="Daisy\Unit\Linking\DaisyLinksTests.cs" />
     <Compile Include="Daisy\Unit\Statements\ReflectionRuleHandlerTests.cs" />
     <Compile Include="Daisy\Unit\Statements\MatchesAttributeTests.cs" />
     <Compile Include="Daisy\Unit\Statements\StatementSetTests.cs" />

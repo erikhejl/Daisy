@@ -33,6 +33,7 @@
             stopwatch.Stop();
             Console.WriteLine("Elapsed: " + stopwatch.ElapsedMilliseconds);
             Console.WriteLine("Per execution: " + ((double)stopwatch.ElapsedMilliseconds)/iterations);
+            Console.ReadKey();
         }
     }
 }

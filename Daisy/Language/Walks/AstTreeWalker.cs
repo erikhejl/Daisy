@@ -51,11 +51,6 @@
                     PostVisit(not);
                 }
             }
-            else if (node is Statement)
-            {
-                var statement = node as Statement;
-                Visit(statement);
-            }
             else if (node is GroupOperator)
             {
                 var group = node as GroupOperator;
@@ -64,6 +59,11 @@
                     Walk(group.Root);
                     PostVisit(group);
                 }
+            }
+            else if (node is Statement)
+            {
+                var statement = node as Statement;
+                Visit(statement);
             }
             else
             {

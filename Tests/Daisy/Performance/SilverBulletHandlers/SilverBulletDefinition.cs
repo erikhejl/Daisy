@@ -11,9 +11,9 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance
 
     using Ancestry.Daisy.Statements;
 
-    public abstract class SilverBulletHandler : ReflectionStatementHandler
+    public abstract class SilverBulletDefinition : ReflectionStatementDefinition
     {
-        protected SilverBulletHandler(Type controllerType, string method) : base(controllerType.GetMethod(method), controllerType) { }
+        protected SilverBulletDefinition(Type controllerType, string method) : base(controllerType.GetMethod(method), controllerType) { }
 
         public abstract bool Execute(InvokationContext context);
     }

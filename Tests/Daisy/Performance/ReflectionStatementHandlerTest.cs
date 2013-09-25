@@ -22,52 +22,24 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance
 
         [Test]
         [Ignore]
-        public void ItCreatesControllerQuickly()
-        {
-            var type = typeof(MyController);
-            var method = type.GetMethod("MyStatement");
-            var refHandler = new ReflectionStatementHandler(method, type);
-            var context = new InvokationContext() {
-                Scope = "The Scope",
-                Context = "The Context",
-                Attachments = "The Attachments",
-                Statement = "The Statement"
-            };
-            const int iterations = 1000000;
-
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            for (int i = 0; i < iterations; ++i)
-            {
-                var obj = refHandler.CreateController();
-            }
-            stopwatch.Stop();
-            Console.WriteLine("Elapsed: " + stopwatch.ElapsedMilliseconds);
-            Console.WriteLine("Per invokation: " + ((double)stopwatch.ElapsedMilliseconds)/iterations);
-            Assert.Less(stopwatch.ElapsedMilliseconds, 200);
-        }
-
-        [Test]
-        [Ignore]
         public void ItInitializesControllerQuickly()
         {
             var type = typeof(MyController);
             var method = type.GetMethod("MyStatement");
-            var refHandler = new ReflectionStatementHandler(method, type);
+            var refHandler = (ReflectionStatementDefinition.ReflectionLinkedStatement)new ReflectionStatementDefinition(method, type)
+                .Link("MyStatement");
             var context = new InvokationContext() {
                 Scope = "The Scope",
                 Context = "The Context",
                 Attachments = "The Attachments",
-                Statement = "The Statement"
             };
-            var obj = refHandler.CreateController();
             const int iterations = 1000000;
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             for (int i = 0; i < iterations; ++i)
             {
-                refHandler.InitializeController(obj, context);
+                refHandler.InitializeController(refHandler.CreateController(), context);
             }
             stopwatch.Stop();
             Console.WriteLine("Elapsed: " + stopwatch.ElapsedMilliseconds);
@@ -80,7 +52,8 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance
         {
             var type = typeof(MyController);
             var method = type.GetMethod("MyStatement");
-            var refHandler = new ReflectionStatementHandler(method, type);
+            var refHandler = (ReflectionStatementDefinition.ReflectionLinkedStatement)new ReflectionStatementDefinition(method, type)
+                .Link("My Statement");
             var inst = new MyController() {
                 Scope = "The Scope",
                 Context = "The Context",
@@ -93,7 +66,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance
             stopwatch.Start();
             for (int i = 0; i < iterations; ++i)
             {
-                refHandler.Execute(inst,parameters);
+                refHandler.Execute(inst, parameters);
             }
             stopwatch.Stop();
             Console.WriteLine("Elapsed: " + stopwatch.ElapsedMilliseconds);

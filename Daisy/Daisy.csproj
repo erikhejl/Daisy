@@ -49,10 +49,9 @@
     <Compile Include="Language\Walks\DaisyDebugPrinter.cs" />
     <Compile Include="Language\WhitespaceEater.cs" />
     <Compile Include="Program\DaisyRuntimeException.cs" />
-    <Compile Include="Linking\DaisyLinks.cs" />
     <Compile Include="Program\DaisyProgram.cs" />
     <Compile Include="Linking\DaisyLinker.cs" />
-    <Compile Include="Linking\DaisyStatementLink.cs" />
+    <Compile Include="Linking\LinkedDaisyStatement.cs" />
     <Compile Include="Linking\FailedLinkException.cs" />
     <Compile Include="Language\Walks\AstTreeWalker.cs" />
     <Compile Include="Language\AST\AndOperator.cs" />
@@ -74,10 +73,10 @@
     <Compile Include="Utils\MultiMap.cs" />
     <Compile Include="Utils\Maybe.cs" />
     <Compile Include="Statements\CannotExecuteStatementException.cs" />
-    <Compile Include="Statements\ReflectionStatementHandler.cs" />
+    <Compile Include="Statements\ReflectionStatementDefinition.cs" />
     <Compile Include="Statements\MatchesAttribute.cs" />
     <Compile Include="Statements\InvokationContext.cs" />
-    <Compile Include="Statements\IStatementHandler.cs" />
+    <Compile Include="Statements\IStatementDefinition.cs" />
     <Compile Include="Statements\StatementController.cs" />
     <Compile Include="Language\UnexpectedEndOfStreamException.cs" />
     <Compile Include="Language\UnexpectedTokenException.cs" />

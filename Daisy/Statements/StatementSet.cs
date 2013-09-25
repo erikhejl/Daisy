@@ -7,7 +7,7 @@
 
     public class StatementSet
     {
-        private readonly List<IStatementHandler> statements = new List<IStatementHandler>();
+        private readonly List<IStatementDefinition> statements = new List<IStatementDefinition>();
 
         public StatementSet FromAssembly(Assembly assembly)
         {
@@ -20,13 +20,13 @@
             return this;
         }
 
-        public StatementSet Add(IStatementHandler statementHandler)
+        public StatementSet Add(IStatementDefinition statementDefinition)
         {
-            statements.Add(statementHandler);
+            statements.Add(statementDefinition);
             return this;
         }
 
-        public StatementSet Add(IEnumerable<IStatementHandler> statementHandlers)
+        public StatementSet Add(IEnumerable<IStatementDefinition> statementHandlers)
         {
             foreach (var sh in statementHandlers) Add(sh);
             return this;
@@ -52,10 +52,10 @@
             var methods = controllerType.GetMethods(BindingFlags.Public | BindingFlags.Instance);
             statements.AddRange(methods
                 .Where(StaticAnalysis.IsStatementMethod)
-                .Select(m => new ReflectionStatementHandler(m,controllerType)));
+                .Select(m => new ReflectionStatementDefinition(m,controllerType)));
             return this;
         }
 
-        public IEnumerable<IStatementHandler> Statements { get { return statements; } }
+        public IEnumerable<IStatementDefinition> Statements { get { return statements; } }
     }
 }

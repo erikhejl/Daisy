@@ -5,7 +5,7 @@ namespace Ancestry.Daisy.Linking
 
     using Ancestry.Daisy.Statements;
 
-    public class DaisyStatementLink 
+    public class LinkedDaisyStatement 
     {
         public Match Match { get; set; }
 
@@ -13,7 +13,6 @@ namespace Ancestry.Daisy.Linking
 
         public Type ScopeType { get; set; }
 
-        public IStatementHandler Handler { get; set; }
-
+        public IStatementDefinition Definition { get; set; }
     }
 }

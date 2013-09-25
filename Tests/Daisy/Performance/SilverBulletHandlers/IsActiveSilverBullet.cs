@@ -12,7 +12,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance.SilverBulletHandlers
     using Ancestry.Daisy.Tests.Daisy.Component.Controllers;
     using Ancestry.Daisy.Tests.Daisy.Component.Domain;
 
-    public class IsActiveSilverBullet : SilverBulletHandler
+    public class IsActiveSilverBullet : SilverBulletDefinition
     {
         public IsActiveSilverBullet()
             : base(typeof(UserController), "IsActive")

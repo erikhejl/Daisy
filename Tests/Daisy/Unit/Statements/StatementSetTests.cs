@@ -15,7 +15,7 @@
         {
             var load = new StatementSet();
             load.FromAssemblyOf(typeof(StatementSetTests));
-            Assert.That(load.Statements.OfType<ReflectionStatementHandler>().Any(x => x.Name == "R1"));
+            Assert.That(load.Statements.OfType<ReflectionStatementDefinition>().Any(x => x.Name == "R1"));
         }
 
         [Test]
@@ -23,7 +23,7 @@
         {
             var load = new StatementSet();
             load.FromController(typeof(MyStatement));
-            Assert.That(load.Statements.OfType<ReflectionStatementHandler>().Any(x => x.Name == "R1"));
+            Assert.That(load.Statements.OfType<ReflectionStatementDefinition>().Any(x => x.Name == "R1"));
         }
 
         public class MyStatement : StatementController<string>

@@ -31,11 +31,11 @@
             return title;
         }
 
-        public static StatementDocumentation FromReflection(ReflectionStatementHandler reflectionStatementHandler, ICommentDocumentation commentDocumentation)
+        public static StatementDocumentation FromReflection(ReflectionStatementDefinition reflectionStatementDefinition, ICommentDocumentation commentDocumentation)
         {
-            var methodDocs = commentDocumentation.ForMethod(reflectionStatementHandler.MethodInfo);
+            var methodDocs = commentDocumentation.ForMethod(reflectionStatementDefinition.MethodInfo);
             return new StatementDocumentation() { 
-                Parameters = (reflectionStatementHandler.Parameters ?? Enumerable.Empty<StatementParameter>())
+                Parameters = (reflectionStatementDefinition.Parameters ?? Enumerable.Empty<StatementParameter>())
                               .Select(p => new ParameterDocumentation(){
                                   Name = p.Name,
                                   Type = p.Type,
@@ -44,23 +44,23 @@
                               })
                               .ToList(),
                 Description = methodDocs.With(x => x.Summary),
-                ScopeType = reflectionStatementHandler.ScopeType,
-                Title = ExtractTitle(reflectionStatementHandler)
+                ScopeType = reflectionStatementDefinition.ScopeType,
+                Title = ExtractTitle(reflectionStatementDefinition)
             };
         }
 
-        private static string ExtractTitle(ReflectionStatementHandler reflectionStatementHandler)
+        private static string ExtractTitle(ReflectionStatementDefinition reflectionStatementDefinition)
         {
             //Use attribute if present
-            var titleAttr = reflectionStatementHandler
+            var titleAttr = reflectionStatementDefinition
                 .MethodInfo.GetCustomAttributes(typeof(TitleAttribute),true)
                 .OfType<TitleAttribute>()
                 .Select(x => x.Title)
                 .FirstOrDefault(x => !string.IsNullOrEmpty(x));
             if (titleAttr != null) return titleAttr;
-            var expression = reflectionStatementHandler.MatchingCriteria.ToString();
-            if (Regex.IsMatch(expression, @"\(\?")) return reflectionStatementHandler.MethodInfo.Name; //Compilcated regexes just use method name
-            return ParseTitle(expression, reflectionStatementHandler.Parameters);
+            var expression = reflectionStatementDefinition.MatchingCriteria.ToString();
+            if (Regex.IsMatch(expression, @"\(\?")) return reflectionStatementDefinition.MethodInfo.Name; //Compilcated regexes just use method name
+            return ParseTitle(expression, reflectionStatementDefinition.Parameters);
         }
     }
 

@@ -1,12 +1,16 @@
 ﻿namespace Ancestry.Daisy.Language.AST
 {
+    using Ancestry.Daisy.Statements;
+
     public class Statement : IDaisyAstNode
     {
-        public string Command { get; private set; }
+        public string Text { get; private set; }
+
+        public ILinkedStatement LinkedStatement { get; set; }
 
         public Statement(string statement)
         {
-            Command = statement;
+            Text = statement;
         }
     }
 }

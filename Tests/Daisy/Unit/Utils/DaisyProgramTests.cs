@@ -16,15 +16,6 @@
     [TestFixture,Category("Unit")]
     public class DaisyProgramTests
     {
-        [Test]
-        [ExpectedException(typeof(ArgumentException))]
-        public void ItRequiresLinksToOperateOnSameBaseTypeAsProgram()
-        {
-            var links = new DaisyLinks(typeof(int));
-            var ast = new DaisyAst(new Statement("Hi"));
-            var load = new DaisyProgram<string>(ast, links);
-        }
-
         private TestCaseData[] itRunsPrograms =
             {
                 new TestCaseData("t")
@@ -66,10 +57,9 @@
         public bool ItRunsPrograms(string code)
         {
             var ast = DaisyParser.Parse(code);
-            var links = new DaisyLinks(typeof(int));
-            AddLink(links, "t", i => true);
-            AddLink(links, "f", i => false);
-            var program = new DaisyProgram<int>(ast, links);
+            AddLink(ast, "t", i => true);
+            AddLink(ast, "f", i => false);
+            var program = new DaisyProgram<int>(ast);
             var result = program.Execute(1).Result;
             return result;
         }
@@ -80,56 +70,32 @@
         public bool ItExecutesAggregates(string code,string values)
         {
             var ast = DaisyParser.Parse(code);
-            var links = new DaisyLinks(typeof(IEnumerable<int>));
-            AddLink(links, "even", i => i%2 == 0);
-            AddLink(links, "t", i => true);
-            AddAggregateLink(links, "any");
-            var program = new DaisyProgram<IEnumerable<int>>(ast, links);
+            AddLink(ast, "even", i => i%2 == 0);
+            AddLink(ast, "t", i => true);
+            AddAggregateLink(ast, "any");
+            var program = new DaisyProgram<IEnumerable<int>>(ast);
             var result = program.Execute(values.Split(',').Select(int.Parse)).Result;
             return result;
         }
 
-
-        [Test]
-        public void ItSanityChecksLinksForStatementEquality()
+        public void AddLink(DaisyAst ast, string rawStatement, Func<int,bool> predicate)
         {
-            var ex = Assert.Catch<DaisyRuntimeException>(() =>
-                DaisyProgram<int>.SanityCheckLink(new DaisyStatementLink() { Statement = "a" }, null, "b"));
-            Assert.That(ex.Message.Contains("statement"));
+            var statement = new FakeStatement(rawStatement, predicate).Link(rawStatement);
+            new AstCollector(ast)
+                .OfType<Statement>()
+                .Where(x => x.Text == rawStatement)
+                .Select(x => { x.LinkedStatement = statement; return x; }) //Sigh, I wish I had a for each
+                .ToList();
         }
 
-        [Test]
-        public void ItSanityChecksLinksForScopeConsistency()
+        private void AddAggregateLink(DaisyAst ast, string rawStatement)
         {
-            var ex = Assert.Catch<DaisyRuntimeException>(() =>
-                DaisyProgram<int>.SanityCheckLink(new DaisyStatementLink() {
-                        Statement = "a",
-                        ScopeType = typeof(int)
-                    },
-                "bad scope", "a"));
-            Assert.That(ex.Message.Contains("scope"));
-        }
-
-        public void AddLink(DaisyLinks links, string rawStatement, Func<int,bool> predicate)
-        {
-            var statement = new FakeStatement(rawStatement, predicate);
-            links.AddLink(new DaisyStatementLink() {
-                Match = statement.Matches(new MatchingContext(){Statement = rawStatement}),
-                Handler = statement,
-                ScopeType = typeof(int),
-                Statement = rawStatement
-            });
-        }
-
-        private void AddAggregateLink(DaisyLinks links, string rawStatement)
-        {
-            var statement = new FakeAggregate<int,int>(rawStatement);
-            links.AddLink(new DaisyStatementLink() {
-                Match = statement.Matches(new MatchingContext(){Statement = rawStatement}),
-                Handler = statement,
-                ScopeType = typeof(IEnumerable<int>),
-                Statement = rawStatement
-            });
+            var statement = new FakeAggregate<int,int>(rawStatement).Link(rawStatement);
+            new AstCollector(ast)
+                .OfType<Statement>()
+                .Where(x => x.Text == rawStatement)
+                .Select(x => { x.LinkedStatement = statement; return x; }) //Sigh, I wish I had a for each
+                .ToList();
         }
     }
 }

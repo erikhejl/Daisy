@@ -16,7 +16,7 @@
         [TestCase("IsResidence",Result = "Is\\s+Residence")]
         public string ItNormalizesMethodNames(string name)
         {
-            return ReflectionStatementHandler.NormalizeMethodName(name);
+            return ReflectionStatementDefinition.NormalizeMethodName(name);
         }
 
         private class TestStatements : StatementController<int>
@@ -67,7 +67,7 @@
         public bool ItMatchesStatements(string statment, string statement)
         {
             var m = GetMethod(statment);
-            var load = new ReflectionStatementHandler(m, typeof(TestStatements));
+            var load = new ReflectionStatementDefinition(m, typeof(TestStatements));
             var match = load.Matches(new MatchingContext() {
                     Statement = statement
                 });
@@ -84,24 +84,13 @@
         [TestCase("R7","I haz cheeseburgers",1,Result = true, TestName = "It injects null for non-captured groups")]
         public bool ItExecutesStatements(string statement, string rawStatement, int scope)
         {
-            var load = new ReflectionStatementHandler(GetMethod(statement), typeof(TestStatements));
-            var match = load.Matches(new MatchingContext() {
-                    ScopeType = scope.GetType(),
-                    Statement = rawStatement
-
-                });
-            Assert.True(match.Success);
-            return load.Execute(new InvokationContext() {
-                    Statement = rawStatement,
+            var load = new ReflectionStatementDefinition(GetMethod(statement), typeof(TestStatements));
+            var linked = load.Link(rawStatement);
+            Assert.IsNotNull(linked);
+            return linked.Execute(new InvokationContext() {
                     Scope = scope,
-                    Match = match,
                     Context = new object(),
                 });
-        }
-
-        private MethodInfo GetMethod(string statementName)
-        {
-            return typeof(TestStatements).GetMethod(statementName);
         }
 
         [TestCase("R1", "R1", "1,2,3,4", 2, Result = true, TestName = "It returns result of statment")]
@@ -112,17 +101,12 @@
         public bool ItExecutesAggregates(string statement, string rawStatement, string strScope, int expectedCalls)
         {
             var scope = strScope.Split(',').Select(int.Parse);
-            var load = new ReflectionStatementHandler(GetAggregateMethod(statement), typeof(TestAggregates));
-            var match = load.Matches(new MatchingContext() {
-                ScopeType = scope.GetType(),
-                Statement = rawStatement
-            });
-            Assert.True(match.Success);
+            var load = new ReflectionStatementDefinition(GetAggregateMethod(statement), typeof(TestAggregates));
+            var link = load.Link(rawStatement);
+            Assert.IsNotNull(link);
             var calls = 0;
-            var result = load.Execute(new InvokationContext() {
-                Statement = rawStatement,
+            var result = link.Execute(new InvokationContext() {
                 Scope = scope,
-                Match = match,
                 Proceed =  o =>
                 {
                     calls++;
@@ -170,6 +154,11 @@
             {
                 return false;
             }
+        }
+
+        private MethodInfo GetMethod(string statementName)
+        {
+            return typeof(TestStatements).GetMethod(statementName);
         }
     }
 }

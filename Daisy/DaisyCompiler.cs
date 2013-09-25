@@ -17,8 +17,8 @@ namespace Ancestry.Daisy
         {
             var ast = DaisyParser.Parse(code);
             var linker = new DaisyLinker(ast, statements, typeof(T));
-            var links = linker.Link();
-            return new DaisyProgram<T>(ast, links);
+            linker.Link();
+            return new DaisyProgram<T>(ast);
         }
     }
 }

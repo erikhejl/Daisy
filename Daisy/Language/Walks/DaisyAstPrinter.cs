@@ -62,7 +62,7 @@
         protected override void Visit(Statement node)
         {
             Pad(sb, indent);
-            sb.Append(node.Command);
+            sb.Append(node.Text);
             sb.Append("\r\n");
         }
 
@@ -70,10 +70,10 @@
         {
             Pad(sb, indent);
             sb.Append("GROUP");
-            if(!string.IsNullOrEmpty(node.Command))
+            if(!string.IsNullOrEmpty(node.Text))
             {
                 sb.Append("-");
-                sb.Append(node.Command);
+                sb.Append(node.Text);
             }
             sb.Append("\r\n");
             indent++;

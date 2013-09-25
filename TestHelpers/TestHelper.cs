@@ -10,15 +10,13 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using ExecutionContext = System.Threading.ExecutionContext;
-
     public class TestHelper
     {
 
         public static bool Matches(Type controller, string methodName, string statement)
         {
             var method = GetMethod(controller, methodName);
-            var statementHandler = new ReflectionStatementHandler(method, controller);
+            var statementHandler = new ReflectionStatementDefinition(method, controller);
             return statementHandler.Matches(new MatchingContext() {
                     Statement = statement,
                 }).Success;
@@ -38,7 +36,7 @@
                 proceed = o => false;
             context = context ?? new ExpandoObject();
             var method = GetMethod(controller, methodName);
-            var statementHandler = new ReflectionStatementHandler(method, controller);
+            var statementHandler = new ReflectionStatementDefinition(method, controller);
             var invokationResult = new InvokationResult()
                 {
                     Context = context,
@@ -51,12 +49,12 @@
                     ScopeType = typeof(T)
                 });
             if (!invokationResult.Matched) return invokationResult;
-            invokationResult.Result = statementHandler.Execute(new InvokationContext() {
-                Statement = statement,
+            var link = statementHandler.Link(statement);
+            if (link == null) throw new Exception("If matched, should have linked, but didn't");
+            invokationResult.Result = link.Execute(new InvokationContext() {
                 Context = invokationResult.Context,
                 Attachments = invokationResult.Attachments,
                 Scope = scope,
-                Match = invokationResult.Match,
                 Proceed = proceed
             });
             return invokationResult;

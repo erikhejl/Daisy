@@ -75,7 +75,7 @@
             Consume(TokenKind.StartGroup);
             var groupInner = ParseExpression();
             Consume(TokenKind.EndGroup);
-            return new GroupOperator(head.With(x => head.Command),
+            return new GroupOperator(head.With(x => head.Text),
                 groupInner);
         }
 

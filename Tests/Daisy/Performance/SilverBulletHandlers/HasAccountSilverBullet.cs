@@ -10,7 +10,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance.SilverBulletHandlers
     using Ancestry.Daisy.Tests.Daisy.Component.Controllers;
     using Ancestry.Daisy.Tests.Daisy.Component.Domain;
 
-    public class HasAccountSilverBullet : SilverBulletHandler
+    public class HasAccountSilverBullet : SilverBulletDefinition
     {
         public HasAccountSilverBullet()
             : base(typeof(UserController), "HasAccount")

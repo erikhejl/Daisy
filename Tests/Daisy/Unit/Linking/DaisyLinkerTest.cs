@@ -8,6 +8,7 @@
     using Ancestry.Daisy.Language.AST;
     using Ancestry.Daisy.Linking;
     using Ancestry.Daisy.Statements;
+    using Ancestry.Daisy.Tests.TestObjects;
 
     using Moq;
 
@@ -19,9 +20,9 @@
         [Test]
         public void ItLinksStatements()
         {
-            var match = new Regex("a").Match("a");
-            var statement = new Mock<IStatementHandler>();
-            statement.Setup(x => x.Matches(It.IsAny<MatchingContext>())).Returns(match);
+            var linkedStatement = new Mock<ILinkedStatement>();
+            var statement = new Mock<IStatementDefinition>();
+            statement.Setup(x => x.Link(It.IsAny<string>())).Returns(linkedStatement.Object);
             statement.SetupGet(x => x.Name).Returns("Tennant");
             statement.SetupGet(x => x.ScopeType).Returns(typeof(Int32));
             var statementSet = new StatementSet().Add(statement.Object);
@@ -30,31 +31,8 @@
 
             var load = new DaisyLinker(ast,statementSet,typeof(int));
 
-            var links = load.Link();
-            var linkFor = links.StatementFor("Hello gov'nor", typeof(int));
-            Assert.AreEqual("Tennant",linkFor.Handler.Name);
-            Assert.AreEqual(match, linkFor.Match);
-        }
-
-        [Test]
-        public void ItDoesNotLinkAnonymousGroups()
-        {
-            var match = new Regex("a").Match("a");
-            var statement = new Mock<IStatementHandler>();
-            statement.Setup(x => x.Matches(It.IsAny<MatchingContext>())).Returns(match);
-            statement.SetupGet(x => x.Name).Returns("Tennant");
-            statement.SetupGet(x => x.ScopeType).Returns(typeof(Int32));
-
-            var statementSet = new StatementSet().Add(statement.Object);
-
-            var ast = new DaisyAst(new GroupOperator(null,new Statement("a")));
-
-            var load = new DaisyLinker(ast,statementSet,typeof(int));
-
-            var links = load.Link();
-            var linkFor = links.StatementFor("a", typeof(int));
-            Assert.AreEqual("Tennant",linkFor.Handler.Name);
-            Assert.AreEqual(match, linkFor.Match);
+            load.Link();
+            statement.Verify(x => x.Link(It.IsAny<string>()), Times.Once());
         }
 
         [Test]
@@ -71,14 +49,17 @@
         [Test]
         public void ItDiesOnMultipleLinksFound()
         {
-            var match = new Regex("a").Match("a");
-            var statement = new Mock<IStatementHandler>();
-            statement.Setup(x => x.Matches(It.IsAny<MatchingContext>())).Returns(match);
+            var linkedStatement1 = new Mock<ILinkedStatement>();
+            var statement = new Mock<IStatementDefinition>();
+            linkedStatement1.SetupGet(x => x.Definition).Returns(statement.Object);
+            statement.Setup(x => x.Link(It.IsAny<string>())).Returns(linkedStatement1.Object);
             statement.SetupGet(x => x.Name).Returns("David");
             statement.SetupGet(x => x.ScopeType).Returns(typeof(int));
 
-            var statement2 = new Mock<IStatementHandler>();
-            statement2.Setup(x => x.Matches(It.IsAny<MatchingContext>())).Returns(match);
+            var linkedStatement2 = new Mock<ILinkedStatement>();
+            var statement2 = new Mock<IStatementDefinition>();
+            linkedStatement2.SetupGet(x => x.Definition).Returns(statement2.Object);
+            statement2.Setup(x => x.Link(It.IsAny<string>())).Returns(linkedStatement2.Object);
             statement2.SetupGet(x => x.Name).Returns("Tennant");
             statement2.SetupGet(x => x.ScopeType).Returns(typeof(int));
             var statementSet = new StatementSet().Add(statement.Object).Add(statement2.Object);
@@ -90,26 +71,5 @@
             Assert.AreEqual(1, ex.Errors.Count);
             Assert.IsInstanceOf<MultipleLinksFoundError>(ex.Errors.First());
         }
-
-        private class A {}
-        private class B : A {}
-
-        [Test]
-        public void ItAllowsLinkingToMoreGeneralStatementHandlers()
-        {
-            var match = new Regex("a").Match("a");
-            var statement = new Mock<IStatementHandler>();
-            statement.Setup(x => x.Matches(It.IsAny<MatchingContext>())).Returns(match);
-            statement.SetupGet(x => x.ScopeType).Returns(typeof(A));
-            var statementSet = new StatementSet().Add(statement.Object);
-
-            var ast = new DaisyAst(new Statement("a"));
-
-            var sut = new DaisyLinker(ast, statementSet, typeof(B));
-            var links = sut.Link();
-            var matched = links.StatementFor("a", typeof(B));
-            Assert.IsNotNull(matched);
-        }
-
     }
 }

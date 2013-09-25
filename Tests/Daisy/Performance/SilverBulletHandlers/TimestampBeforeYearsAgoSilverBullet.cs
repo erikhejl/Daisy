@@ -12,7 +12,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance.SilverBulletHandlers
     using Ancestry.Daisy.Tests.Daisy.Component.Controllers;
     using Ancestry.Daisy.Tests.Daisy.Component.Domain;
 
-    public class TimestampBeforeYearsAgoSilverBullet : SilverBulletHandler
+    public class TimestampBeforeYearsAgoSilverBullet : SilverBulletDefinition
     {
         public TimestampBeforeYearsAgoSilverBullet()
             : base(typeof(TransactionController), "TimestampBeforeYearsAgo")

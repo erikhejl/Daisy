@@ -21,7 +21,7 @@
             get
             {
                 return statements.Statements
-                    .OfType<ReflectionStatementHandler>()
+                    .OfType<ReflectionStatementDefinition>()
                     .Select(x => StatementDocumentation.FromReflection(x,commentDocumentation))
                     .ToList()
                     ;

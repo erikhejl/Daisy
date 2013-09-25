@@ -1,16 +1,13 @@
 ﻿namespace Ancestry.Daisy.Language.AST
 {
-    public class GroupOperator : IDaisyAstNode
+    public class GroupOperator : Statement
     {
-        public string Command { get; private set; }
-
         public IDaisyAstNode Root { get; private set; }
 
-        public bool HasCommand { get { return !string.IsNullOrEmpty(Command); } }
+        public bool HasCommand { get { return !string.IsNullOrEmpty(Text); } }
 
-        public GroupOperator(string command, IDaisyAstNode root)
+        public GroupOperator(string text, IDaisyAstNode root) : base(text)
         {
-            Command = command;
             Root = root;
         }
     }
