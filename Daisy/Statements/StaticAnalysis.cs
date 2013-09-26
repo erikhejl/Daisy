@@ -4,6 +4,9 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using System.Reflection.Emit;
+
+    using Fasterflect;
 
     public static class StaticAnalysis
     {
@@ -72,7 +75,13 @@
             var callInputOnX = Expression.Invoke(input, convert);
             var body2 = Expression.Lambda(callInputOnX, x);
             var body1 = Expression.Lambda(typeof(TransformPredicate),body2, input);
-            return (TransformPredicate) body1.Compile();
+            var compiled = body1.Compile();
+            return (TransformPredicate)compiled;
+            /*
+            var destFunc = typeof(Func<,>).MakeGenericType(destType, typeof(bool));
+            var endType = typeof(Func<,>).MakeGenericType(typeof(Func<object, bool>), destFunc);
+            return (TransformPredicate)compiled.Method.CreateDelegate(endType);
+            */
         }
 
         public delegate object TransformPredicate(Func<object,bool> weak);

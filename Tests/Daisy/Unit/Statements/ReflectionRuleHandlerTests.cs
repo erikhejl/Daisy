@@ -78,8 +78,8 @@
         [TestCase("R2","R2",9,Result = true, TestName = "It sets scope")]
         [TestCase("R2","R2",8,Result = false, TestName = "It sets scope. Inverse")]
         [TestCase("R3","I haz 2 cheeseburgers",2,Result = true, TestName = "It sets parameter values")]
-        [TestCase("R4","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotExecuteStatementException), TestName = "It errors when cannot make parameter")]
-        [TestCase("R5","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotExecuteStatementException), TestName = "It errors when cannot make parameter")]
+        [TestCase("R4","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotLinkStatementException), TestName = "It errors when cannot make parameter")]
+        [TestCase("R5","I haz 2 cheeseburgers",2,ExpectedException = typeof(CannotLinkStatementException), TestName = "It errors when cannot make parameter")]
         [TestCase("R6","R6",9,Result = true, TestName = "It sets context")]
         [TestCase("R7","I haz cheeseburgers",1,Result = true, TestName = "It injects null for non-captured groups")]
         public bool ItExecutesStatements(string statement, string rawStatement, int scope)
@@ -96,8 +96,8 @@
         [TestCase("R1", "R1", "1,2,3,4", 2, Result = true, TestName = "It returns result of statment")]
         [TestCase("R1", "R1", "1,3,5", 3, Result = false, TestName = "It sets scope. Inverse")]
         [TestCase("R2", "I haz 10 cheeseburgers", "1,2,3",2 , Result = true, TestName = "It sets parameter values")]
-        [TestCase("R3", "I haz 10 cheeseburgers", "1", 1, ExpectedException = typeof(CannotExecuteStatementException), TestName = "It errors when cannot make parameter")] //too few
-        [TestCase("R4", "I haz 10 cheeseburgers", "1", 1, ExpectedException = typeof(CannotExecuteStatementException), TestName = "It errors when cannot make parameter")] //too many
+        [TestCase("R3", "I haz 10 cheeseburgers", "1", 1, ExpectedException = typeof(CannotLinkStatementException), TestName = "It errors when cannot make parameter")] //too few
+        [TestCase("R4", "I haz 10 cheeseburgers", "1", 1, ExpectedException = typeof(CannotLinkStatementException), TestName = "It errors when cannot make parameter")] //too many
         public bool ItExecutesAggregates(string statement, string rawStatement, string strScope, int expectedCalls)
         {
             var scope = strScope.Split(',').Select(int.Parse);

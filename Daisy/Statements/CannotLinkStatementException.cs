@@ -3,10 +3,10 @@ namespace Ancestry.Daisy.Statements
     using System;
     using System.Reflection;
 
-    public class CannotExecuteStatementException : Exception
+    public class CannotLinkStatementException : Exception
     {
 
-        public CannotExecuteStatementException(MethodInfo method,string message) : base(message)
+        public CannotLinkStatementException(MethodInfo method,string message) : base(message)
         {
             StatementName = method.Name;
         }

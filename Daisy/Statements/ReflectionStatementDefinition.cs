@@ -23,6 +23,7 @@ namespace Ancestry.Daisy.Statements
 
             private readonly ReflectionStatementDefinition definition;
             private readonly Match match;
+            private bool transformsToValueType;
 
             private object[] mappedParameters;
 
@@ -54,7 +55,7 @@ namespace Ancestry.Daisy.Statements
                     {
                         if(ptrGroups>=match.Groups.Count)
                         {
-                            throw new CannotExecuteStatementException(
+                            throw new CannotLinkStatementException(
                                 definition.MethodInfo,
                                 string.Format("Statement {1} has more parameters than captures available to it." 
                                 + "{0} are available.",
@@ -70,7 +71,7 @@ namespace Ancestry.Daisy.Statements
                 }
                 if(objs.Count != definition.Parameters.Count)
                 {
-                    throw new CannotExecuteStatementException(
+                    throw new CannotLinkStatementException(
                         definition.MethodInfo,
                         string.Format("Statement {2} wants {0} parameters from statement," 
                         + " but only {1} could be matched.",
@@ -78,7 +79,7 @@ namespace Ancestry.Daisy.Statements
                 }
                 if(ptrGroups < match.Groups.Count)
                 {
-                    throw new CannotExecuteStatementException(
+                    throw new CannotLinkStatementException(
                         definition.MethodInfo,
                         string.Format("Statement {2} did not use all captures available to it." 
                         + "It used {0} but {1} are available.",
@@ -92,7 +93,7 @@ namespace Ancestry.Daisy.Statements
                 try { return Convert.ChangeType(obj, param.Type); }
                 catch(FormatException e)
                 {
-                    throw new CannotExecuteStatementException(definition.MethodInfo,
+                    throw new CannotLinkStatementException(definition.MethodInfo,
                         string.Format("Cannot convert '{0}' into {1}, to match parameter '{2}'",
                         obj, param.Type, param.Name))
                         {
@@ -111,7 +112,11 @@ namespace Ancestry.Daisy.Statements
                 delegateForAttachmentsSetter = controllerType.DelegateForSetPropertyValue("Attachments");
                 delegateForInvokation = definition.MethodInfo.DelegateForCallMethod();
                 controllerInstance = CreateController();
-                if (definition.TransformsScopeTo != null) scopeConverter = StaticAnalysis.CreateConverter(definition.TransformsScopeTo);
+                if (definition.TransformsScopeTo != null)
+                {
+                    scopeConverter = StaticAnalysis.CreateConverter(definition.TransformsScopeTo);
+                    transformsToValueType = definition.TransformsScopeTo.IsValueType;
+                }
             }
 
             public IStatementDefinition Definition { get; private set; }
@@ -121,7 +126,9 @@ namespace Ancestry.Daisy.Statements
                 InitializeController(controllerInstance,context);
                 var methodParams = Definition.TransformsScopeTo == null ?
                     mappedParameters :
-                    mappedParameters.Select(x => x == proceedHolder ? scopeConverter(context.Proceed) : x).ToArray();
+                    mappedParameters.Select(x => x == proceedHolder ?
+                        transformsToValueType ? scopeConverter(context.Proceed) : context.Proceed 
+                        : x).ToArray();
                 return Execute(controllerInstance, methodParams);
             }
 
@@ -139,7 +146,7 @@ namespace Ancestry.Daisy.Statements
                 }
                 catch
                 {
-                    throw new CannotExecuteStatementException(definition.MethodInfo,
+                    throw new CannotLinkStatementException(definition.MethodInfo,
                         string.Format("Cannot build statement {0} because it's controller could not be constructed.",
                             definition.MethodInfo.Name));
                 }

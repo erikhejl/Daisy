@@ -72,7 +72,7 @@
     <Compile Include="Utils\FastFlect.cs" />
     <Compile Include="Utils\MultiMap.cs" />
     <Compile Include="Utils\Maybe.cs" />
-    <Compile Include="Statements\CannotExecuteStatementException.cs" />
+    <Compile Include="Statements\CannotLinkStatementException.cs" />
     <Compile Include="Statements\ReflectionStatementDefinition.cs" />
     <Compile Include="Statements\MatchesAttribute.cs" />
     <Compile Include="Statements\InvokationContext.cs" />

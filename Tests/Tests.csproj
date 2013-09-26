@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fasterflect, Version=2.1.3.0, Culture=neutral, PublicKeyToken=38d18473284c1ca7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\fasterflect.2.1.3\lib\net40\Fasterflect.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Monads.NET">
       <HintPath>..\packages\Monads.NET.1.0.3\lib\net40\Monads.NET.dll</HintPath>
@@ -73,6 +77,12 @@
     <Compile Include="Daisy\Component\Domain\User.cs" />
     <Compile Include="Daisy\Component\DomainExecutions.cs" />
     <Compile Include="Daisy\Component\EndToEndDaisyTest.cs" />
+    <Compile Include="Daisy\Component\SilverBulletHandlers\HasTransactionSilverBulletStatement.cs" />
+    <Compile Include="Daisy\Component\SilverBulletHandlers\GenericSilverBullet.cs" />
+    <Compile Include="Daisy\Component\SilverBulletHandlers\TimestampBeforeSilverBulletStatement.cs" />
+    <Compile Include="Daisy\Component\SilverBulletHandlers\HasAccountSilverBulletStatement.cs" />
+    <Compile Include="Daisy\Component\SilverBulletHandlers\GenericLink.cs" />
+    <Compile Include="Daisy\Component\SilverBulletHandlers\IsActiveSilverBulletStatement.cs" />
     <Compile Include="Daisy\Component\Statements.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
