@@ -30,7 +30,8 @@ Daisy handles the boolean algebra and linking statements to functions. Domain ex
 *  Domain adaptive. Daisy will work for nearly any domain you've got, since it let's you define the data model
 *  Open source. Openly available well tested source means you can always see what's happening under the covers
 
-
+###Using Daisy
+Daisy is available as a [nuget package]
 
 For Your Domain Experts
 ------------------------
@@ -232,3 +233,4 @@ License
 MIT
 
  [business writeable]: http://martinfowler.com/bliki/BusinessReadableDSL.html
+ [nuget package]: https://www.nuget.org/packages/Ancestry.Daisy/
