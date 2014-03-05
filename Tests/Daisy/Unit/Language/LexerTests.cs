@@ -33,6 +33,9 @@
                 new TestCaseData("AND  NOT",new []{new Token(){Kind = TokenKind.And},new Token(){Kind = TokenKind.Not}}),
                 new TestCaseData("OR  NOT",new []{new Token(){Kind = TokenKind.Or},new Token(){Kind = TokenKind.Not}}),
                 new TestCaseData("OR  NOT  a a a and a",new []{new Token(){Kind = TokenKind.Or},new Token(){Kind = TokenKind.Not}, new Token(){Kind = TokenKind.Statement, Value = "a a a and a"}}),
+                new TestCaseData("a//A comment",new []{new Token(){Kind = TokenKind.Statement, Value = "a"}}),
+                new TestCaseData("a //A comment",new []{new Token(){Kind = TokenKind.Statement, Value = "a"}}),
+                new TestCaseData("//A comment",new Token[]{}),
             };
 
         [TestCaseSource("itInterpretsLines")]
@@ -116,6 +119,17 @@ c",new []
                     }),
                 new TestCaseData(@"a
   b",new []
+                    {
+                        new Token(){Kind = TokenKind.Statement, Value = "a"},
+                        new Token(){Kind = TokenKind.StartGroup},
+                        new Token(){Kind = TokenKind.Statement, Value = "b"},
+                        new Token(){Kind = TokenKind.EndGroup},
+                        new Token(){Kind = TokenKind.EOF},
+                    }),
+                new TestCaseData(@"a
+//This is a comment
+  b //Comment 2
+  //Comment 3",new []
                     {
                         new Token(){Kind = TokenKind.Statement, Value = "a"},
                         new Token(){Kind = TokenKind.StartGroup},

@@ -16,26 +16,32 @@
 
     public class CommentDocumentation : ICommentDocumentation
     {
-        private XDocument document;
-
         private Dictionary<string, MethodDocumentation> methodDocs;
 
-        public CommentDocumentation(Stream stream)
+        private CommentDocumentation(XDocument document)
         {
-            document = XDocument.Load(stream);
-            Parse();
+            Parse(document);
         }
 
-        public CommentDocumentation(string fileName)
+        public static CommentDocumentation Parse(Stream stream)
+        {
+            return new CommentDocumentation(XDocument.Load(stream));
+        }
+
+        public static CommentDocumentation Parse(string text)
+        {
+            return new CommentDocumentation(XDocument.Parse(text));
+        }
+
+        public static CommentDocumentation ParseFile(string fileName)
         {
             using (var stream  = new FileStream(fileName, FileMode.Open))
             {
-                document = XDocument.Load(stream);
+                return new CommentDocumentation(XDocument.Load(stream));
             }
-            Parse();
         }
 
-        private void Parse()
+        private void Parse(XDocument document)
         {
             methodDocs = document
                 .Descendants()
@@ -51,7 +57,7 @@
                             .Substring(2),
                         Summary = x.Descendants()
                             .FirstOrDefault(y => y.Name == "summary")
-                            .With(y => y.Value)
+                            .With(AllInclusiveValue)
                             .With(y => y.ConsolidateWhitespace()),
                         Parameters = x.Descendants()
                                       .Where(y => y.Name == "param")
@@ -65,6 +71,22 @@
                                       .ToDictionary(z => z.name, z => z.description)
                     })
                 .ToDictionary(x => x.MethodName, x => x);
+        }
+
+        private string AllInclusiveValue(XElement ele)
+        {
+            return string.Join(" ", ele.DescendantNodes().Select(x =>
+            {
+                if (x is XText) return ((XText) x).Value;
+                if (x is XElement)
+                {
+                    var xele = (XElement) x;
+                    if (xele.HasElements)
+                        return "<" + xele.Name + ">" + AllInclusiveValue(xele) + "</" + xele.Name + ">";
+                    else return "<" + xele.Name + "/>";
+                }
+                return "";
+            }));
         }
 
         public MethodDocumentation ForMethod(MethodInfo methodInfo)

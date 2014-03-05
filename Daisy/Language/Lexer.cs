@@ -40,8 +40,6 @@
         {
             lineNum++;
             var line = reader.ReadLine();
-            if (line == null) return null;
-            if (line.Length == 0) return Enumerable.Empty<Token>();
             return InterpretLine(line);
         }
 
@@ -65,6 +63,10 @@
 
         internal IEnumerable<Token> InterpretLine(string line)
         {
+            if (line == null) return null;
+            var commentStart = line.IndexOf("//");
+            if (commentStart >= 0) line = line.Substring(0, commentStart);
+            if (line.Length == 0) return Enumerable.Empty<Token>();
             var tokens = new List<Token>();
             line = InterpretSpaces(tokens,line);
 

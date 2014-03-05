@@ -8,7 +8,7 @@
     {
         public static DocumentationSet Document(Assembly assembly, string documentationPath)
         {
-            return new DocumentationSet(new StatementSet().FromAssembly(assembly), new CommentDocumentation(documentationPath));
+            return new DocumentationSet(new StatementSet().FromAssembly(assembly), CommentDocumentation.ParseFile(documentationPath));
         }
     }
 }

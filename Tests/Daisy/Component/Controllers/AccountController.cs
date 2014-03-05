@@ -23,7 +23,8 @@
         }
 
         /// <summary>
-        /// True when the Account has a balance between two values, exclusive.
+        /// True when the Account has a balance between two values.<br/>
+        /// Bounds are exclusive.
         /// </summary>
         /// <param name="lowerEnd">The lowest value a balance may have</param>
         /// <param name="higherEnd">The highest value a balance may have</param>
