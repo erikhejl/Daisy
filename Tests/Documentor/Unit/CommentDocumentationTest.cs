@@ -17,7 +17,7 @@ namespace Ancestry.Daisy.Tests.Documentor.Unit
     public class CommentDocumentationTest
     {
         [TestCase(typeof(AccountController),"Type","True when the Account is of the given type.")]
-        [TestCase(typeof(AccountController), "IsBalanced", "True when the Account has a non-negative balance")]
+        [TestCase(typeof(AccountController), "IsBalanced", "True when the Account has a <strong>non-negative</strong> balance")]
         [TestCase(typeof(AccountController), "BalanceBetween", "True when the Account has a balance between two values. <br/> Bounds are exclusive.")]
         public void ItParsesSummaries(Type type, string methodName, string summary)
         {

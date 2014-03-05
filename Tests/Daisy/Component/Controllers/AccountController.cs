@@ -14,7 +14,7 @@
         }
 
         /// <summary>
-        /// True when the Account has a non-negative balance
+        /// True when the Account has a <strong>non-negative</strong> balance
         /// </summary>
         /// <returns></returns>
         public bool IsBalanced()

@@ -75,18 +75,24 @@
 
         private string AllInclusiveValue(XElement ele)
         {
+            bool ignoreNext = false;
             return string.Join(" ", ele.DescendantNodes().Select(x =>
             {
+                if (ignoreNext)
+                {
+                    ignoreNext = false;
+                    return null;
+                }
                 if (x is XText) return ((XText) x).Value;
                 if (x is XElement)
                 {
                     var xele = (XElement) x;
-                    if (xele.HasElements)
-                        return "<" + xele.Name + ">" + AllInclusiveValue(xele) + "</" + xele.Name + ">";
-                    else return "<" + xele.Name + "/>";
+                    if (xele.IsEmpty) return "<" + xele.Name + "/>";
+                    ignoreNext = true;
+                    return "<" + xele.Name + ">" + AllInclusiveValue(xele) + "</" + xele.Name + ">";
                 }
-                return "";
-            }));
+                return null;
+            }).Where(x => x != null));
         }
 
         public MethodDocumentation ForMethod(MethodInfo methodInfo)
