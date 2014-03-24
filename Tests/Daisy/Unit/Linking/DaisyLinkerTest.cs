@@ -27,7 +27,7 @@
             statement.SetupGet(x => x.ScopeType).Returns(typeof(Int32));
             var statementSet = new StatementSet().Add(statement.Object);
 
-            var ast = new DaisyAst(new Statement("Hello gov'nor"));
+            var ast = new DaisyAst(new StatementNode("Hello gov'nor"));
 
             var load = new DaisyLinker(ast,statementSet,typeof(int));
 
@@ -39,7 +39,7 @@
         public void ItDiesOnFailureToLink()
         {
             var statementSet = new StatementSet();
-            var ast = new DaisyAst(new Statement("Hello gov'nor"));
+            var ast = new DaisyAst(new StatementNode("Hello gov'nor"));
             var load = new DaisyLinker(ast,statementSet,typeof(int));
             var ex = Assert.Catch<FailedLinkException>(() => load.Link());
             Assert.AreEqual(1, ex.Errors.Count);
@@ -64,7 +64,7 @@
             statement2.SetupGet(x => x.ScopeType).Returns(typeof(int));
             var statementSet = new StatementSet().Add(statement.Object).Add(statement2.Object);
 
-            var ast = new DaisyAst(new Statement("Hello gov'nor"));
+            var ast = new DaisyAst(new StatementNode("Hello gov'nor"));
 
             var load = new DaisyLinker(ast,statementSet,typeof(int));
             var ex = Assert.Catch<FailedLinkException>(() => load.Link());
@@ -85,7 +85,7 @@
 
             var statementSet = new StatementSet().Add(statement.Object);
 
-            var ast = new DaisyAst(new GroupOperator("Hello gov'nor",new Statement("Blah")));
+            var ast = new DaisyAst(new GroupOperatorNode("Hello gov'nor",new StatementNode("Blah")));
 
             var load = new DaisyLinker(ast,statementSet,typeof(int));
             var ex = Assert.Catch<FailedLinkException>(() => load.Link());

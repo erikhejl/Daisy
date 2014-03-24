@@ -1,3 +1,5 @@
+using Ancestry.Daisy.Program;
+
 namespace Ancestry.Daisy.Statements
 {
     using System;
@@ -9,5 +11,6 @@ namespace Ancestry.Daisy.Statements
         public Func<object,bool> Proceed { get; set; }
         public dynamic Context { get; set; }
         public dynamic Attachments { get; set; }
+        public ITracer Tracer { get; set; }
     }
 }

@@ -51,11 +51,11 @@
             return statement;
         }
 
-        private AndOperator ParseAnd(IDaisyAstNode left)
+        private AndOperatorNode ParseAnd(IDaisyAstNode left)
         {
             if(tokenStream.Current.Kind == TokenKind.And) MoveNextGuaranteed();
             var right = ParseUnaryExpr();
-            return new AndOperator(left, right);
+            return new AndOperatorNode(left, right);
         }
 
         private IDaisyAstNode ParseUnaryExpr()
@@ -64,18 +64,18 @@
             {
                 MoveNextGuaranteed();
                 var pred = ParsePredicate();
-                return new NotOperator(pred);
+                return new NotOperatorNode(pred);
             }
             return ParsePredicate();
         }
 
 
-        private GroupOperator ParseGroup(Statement head)
+        private GroupOperatorNode ParseGroup(StatementNode head)
         {
             Consume(TokenKind.StartGroup);
             var groupInner = ParseExpression();
             Consume(TokenKind.EndGroup);
-            return new GroupOperator(head.With(x => head.Text),
+            return new GroupOperatorNode(head.With(x => head.Text),
                 groupInner);
         }
 
@@ -93,17 +93,17 @@
             return statement;
         }
 
-        private OrOperator ParseOr(IDaisyAstNode left)
+        private OrOperatorNode ParseOr(IDaisyAstNode left)
         {
             Consume(TokenKind.Or);
             var right = ParseUnaryExpr();
-            return new OrOperator(left, right);
+            return new OrOperatorNode(left, right);
         }
 
-        private Statement ParseStatement()
+        private StatementNode ParseStatement()
         {
             AssertHasType(TokenKind.Statement);
-            var statement =  new Statement(tokenStream.Current.Value);
+            var statement =  new StatementNode(tokenStream.Current.Value);
             tokenStream.MoveNext();
             return statement;
         }

@@ -16,6 +16,7 @@ namespace Ancestry.Daisy.Statements
             private MemberSetter delegateForAttachmentsSetter;
             private MemberSetter delegateForContextSetter;
             private MemberSetter delegateForScopeSetter;
+            private MemberSetter delegateForTracerSetter;
             private MethodInvoker delegateForInvokation;
             private object controllerInstance;
             private StaticAnalysis.TransformPredicate scopeConverter;
@@ -110,6 +111,7 @@ namespace Ancestry.Daisy.Statements
                 delegateForScopeSetter = controllerType.DelegateForSetPropertyValue("Scope");
                 delegateForContextSetter = controllerType.DelegateForSetPropertyValue("Context");
                 delegateForAttachmentsSetter = controllerType.DelegateForSetPropertyValue("Attachments");
+                delegateForTracerSetter = controllerType.DelegateForSetPropertyValue("Tracer");
                 delegateForInvokation = definition.MethodInfo.DelegateForCallMethod();
                 controllerInstance = CreateController();
                 if (definition.TransformsScopeTo != null)
@@ -126,9 +128,8 @@ namespace Ancestry.Daisy.Statements
                 InitializeController(controllerInstance,context);
                 var methodParams = Definition.TransformsScopeTo == null ?
                     mappedParameters :
-                    mappedParameters.Select(x => x == proceedHolder ?
-                        transformsToValueType ? scopeConverter(context.Proceed) : context.Proceed 
-                        : x).ToArray();
+                    mappedParameters.Select(x => x == proceedHolder ?  transformsToValueType ? scopeConverter(context.Proceed) : context.Proceed : x)
+                    .ToArray();
                 return Execute(controllerInstance, methodParams);
             }
 
@@ -158,6 +159,7 @@ namespace Ancestry.Daisy.Statements
                 delegateForScopeSetter(controller, invokationContext.Scope);
                 delegateForContextSetter(controller, invokationContext.Context);
                 delegateForAttachmentsSetter(controller, invokationContext.Attachments);
+                delegateForTracerSetter(controller, invokationContext.Tracer);
             }
         }
 

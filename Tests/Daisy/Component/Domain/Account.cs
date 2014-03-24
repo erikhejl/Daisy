@@ -11,5 +11,10 @@
         public AccountType Type { get; set; }
 
         public IList<Transaction> Transactions { get; set; }
+
+        public override string ToString()
+        {
+            return "AccountId: " + AccountId + ",Balance: " + Balance + ",Type: " + Type;
+        }
     }
 }

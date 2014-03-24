@@ -46,7 +46,7 @@
         public bool ItExecutesStatements(string code, User data)
         {
             var exec = DaisyCompiler.Compile<User>(code, statements).Execute(data);
-            return exec.Result;
+            return exec.Outcome;
         }
     }
 }

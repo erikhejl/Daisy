@@ -52,26 +52,26 @@ namespace Ancestry.Daisy.Tests.TestObjects
             {
                 var node = queue.Pop();
                 yield return node;
-                if (node is AndOperator)
+                if (node is AndOperatorNode)
                 {
-                    var and = node as AndOperator;
+                    var and = node as AndOperatorNode;
                     queue.Push(and.Right);
                     queue.Push(and.Left);
                 }
-                else if (node is OrOperator)
+                else if (node is OrOperatorNode)
                 {
-                    var and = node as OrOperator;
+                    var and = node as OrOperatorNode;
                     queue.Push(and.Right);
                     queue.Push(and.Left);
                 }
-                else if (node is NotOperator)
+                else if (node is NotOperatorNode)
                 {
-                    var and = node as NotOperator;
+                    var and = node as NotOperatorNode;
                     queue.Push(and.Inner);
                 }
-                else if (node is GroupOperator)
+                else if (node is GroupOperatorNode)
                 {
-                    var and = node as GroupOperator;
+                    var and = node as GroupOperatorNode;
                     queue.Push(and.Root);
                 }
             }

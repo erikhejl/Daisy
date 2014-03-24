@@ -1,12 +1,21 @@
-﻿namespace Ancestry.Daisy.Language.AST
+﻿using Ancestry.Daisy.Statements;
+
+namespace Ancestry.Daisy.Language.AST
 {
-    public class GroupOperator : Statement
+    public interface IGroupOperatorNode<T> : IStatementNode where T : IDaisyAstNode
+    {
+        T Root { get; }
+        string Text { get; }
+        ILinkedStatement LinkedStatement { get; }
+    }
+
+    public class GroupOperatorNode : StatementNode, IGroupOperatorNode<IDaisyAstNode>
     {
         public IDaisyAstNode Root { get; private set; }
 
         public bool HasCommand { get { return !string.IsNullOrEmpty(Text); } }
 
-        public GroupOperator(string text, IDaisyAstNode root) : base(text)
+        public GroupOperatorNode(string text, IDaisyAstNode root) : base(text)
         {
             Root = root;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ancestry.Daisy.Language.AST.Trace;
 
 namespace Ancestry.Daisy.Program
 {
@@ -15,49 +16,19 @@ namespace Ancestry.Daisy.Program
     {
         public DaisyAst Ast { get; private set; }
 
-        private MultiMap<Statement, DebugNode> statements = new MultiMap<Statement,DebugNode>();
-        private MultiMap<GroupOperator, DebugNode> groups = new MultiMap<GroupOperator,DebugNode>();
-
         public ExecutionDebugInfo(DaisyAst ast)
         {
             Ast = ast;
-        }
-
-        public void AttachDebugInfo(Statement statement, DebugNode node)
-        {
-            statements.Add(statement, node);
-        }
-
-        public void AttachDebugInfo(GroupOperator group, DebugNode node)
-        {
-            groups.Add(group, node);
-        }
-
-        public IEnumerable<DebugNode> DebugFor(Statement statement)
-        {
-            return statements[statement];
-        }
-
-        public IEnumerable<DebugNode> DebugFor(GroupOperator group)
-        {
-            return groups[group];
         }
 
         public string DebugView
         {
             get
             {
-                return new DaisyDebugPrinter(this).Print();
+                return new DaisyTracePrinter(Trace).Print();
             }
         }
-    }
 
-    public class DebugNode
-    {
-        public bool Result { get; set; }
-
-        public object Scope { get; set; }
-
-        public Type ScopeType { get; set; }
+        public TraceNode Trace { get; set; }
     }
 }

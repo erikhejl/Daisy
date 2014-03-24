@@ -28,7 +28,7 @@
             this.statements = statements;
         }
 
-        private class Walker : AstTreeWalker
+        private class Walker : AstTreeWalker<IDaisyAstNode>
         {
             private readonly DaisyLinker linker;
             private Stack<Type> scopes;
@@ -45,18 +45,19 @@
                 Walk();
             }
 
-            protected override void Visit(Statement node)
+            protected override void Visit(IStatementNode node)
             {
-                linker.Link(node, scopes.Peek(),false);
+                linker.Link((StatementNode)node, scopes.Peek(),false);
             }
 
-            protected override void PostVisit(GroupOperator node)
+            protected override void PostVisit(IGroupOperatorNode<IDaisyAstNode> node)
             {
                 scopes.Pop();
             }
 
-            protected override bool PreVisit(GroupOperator node)
+            protected override bool PreVisit(IGroupOperatorNode<IDaisyAstNode> abstraceNode)
             {
+                var node = (GroupOperatorNode) abstraceNode;
                 if(node.HasCommand)
                 {
                     var nextScope = linker.Link(node, scopes.Peek(),true);
@@ -79,7 +80,7 @@
             if (errors.Count > 0) throw new FailedLinkException(errors);
         }
 
-        private Type Link(Statement statement, Type scopeType, bool isGroup)
+        private Type Link(StatementNode statement, Type scopeType, bool isGroup)
         {
             var matches = FindStatementMatches(statement.Text, scopeType).ToList();
             if(matches.Count == 0)

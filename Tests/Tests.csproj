@@ -90,6 +90,7 @@
     </Compile>
     <Compile Include="Daisy\Component\TestData.cs" />
     <Compile Include="Daisy\Component\TestExecutions.cs" />
+    <Compile Include="Daisy\Component\TracingTest.cs" />
     <Compile Include="Daisy\Performance\ExecutionPerformanceTest.cs" />
     <Compile Include="Daisy\Performance\ReflectionStatementHandlerTest.cs" />
     <Compile Include="Documentor\Component\DocumentorTests.cs" />
@@ -115,7 +116,6 @@
     <Compile Include="Daisy\Unit\Language\LookAheadTokenStream.cs" />
     <Compile Include="Daisy\Unit\Language\ParserTest.cs" />
     <Compile Include="Daisy\Unit\Language\WalksTests\DaisyAstPrinterTests.cs" />
-    <Compile Include="Daisy\Unit\Language\WalksTests\DaisyDebugPrinterTests.cs" />
     <Compile Include="Daisy\Unit\Linking\DaisyLinkerTest.cs" />
     <Compile Include="Daisy\Unit\Statements\ReflectionRuleHandlerTests.cs" />
     <Compile Include="Daisy\Unit\Statements\MatchesAttributeTests.cs" />

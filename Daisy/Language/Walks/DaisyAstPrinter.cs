@@ -5,7 +5,7 @@
 
     using Ancestry.Daisy.Language.AST;
 
-    public class DaisyAstPrinter : AstTreeWalker
+    public class DaisyAstPrinter : AstTreeWalker<IDaisyAstNode>
     {
         public DaisyAstPrinter(IDaisyAstNode node) : base(node) { }
 
@@ -23,50 +23,50 @@
             return sb.ToString();
         }
 
-        protected override bool PreVisit(AndOperator node)
+        protected override bool PreVisit(IAndOperatorNode<IDaisyAstNode> node)
         {
             Pad(sb, indent); sb.Append("AND\r\n");
             indent++;
             return true;
         }
 
-        protected override void PostVisit(AndOperator node)
+        protected override void PostVisit(IAndOperatorNode<IDaisyAstNode> node)
         {
             indent--;
         }
 
-        protected override bool PreVisit(OrOperator node)
+        protected override bool PreVisit(IOrOperatorNode<IDaisyAstNode> node)
         {
             Pad(sb, indent); sb.Append("OR\r\n");
             indent++;
             return true;
         }
 
-        protected override void PostVisit(OrOperator node)
+        protected override void PostVisit(IOrOperatorNode<IDaisyAstNode> node)
         {
             indent--;
         }
 
-        protected override bool PreVisit(NotOperator node)
+        protected override bool PreVisit(INotOperatorNode<IDaisyAstNode> node)
         {
             Pad(sb, indent); sb.Append("NOT\r\n");
             indent++;
             return true;
         }
 
-        protected override void PostVisit(NotOperator node)
+        protected override void PostVisit(INotOperatorNode<IDaisyAstNode> node)
         {
             indent--;
         }
 
-        protected override void Visit(Statement node)
+        protected override void Visit(IStatementNode node)
         {
             Pad(sb, indent);
             sb.Append(node.Text);
             sb.Append("\r\n");
         }
 
-        protected override bool PreVisit(GroupOperator node)
+        protected override bool PreVisit(IGroupOperatorNode<IDaisyAstNode> node)
         {
             Pad(sb, indent);
             sb.Append("GROUP");
@@ -80,7 +80,7 @@
             return true;
         }
 
-        protected override void PostVisit(GroupOperator node)
+        protected override void PostVisit(IGroupOperatorNode<IDaisyAstNode> node)
         {
             indent--;
         }

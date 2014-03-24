@@ -10,6 +10,7 @@
     {
         public bool HasAccount(Func<Account,bool> procced)
         {
+            Trace("Has {0} accounts", Scope.Accounts.Count);
             return Scope.Accounts.Any(procced);
         }
 
@@ -21,6 +22,11 @@
         public bool IsActive()
         {
             return Scope.IsActive;
+        }
+
+        public override string ToString()
+        {
+            return "User";
         }
     }
 }

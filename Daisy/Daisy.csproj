@@ -45,8 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DaisyCompiler.cs" />
+    <Compile Include="Language\AST\Trace\AndOperatorTrace.cs" />
+    <Compile Include="Language\AST\Trace\GroupOperatorTrace.cs" />
+    <Compile Include="Language\AST\Trace\TraceNode.cs" />
+    <Compile Include="Language\AST\Trace\NotOperatorTrace.cs" />
+    <Compile Include="Language\AST\Trace\OrOperatorTrace.cs" />
+    <Compile Include="Language\AST\Trace\StatementTrace.cs" />
     <Compile Include="Language\InconsistentWhitespaceException.cs" />
-    <Compile Include="Language\Walks\DaisyDebugPrinter.cs" />
+    <Compile Include="Language\Walks\DaisyTracePrinter.cs" />
     <Compile Include="Language\WhitespaceEater.cs" />
     <Compile Include="Program\DaisyRuntimeException.cs" />
     <Compile Include="Program\DaisyProgram.cs" />
@@ -67,6 +73,7 @@
     <Compile Include="Program\ExecutionDebugInfo.cs" />
     <Compile Include="Program\DaisyExecution.cs" />
     <Compile Include="Program\ExecutionResultType.cs" />
+    <Compile Include="Program\Tracer.cs" />
     <Compile Include="Statements\StatementParameter.cs" />
     <Compile Include="Statements\TitleAttribute.cs" />
     <Compile Include="Utils\FastFlect.cs" />
@@ -91,6 +98,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

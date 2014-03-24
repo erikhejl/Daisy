@@ -60,7 +60,7 @@
             AddLink(ast, "t", i => true);
             AddLink(ast, "f", i => false);
             var program = new DaisyProgram<int>(ast);
-            var result = program.Execute(1).Result;
+            var result = program.Execute(1).Outcome;
             return result;
         }
 
@@ -74,7 +74,7 @@
             AddLink(ast, "t", i => true);
             AddAggregateLink(ast, "any");
             var program = new DaisyProgram<IEnumerable<int>>(ast);
-            var result = program.Execute(values.Split(',').Select(int.Parse)).Result;
+            var result = program.Execute(values.Split(',').Select(int.Parse)).Outcome;
             return result;
         }
 
@@ -82,7 +82,7 @@
         {
             var statement = new FakeStatement(rawStatement, predicate).Link(rawStatement);
             new AstCollector(ast)
-                .OfType<Statement>()
+                .OfType<StatementNode>()
                 .Where(x => x.Text == rawStatement)
                 .Select(x => { x.LinkedStatement = statement; return x; }) //Sigh, I wish I had a for each
                 .ToList();
@@ -92,7 +92,7 @@
         {
             var statement = new FakeAggregate<int,int>(rawStatement).Link(rawStatement);
             new AstCollector(ast)
-                .OfType<Statement>()
+                .OfType<StatementNode>()
                 .Where(x => x.Text == rawStatement)
                 .Select(x => { x.LinkedStatement = statement; return x; }) //Sigh, I wish I had a for each
                 .ToList();

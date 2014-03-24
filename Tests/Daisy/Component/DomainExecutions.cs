@@ -1,4 +1,7 @@
-﻿namespace Ancestry.Daisy.Tests.Daisy.Component
+﻿using System;
+using Ancestry.Daisy.Language.Walks;
+
+namespace Ancestry.Daisy.Tests.Daisy.Component
 {
     using Ancestry.Daisy.Statements;
     using Ancestry.Daisy.Tests.Daisy.Component.Controllers;
@@ -6,7 +9,7 @@
 
     using NUnit.Framework;
 
-    [TestFixture,Category("Component")]
+    [TestFixture, Category("Component")]
     public class DomainExecutions
     {
         private StatementSet statements;
@@ -36,9 +39,9 @@
         [TestCaseSource("itExecutesStatments")]
         public bool ItExecutesStatements(string code, User data)
         {
-            return DaisyCompiler.Compile<User>(code, statements)
-                .Execute(data)
-                .Result;
+            var execution = DaisyCompiler.Compile<User>(code, statements).Execute(data);
+            Console.WriteLine(new DaisyTracePrinter(execution.DebugInfo.Trace).Print());
+            return execution.Outcome;
         }
     }
 }

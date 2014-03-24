@@ -2,13 +2,19 @@
 {
     using Ancestry.Daisy.Statements;
 
-    public class Statement : IDaisyAstNode
+    public interface IStatementNode : IDaisyAstNode
+    {
+        string Text { get; }
+        ILinkedStatement LinkedStatement { get; }
+    }
+
+    public class StatementNode : IStatementNode
     {
         public string Text { get; private set; }
 
         public ILinkedStatement LinkedStatement { get; set; }
 
-        public Statement(string statement)
+        public StatementNode(string statement)
         {
             Text = statement;
         }

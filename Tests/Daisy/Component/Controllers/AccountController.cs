@@ -1,4 +1,6 @@
-﻿namespace Ancestry.Daisy.Tests.Daisy.Component.Controllers
+﻿using System.Diagnostics;
+
+namespace Ancestry.Daisy.Tests.Daisy.Component.Controllers
 {
     using System;
     using System.Linq;

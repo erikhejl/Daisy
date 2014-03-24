@@ -12,14 +12,14 @@ namespace Ancestry.Daisy.Program
 
     public interface IDaisyExecution
     {
-        bool Result { get; }
+        bool Outcome { get; }
         ExecutionDebugInfo DebugInfo { get; }
         dynamic Attachments { get; }
     }
 
     public class DaisyExecution : IDaisyExecution
     {
-        public bool Result { get; internal set; }
+        public bool Outcome { get; internal set; }
 
         public ExecutionDebugInfo DebugInfo { get; private set; }
 
