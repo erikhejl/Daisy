@@ -29,6 +29,23 @@ namespace Ancestry.Daisy.Linking
         }
     }
 
+    public class NoLinksPermittedError : LinkingError
+    {
+        public IStatementDefinition Definition { get; set; }
+
+        public NoLinksPermittedError(string statement, Type scopeType, IStatementDefinition definition)
+        {
+            Definition = definition;
+            Statement = statement;
+            ScopeType = scopeType;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Statement {0} does not allow any subrules, but some were provided", Statement);
+        }
+    }
+
     public class MultipleLinksFoundError : LinkingError
     {
         public IList<IStatementDefinition> MatchedStatements { get; set; }

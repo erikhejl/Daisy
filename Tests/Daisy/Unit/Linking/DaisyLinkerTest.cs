@@ -71,5 +71,26 @@
             Assert.AreEqual(1, ex.Errors.Count);
             Assert.IsInstanceOf<MultipleLinksFoundError>(ex.Errors.First());
         }
+
+        [Test]
+        public void ItDiesOnLinkingGroupToNonGroup()
+        {
+            var linkedStatement1 = new Mock<ILinkedStatement>();
+            var statement = new Mock<IStatementDefinition>();
+            linkedStatement1.SetupGet(x => x.Definition).Returns(statement.Object);
+            statement.Setup(x => x.Link(It.IsAny<string>())).Returns(linkedStatement1.Object);
+            statement.SetupGet(x => x.Name).Returns("David");
+            statement.SetupGet(x => x.ScopeType).Returns(typeof(int));
+            statement.SetupGet(x => x.TransformsScopeTo).Returns((Type)null);
+
+            var statementSet = new StatementSet().Add(statement.Object);
+
+            var ast = new DaisyAst(new GroupOperator("Hello gov'nor",new Statement("Blah")));
+
+            var load = new DaisyLinker(ast,statementSet,typeof(int));
+            var ex = Assert.Catch<FailedLinkException>(() => load.Link());
+            Assert.AreEqual(1, ex.Errors.Count);
+            Assert.IsInstanceOf<NoLinksPermittedError>(ex.Errors.First());
+        }
     }
 }

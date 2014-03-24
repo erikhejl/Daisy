@@ -95,6 +95,10 @@
                 return null;
             }
             var match = matches.First();
+            if (isGroup && match.Definition.TransformsScopeTo == null)
+            {
+                errors.Add(new NoLinksPermittedError(statement.Text, scopeType,match.Definition));
+            }
             statement.LinkedStatement = match;
             return isGroup ? match.Definition.TransformsScopeTo : scopeType;
         }

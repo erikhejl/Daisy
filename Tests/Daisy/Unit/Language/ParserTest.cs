@@ -37,8 +37,13 @@ AND
 AND d
   b
   OR c",
-            "AND\r\n-a\r\n-GROUP-d\r\n--OR\r\n---b\r\n---c\r\n",
+            "AND\r\n-a\r\n-GROUP@d\r\n--OR\r\n---b\r\n---c\r\n",
             TestName = "It parses named groups")]
+        [TestCase(
+@"a
+  b",
+            "GROUP@a\r\n-b\r\n",
+            TestName = "It parses groups")]
         public void ItParsesLanguages(string code, string expectedTree)
         {
             var llstream = new LookAheadStream<Token>(new Lexer(code.ToStream()).Lex());

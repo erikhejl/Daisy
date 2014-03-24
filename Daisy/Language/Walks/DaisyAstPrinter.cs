@@ -72,7 +72,7 @@
             sb.Append("GROUP");
             if(!string.IsNullOrEmpty(node.Text))
             {
-                sb.Append("-");
+                sb.Append("@");
                 sb.Append(node.Text);
             }
             sb.Append("\r\n");
