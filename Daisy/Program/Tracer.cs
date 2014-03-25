@@ -27,4 +27,14 @@ namespace Ancestry.Daisy.Program
 
         public List<string> Tracings { get; private set; }
     }
+
+    public class NoOpTracer : ITracer
+    {
+        private static List<string> tracings = new List<string>();
+        public NoOpTracer() { }
+
+        public void Trace(string pattern, params object[] templateValues) { return; }
+
+        public List<string> Tracings { get { return tracings; } }
+    }
 }

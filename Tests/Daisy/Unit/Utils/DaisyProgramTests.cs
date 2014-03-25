@@ -59,7 +59,7 @@
             var ast = DaisyParser.Parse(code);
             AddLink(ast, "t", i => true);
             AddLink(ast, "f", i => false);
-            var program = new DaisyProgram<int>(ast);
+            var program = new DaisyProgram<int>(ast,DaisyMode.Debug);
             var result = program.Execute(1).Outcome;
             return result;
         }
@@ -73,7 +73,7 @@
             AddLink(ast, "even", i => i%2 == 0);
             AddLink(ast, "t", i => true);
             AddAggregateLink(ast, "any");
-            var program = new DaisyProgram<IEnumerable<int>>(ast);
+            var program = new DaisyProgram<IEnumerable<int>>(ast,DaisyMode.Debug);
             var result = program.Execute(values.Split(',').Select(int.Parse)).Outcome;
             return result;
         }

@@ -12,10 +12,12 @@ namespace Ancestry.Daisy.Program
 
     public class DaisyProgram<T>
     {
+        public DaisyMode Mode { get; private set; }
         private readonly DaisyAst ast;
 
-        public DaisyProgram(DaisyAst ast)
+        public DaisyProgram(DaisyAst ast, DaisyMode mode)
         {
+            Mode = mode;
             this.ast = ast;
         }
 
@@ -31,6 +33,12 @@ namespace Ancestry.Daisy.Program
             execution.Outcome = traced.Outcome;
             execution.DebugInfo.Trace = traced;
             return execution;
+        }
+
+        private ITracer BuildTracer()
+        {
+            if(Mode == DaisyMode.Debug) return new Tracer();
+            return new NoOpTracer();
         }
 
         private TraceNode Execute(object scope, IDaisyAstNode node, DaisyExecution daisyExecution, ContextBundle context)
@@ -65,7 +73,7 @@ namespace Ancestry.Daisy.Program
                     var link = group.LinkedStatement;
                     if (link == null) throw new DaisyRuntimeException(string.Format("Group '{0}' was never linked", group.Text));
                     var frames = new List<TraceNode>();
-                    var tracer = new Tracer();
+                    var tracer = BuildTracer();
                     var result =  link.Execute(new InvokationContext() {
                         Scope = scope,
                         Proceed = o =>
@@ -90,7 +98,7 @@ namespace Ancestry.Daisy.Program
                 var statement = node as StatementNode;
                 var link = statement.LinkedStatement;
                 if (link == null) throw new DaisyRuntimeException(string.Format("Statement '{0}' was never linked.", statement.Text));
-                var tracer = new Tracer();
+                var tracer = BuildTracer();
                 var result = link.Execute(new InvokationContext() {
                         Scope = scope,
                         Proceed = o => false,  //I don't know. False since there are no children?

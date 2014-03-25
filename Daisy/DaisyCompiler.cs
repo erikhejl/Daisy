@@ -13,12 +13,18 @@ namespace Ancestry.Daisy
 
     public class DaisyCompiler
     {
-        public static DaisyProgram<T> Compile<T>(string code, StatementSet statements)
+        public static DaisyProgram<T> Compile<T>(string code, StatementSet statements, DaisyMode mode = DaisyMode.Debug)
         {
             var ast = DaisyParser.Parse(code);
             var linker = new DaisyLinker(ast, statements, typeof(T));
             linker.Link();
-            return new DaisyProgram<T>(ast);
+            return new DaisyProgram<T>(ast, mode);
         }
+    }
+
+    public enum DaisyMode
+    {
+        Debug,
+        Release
     }
 }

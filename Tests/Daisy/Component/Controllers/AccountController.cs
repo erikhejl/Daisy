@@ -33,6 +33,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component.Controllers
         [Matches(@"Balance is between (\d+) and (\d+)")]
         public bool BalanceBetween(int lowerEnd, int higherEnd)
         {
+            Trace("Balance is: "  + Scope.Balance);
             return Scope.Balance > lowerEnd && Scope.Balance < higherEnd;
         }
 
