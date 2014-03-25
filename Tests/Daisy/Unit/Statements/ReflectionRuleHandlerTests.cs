@@ -1,4 +1,6 @@
-﻿namespace Ancestry.Daisy.Tests.Daisy.Unit.Statements
+﻿using Ancestry.Daisy.Program;
+
+namespace Ancestry.Daisy.Tests.Daisy.Unit.Statements
 {
     using System;
     using System.Collections.Generic;
@@ -89,7 +91,7 @@
             Assert.IsNotNull(linked);
             return linked.Execute(new InvokationContext() {
                     Scope = scope,
-                    Context = new object(),
+                    Context = new ContextBundle(),
                 });
         }
 

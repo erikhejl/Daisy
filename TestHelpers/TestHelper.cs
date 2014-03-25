@@ -1,8 +1,9 @@
-﻿namespace Ancestry.Daisy.TestHelpers
+﻿using Ancestry.Daisy.Program;
+
+namespace Ancestry.Daisy.TestHelpers
 {
     using System;
     using System.Collections.Generic;
-    using System.Dynamic;
     using System.Reflection;
     using System.Text.RegularExpressions;
 
@@ -30,11 +31,11 @@
         }
 
         public static InvokationResult Invoke<T>(Type controller, string methodName, T scope,
-            string statement, dynamic context = null, Func<object, bool> proceed = null)
+            string statement, ContextBundle context = null, Func<object, bool> proceed = null)
         {
             if(proceed == null)
                 proceed = o => false;
-            context = context ?? new ExpandoObject();
+            context = context ?? new ContextBundle();
             var method = GetMethod(controller, methodName);
             var statementHandler = new ReflectionStatementDefinition(method, controller);
             var invokationResult = new InvokationResult()
@@ -42,7 +43,7 @@
                     Context = context,
                     Statement = statement,
                     MatchingCriteria = statementHandler.GetMatchingCriteria(),
-                    Attachments = new ExpandoObject()
+                    Attachments = new ContextBundle()
                 };
             invokationResult.Match = statementHandler.Matches(new MatchingContext() {
                     Statement = statement,
@@ -66,9 +67,9 @@
 
             public Match Match { get; set; }
 
-            public dynamic Context { get; set; }
+            public ContextBundle Context { get; set; }
 
-            public dynamic Attachments { get; set; }
+            public ContextBundle Attachments { get; set; }
 
             public bool Result { get; set; }
 

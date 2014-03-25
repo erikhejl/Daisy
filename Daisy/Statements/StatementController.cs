@@ -5,8 +5,8 @@ namespace Ancestry.Daisy.Statements
     public class StatementController<T> 
     {
         public T Scope { get; set; }
-        public dynamic Context { get; set; }
-        public dynamic Attachments { get; set; }
+        public ContextBundle Context { get; set; }
+        public ContextBundle Attachments { get; set; }
         public ITracer Tracer { get; set; }
 
         public void Trace(string pattern, params object[] templateValues)

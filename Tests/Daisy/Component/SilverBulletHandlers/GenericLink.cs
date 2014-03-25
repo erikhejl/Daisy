@@ -24,6 +24,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component.SilverBulletHandlers
             controller.Attachments = context.Attachments;
             controller.Context = context.Context;
             controller.Scope = (T)context.Scope;
+            controller.Tracer = context.Tracer;
         }
     }
 }

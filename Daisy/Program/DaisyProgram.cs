@@ -4,7 +4,6 @@ using Ancestry.Daisy.Language.AST.Trace;
 namespace Ancestry.Daisy.Program
 {
     using System;
-    using System.Dynamic;
 
     using Ancestry.Daisy.Language;
     using Ancestry.Daisy.Language.AST;
@@ -22,10 +21,10 @@ namespace Ancestry.Daisy.Program
 
         public IDaisyExecution Execute(T scope)
         {
-            return Execute(scope, new ExpandoObject());
+            return Execute(scope, new ContextBundle());
         }
 
-        public IDaisyExecution Execute(T scope, dynamic context)
+        public IDaisyExecution Execute(T scope, ContextBundle context)
         {
             var execution = new DaisyExecution(ast);
             var traced = Execute(scope, ast.Root, execution, context);
@@ -34,7 +33,7 @@ namespace Ancestry.Daisy.Program
             return execution;
         }
 
-        private TraceNode Execute(object scope, IDaisyAstNode node, DaisyExecution daisyExecution, dynamic context)
+        private TraceNode Execute(object scope, IDaisyAstNode node, DaisyExecution daisyExecution, ContextBundle context)
         {
             if(node is AndOperatorNode)
             {

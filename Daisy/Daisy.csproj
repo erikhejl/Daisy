@@ -54,6 +54,7 @@
     <Compile Include="Language\InconsistentWhitespaceException.cs" />
     <Compile Include="Language\Walks\DaisyTracePrinter.cs" />
     <Compile Include="Language\WhitespaceEater.cs" />
+    <Compile Include="Program\ContextBundle.cs" />
     <Compile Include="Program\DaisyRuntimeException.cs" />
     <Compile Include="Program\DaisyProgram.cs" />
     <Compile Include="Linking\DaisyLinker.cs" />

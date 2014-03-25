@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ancestry.Daisy.Program;
 
 namespace Ancestry.Daisy.Tests.Daisy.Performance
 {
@@ -30,8 +31,8 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance
                 .Link("MyStatement");
             var context = new InvokationContext() {
                 Scope = "The Scope",
-                Context = "The Context",
-                Attachments = "The Attachments",
+                Context = new ContextBundle(),
+                Attachments = new ContextBundle(),
             };
             const int iterations = 1000000;
 
@@ -56,8 +57,8 @@ namespace Ancestry.Daisy.Tests.Daisy.Performance
                 .Link("My Statement");
             var inst = new MyController() {
                 Scope = "The Scope",
-                Context = "The Context",
-                Attachments = "The Attachments"
+                Context = new ContextBundle(),
+                Attachments = new ContextBundle()
             };
             const int iterations = 1000000;
             var parameters = new object[0];

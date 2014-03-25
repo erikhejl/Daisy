@@ -1,9 +1,10 @@
-﻿namespace Ancestry.Daisy.PerformanceScenario
+﻿using Ancestry.Daisy.Program;
+
+namespace Ancestry.Daisy.PerformanceScenario
 {
     using System;
     using System.ComponentModel;
     using System.Diagnostics;
-    using System.Dynamic;
     using System.Linq;
 
     using Ancestry.Daisy.Statements;
@@ -87,23 +88,25 @@
             Console.WriteLine("Running iterations from handlers...");
             stopwatch = new Stopwatch();
             stopwatch.Start();
-            dynamic context = new ExpandoObject();
-            dynamic attachments = new ExpandoObject();
+            var context = new ContextBundle();
+            var attachments = new ContextBundle();
 
+            var tracer = new Tracer();
             for(int i=0; i<iterations; ++i)
             {
                 var data = Tests.Daisy.Component.TestData.Ben;
-                var result = new UserController() { Scope = data, Context = context, Attachments = attachments}.IsActive()
-                    && !new UserController() { Scope = data, Context = context, Attachments = attachments}.HasAccount(account =>
-                        new AccountController() { Scope = account, Context = context, Attachments = attachments}.HasTransaction(
+                var result = new UserController() { Scope = data, Context = context, Attachments = attachments, Tracer = tracer}.IsActive()
+                    && !new UserController() { Scope = data, Context = context, Attachments = attachments, Tracer = tracer}.HasAccount(account =>
+                        new AccountController() { Scope = account, Context = context, Attachments = attachments, Tracer = tracer}.HasTransaction(
                         transaction =>
-                            new TransactionController() { Scope = transaction, Context = context, Attachments = attachments}.TimestampBeforeYearsAgo(1)
+                            new TransactionController() { Scope = transaction, Context = context, Attachments = attachments, Tracer = tracer}.TimestampBeforeYearsAgo(1)
                         )
                     );
             }
             stopwatch.Stop();
             Console.WriteLine("Elapsed: " + stopwatch.ElapsedMilliseconds);
             Console.WriteLine("Per execution: " + ((double)stopwatch.ElapsedMilliseconds)/iterations);
+            Console.ReadKey();
         }
     }
 }

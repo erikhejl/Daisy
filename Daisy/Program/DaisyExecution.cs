@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace Ancestry.Daisy.Program
 {
-    using System.Dynamic;
-
     using Ancestry.Daisy.Language;
 
     public interface IDaisyExecution
     {
         bool Outcome { get; }
         ExecutionDebugInfo DebugInfo { get; }
-        dynamic Attachments { get; }
+        ContextBundle Attachments { get; }
     }
 
     public class DaisyExecution : IDaisyExecution
@@ -23,11 +21,11 @@ namespace Ancestry.Daisy.Program
 
         public ExecutionDebugInfo DebugInfo { get; private set; }
 
-        public dynamic Attachments { get; private set; }
+        public ContextBundle Attachments { get; private set; }
 
         internal DaisyExecution(DaisyAst ast)
         {
-            Attachments = new ExpandoObject();
+            Attachments = new ContextBundle();
             DebugInfo = new ExecutionDebugInfo(ast);
         }
     }

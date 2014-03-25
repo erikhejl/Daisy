@@ -15,7 +15,7 @@
             [Matches("Good boy")]
             public bool R1()
             {
-                Context.didIt = true;
+                Context["didIt"] = true;
                 return Scope == 1;
             }
         }

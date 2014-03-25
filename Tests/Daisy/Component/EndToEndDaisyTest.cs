@@ -19,7 +19,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component
 
             var program = DaisyCompiler.Compile<int>(code, new StatementSet().FromController(typeof(TestStatementController)));
             var result = program.Execute(4);
-            Assert.AreEqual(5, result.Attachments.Test);
+            Assert.AreEqual(5, result.Attachments["Test"]);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Ancestry.Daisy.Tests.Daisy.Component
         {
             public bool SetAttachment()
             {
-                this.Attachments.Test = 5;
+                this.Attachments["Test"] = 5;
                 return true;
             }
 
